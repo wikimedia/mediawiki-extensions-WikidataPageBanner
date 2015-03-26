@@ -1,0 +1,5 @@
+This is an initial repository for developing Wikidata PageBanner Extension as
+per the proposal at https://phabricator.wikimedia.org/T93106
+for the tracking bug at https://phabricator.wikimedia.org/T77925
+
+After the initial setup of the boilerplate extension, the code will be moved to gerrit for development
