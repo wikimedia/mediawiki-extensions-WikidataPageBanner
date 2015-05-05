@@ -17,7 +17,7 @@ $wgExtensionCredits['other'][] = array(
 	'description'    => "Render banners on wikivoyage",
 	'descriptionmsg' => 'Display pagewide banners on wikivoyage',
 	'author'         => array( 'Sumit Asthana' ),
-	'version'        => '0.0.0',
+	'version'        => '0.0.1',
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:WikidataPageBanner',
 	'license-name'   => 'GPL-2.0+',
 );
@@ -26,8 +26,10 @@ $wgExtensionCredits['other'][] = array(
  * Options:
  *
  * $wgPBImage - static pagebanner image url
+ * $wgBannerNamespace - Namespaces on which to display banner
  */
 $wgPBImageUrl = "http://upload.wikimedia.org/wikipedia/commons/a/a0/South_America_Wikivoyage_banner.jpg";
+$wgBannerNamespaces = array( NS_MAIN );
 
 /* Setup */
 // autoloader

@@ -7,15 +7,15 @@ class WikidataPageBanner {
 	 * @return bool
 	 */
 	public static function viewBanner( $article ) {
-		global $wgPBImageUrl;
+		global $wgPBImageUrl, $wgBannerNamespaces;
 		$bannerurl = $wgPBImageUrl;
 		$title = $article->getTitle();
 		$ns = $title->getNamespace();
-		// banner only on main namespacem, and not Main Page of wiki
-		if ( $ns == NS_MAIN && !$title->isMainPage() ) {
+		// banner only on specified namespaces, and not Main Page of wiki
+		if ( in_array( $ns, $wgBannerNamespaces ) && !$title->isMainPage() ) {
 			$banner = Html::openElement( 'div', array( 'class' => 'noprint' ) ) .
 			Html::openElement( 'div', array( 'class' => 'ext-wpb-pagebanner',
-									'style' => 'background-image:url('.$bannerurl.');'
+									'style' => "background-image:url($bannerurl);"
 								)
 							) .
 			Html::openElement( 'div', array( 'class' => 'topbanner' ) ) .
@@ -43,9 +43,10 @@ class WikidataPageBanner {
 	 * @return  bool
 	 */
 	public static function loadModules( $out, $parserOutput ) {
+		global $wgBannerNamespaces;
 		$title = $out->getTitle();
-		if ( $title->getNamespace() == NS_MAIN && !$title->isMainPage() ) {
-			// Setup banner styling, only if main namespace, and not Main Page of wiki
+		if ( in_array( $ns, $wgBannerNamespaces ) && !$title->isMainPage() ) {
+			// Setup banner styling, only if specified namespaces, and not Main Page of wiki
 			$out->addModuleStyles( 'ext.WikidataPageBanner' );
 		}
 	}

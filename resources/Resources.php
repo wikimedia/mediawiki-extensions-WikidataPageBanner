@@ -28,11 +28,6 @@ $wgResourceModules['ext.WikidataPageBanner'] = array(
 	'styles' => array(
 		'ext.WikidataPageBanner.styles/ext.WikidataPageBanner.less',
 	),
-	'messages' => array(
-	),
-	'dependencies' => array(
-	),
-
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'WikidataPageBanner/resources',
 	'targets' => array( 'desktop', 'mobile' ),
