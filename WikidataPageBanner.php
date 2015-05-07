@@ -25,10 +25,10 @@ $wgExtensionCredits['other'][] = array(
 /**
  * Options:
  *
- * $wgPBImage - static pagebanner image url
+ * $wgPBImage - static pagebanner image url, use only filename, do not prefix 'File:'
  * $wgBannerNamespace - Namespaces on which to display banner
  */
-$wgPBImageUrl = "http://upload.wikimedia.org/wikipedia/commons/a/a0/South_America_Wikivoyage_banner.jpg";
+$wgPBImage = "";
 $wgBannerNamespaces = array( NS_MAIN );
 
 /* Setup */
@@ -38,12 +38,14 @@ $wgAutoloadClasses['WikidataPageBanner'] = __DIR__ . 'includes/WikidataPageBanne
 // Register files
 $wgMessagesDirs['WikidataPageBanner'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['WikidataPageBannerAlias'] = __DIR__ . '/WikidataPageBanner.i18n.alias.php';
+$wgExtensionMessagesFiles['WikidataPageBannerMagic'] = __DIR__ . '/WikidataPageBanner.i18n.magic.php';
 
 // Register hooks
 // Hook to inject banner code
-$wgHooks['ArticleViewHeader'][] = 'WikidataPageBanner::viewBanner';
+$wgHooks['ArticleViewHeader'][] = 'WikidataPageBanner::addDefaultBanner';
 // Load Banner modules, styles
 $wgHooks['BeforePageDisplay'][] = 'WikidataPageBanner::loadModules';
+$wgHooks['ParserFirstCallInit'][] = 'WikidataPageBanner::onParserFirstCallInit';
 
 // include WikidataPageBanner class file
 require_once __DIR__ . "/includes/WikidataPageBanner.hooks.php";

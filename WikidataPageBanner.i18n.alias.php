@@ -1,9 +1,5 @@
 <?php
 /**
- * Aliases for special pages of the BoilerPlate extension
- *
- * @file
- * @ingroup Extensions
+ * Aliases for special pages of the WikidataPageBanner extension
  */
-
 $specialPageAliases['en'] = array();
