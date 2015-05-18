@@ -18,18 +18,19 @@ class WikidataPageBanner {
 		// if the page does not exist, or can not be viewed, return
 		if ( !$title->isKnown() ) {
 			return true;
-		} else if ( $article->getParserOutput()->getProperty( 'articlebanner' ) == null ) {
-			// if the page uses no 'PAGEBANNER' invocation, insert default banner,
-			// only set articlebanner property on OutputPage
-			$bannerurl = self::getBannerUrl( $wgPBImage );
+		} elseif ( $article->getParserOutput()->getProperty( 'articlebanner' ) == null ) {
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
 			// if no image exists with given bannerurl, no banner will be added
-			if ( in_array( $ns, $wgBannerNamespaces ) && !$title->isMainPage()
-				&& $bannerurl !== null ) {
-				$banner = self::getBannerHtml( $bannerurl, $title );
-				$out->addHtml( $banner );
-				$out->setProperty( 'articlebanner', $banner );
+			if ( in_array( $ns, $wgBannerNamespaces )
+				&& !$title->isMainPage() ) {
+				// if the page uses no 'PAGEBANNER' invocation, insert default banner,
+				// only set articlebanner property on OutputPage
+				$banner = self::getBannerHtml( $title, $wgPBImage );
+				if ( $banner !== null ) {
+					$out->addHtml( $banner );
+					$out->setProperty( 'articlebanner', $banner );
+				}
 			}
 		} else {
 			$out->setProperty(
@@ -51,6 +52,7 @@ class WikidataPageBanner {
 		if ( $out->getProperty( 'articlebanner' ) != null ) {
 			// if articlebanner property is set, we need to add banner styles
 			$out->addModuleStyles( 'ext.WikidataPageBanner' );
+			$out->addModules( 'ext.WikidataPageBanner.loadImage' );
 		}
 	}
 
@@ -63,17 +65,16 @@ class WikidataPageBanner {
 	 * @return output
 	 */
 	public static function addCustomBanner( $parser, $bannername ) {
-		global $wgBannerNamespaces;
-		$fileurl = self::getBannerUrl( $bannername );
-		// if given banner does not exist, return
-		if ( $fileurl === null ) {
-			return array( '', 'noparse' => true, 'isHTML' => true );
-		}
+		global $wgBannerNamespaces, $wgStandardSizes;
 		$banner = '';
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
 		if ( in_array( $ns, $wgBannerNamespaces ) && !$title->isMainPage() ) {
-			$banner = self::getBannerHtml( $fileurl, $title );
+			$banner = self::getBannerHtml( $title, $bannername );
+			// if given banner does not exist, return
+			if ( $banner === null ) {
+				return array( '', 'noparse' => true, 'isHTML' => true );
+			}
 			// Set 'articlebanner' property for future reference
 			$parser->getOutput()->setProperty( 'articlebanner', $banner );
 		}
@@ -87,7 +88,7 @@ class WikidataPageBanner {
 	 * and returns url of an image of specified width.
 	 *
 	 * @param  string $filename Filename of the banner image
-	 * @return string Full url of the banner image on the wiki
+	 * @return string|null Full url of the banner image on the wiki or null
 	 */
 	public static function getBannerUrl( $filename, $bannerwidth = null ) {
 		// make title object from image name
@@ -101,8 +102,13 @@ class WikidataPageBanner {
 			return null;
 		}
 		// validate $bannerwidth to be a width within 3000
-		else if ( filter_var( $bannerwidth, FILTER_VALIDATE_INT, $options ) !== FALSE ) {
-			$mto = $file->transform( array( 'width' => $width ) );
+		elseif ( filter_var( $bannerwidth, FILTER_VALIDATE_INT, $options ) !== false ) {
+			// return null if querying for a width greater than original width,
+			// so that when srcset is generated from this, urls are not repeated
+			if ( $bannerwidth > $file->getWidth() ) {
+				return null;
+			}
+			$mto = $file->transform( array( 'width' => $bannerwidth ) );
 			$url = wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
 			return $url;
 		} else {
@@ -115,20 +121,45 @@ class WikidataPageBanner {
 	 * WikidataPageBanner::getBannerHtml
 	 * Returns the html code for the pagebanner
 	 *
-	 * @param string $bannerurl Url of the image in the banner
 	 * @param string $title Title to display on banner
-	 * @return string Html code of the banner
-	 * TODO:Move this banner html code to a template.
+	 * @param string $bannername FileName of banner image
+	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
-	public static function getBannerHtml( $bannerurl, $title ) {
-		$templateParser = new TemplateParser( __DIR__ . '/../templates' );
-		$banner = $templateParser->processTemplate(
-				'banner',
-				array(
-					'banner' => $bannerurl,
-					'title' => $title
-				)
-			);
+	public static function getBannerHtml( $title, $bannername ) {
+		global $wgStandardSizes, $wgScript, $wgArticlePath;
+		$urls = self::getStandardSizeUrls( $bannername );
+		$banner = null;
+		/** @var String srcset attribute for <img> element of banner image */
+		$srcset = "";
+		// if a valid bannername given, set banner
+		if ( !empty( $urls ) ) {
+			// @var int index variable
+			$i = 0;
+			foreach ( $urls as $url ) {
+				$size = $wgStandardSizes[$i];
+				// add url with width and a comma if not adding the last url
+				if ( $i < count( $urls ) ) {
+					$srcset .= "$url {$size}w,";
+				}
+				$i++;
+			}
+			// only use the largest size url as a hi-res banner url, as a mix
+			// of 'w' and 'x' causes issues in chrome
+			$url = $urls[$i-1];
+			$srcset .= "$url 2x";
+			$bannerurl = $urls[0];
+			$bannerfile = str_replace( "$1", "File:$bannername", $wgArticlePath );
+			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
+			$banner = $templateParser->processTemplate(
+					'banner',
+					array(
+						'bannerfile' => $bannerfile,
+						'banner' => $bannerurl,
+						'title' => $title,
+						'srcset' => $srcset
+					)
+				);
+		}
 		return $banner;
 	}
 
@@ -142,5 +173,25 @@ class WikidataPageBanner {
 	public static function onParserFirstCallInit( $parser ) {
 		$parser->setFunctionHook( 'PAGEBANNER', 'WikidataPageBanner::addCustomBanner', SFH_NO_HASH );
 		return true;
+	}
+
+	/**
+	 * WikidataPageBanner::getStandardSizeUrls
+	 * returns an array of urls of standard image sizes defined by $wgStandardSizes
+	 *
+	 * @param  String $filename Name of Image file
+	 * @return array
+	 */
+	public static function getStandardSizeUrls( $filename ) {
+		global $wgStandardSizes;
+		$urlSet = array();
+		foreach ( $wgStandardSizes as $size ) {
+			$url = self::getBannerUrl( $filename, $size );
+			if ( $url != null ) {
+				$urlSet[] = $url;
+			}
+			$prevurl = $url;
+		}
+		return $urlSet;
 	}
 }

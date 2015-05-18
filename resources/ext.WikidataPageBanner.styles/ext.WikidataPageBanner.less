@@ -4,10 +4,13 @@
 @import "mediawiki.mixins";
 .ext-wpb-pagebanner {
 	width:100%;
-	height:200px;
-	.background-size( e(''), cover);
-	background-repeat: no-repeat;
-	background-position: center center;
+}
+
+.topbanner{
+	position: relative;
+	max-width: 1800px;
+	overflow: hidden;
+	height: auto;
 }
 
 .topbanner .name {
@@ -26,4 +29,9 @@
 
 h1.firstHeading {
 	display: none;
+}
+
+.topbanner .banner-image{
+	width: 100%;
+	height: auto;
 }

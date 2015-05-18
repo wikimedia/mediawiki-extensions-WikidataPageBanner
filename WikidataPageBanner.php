@@ -25,11 +25,14 @@ $wgExtensionCredits['other'][] = array(
 /**
  * Options:
  *
- * $wgPBImage - static pagebanner image url, use only filename, do not prefix 'File:'
+ * $wgPBImage - default pagebanner image file, use only filename, do not prefix 'File:',
+ * e.g. $wgPBImage = 'Foo.jpg'
  * $wgBannerNamespace - Namespaces on which to display banner
+ * $wgStandardSizes - Array of standard predefined screen widths in increasing order
  */
 $wgPBImage = "";
 $wgBannerNamespaces = array( NS_MAIN );
+$wgStandardSizes = array( 320, 640, 1280, 2560 );
 
 /* Setup */
 // autoloader
@@ -50,4 +53,5 @@ $wgHooks['ParserFirstCallInit'][] = 'WikidataPageBanner::onParserFirstCallInit';
 // include WikidataPageBanner class file
 require_once __DIR__ . "/includes/WikidataPageBanner.hooks.php";
 require_once __DIR__ . "/resources/Resources.php";
+
 
