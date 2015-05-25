@@ -24,15 +24,21 @@ class WikidataPageBanner {
 			// if no image exists with given bannerurl, no banner will be added
 			if ( in_array( $ns, $wgBannerNamespaces )
 				&& !$title->isMainPage() ) {
-				// if the page uses no 'PAGEBANNER' invocation, insert default banner,
+				// if the page uses no 'PAGEBANNER' invocation, insert default banner or
+				// WikidataBanner
 				// only set articlebanner property on OutputPage
-				$banner = self::getBannerHtml( $title, $wgPBImage );
+				$bannername = self::getWikidataBanner( $title );
+				if ( $bannername === null ) {
+					$bannername = $wgPBImage;
+				}
+				$banner = self::getBannerHtml( $title, $bannername );
 				if ( $banner !== null ) {
 					$out->addHtml( $banner );
 					$out->setProperty( 'articlebanner', $banner );
 				}
 			}
 		} else {
+			// set 'articlebanner' property on OutputPage
 			$out->setProperty(
 				'articlebanner',
 				$article->getParserOutput()->getProperty( 'articlebanner' )
@@ -193,5 +199,45 @@ class WikidataPageBanner {
 			$prevurl = $url;
 		}
 		return $urlSet;
+	}
+
+	/**
+	 * Fetches banner from wikidata for the specified page
+	 *
+	 * @param   Title $title Title of the page
+	 * @return  String|null file name of the banner from wikitata [description]
+	 * or null if none found
+	 */
+	public static function getWikidataBanner( $title ) {
+		global $wgBannerProperty;
+		$banner = null;
+		// Ensure Wikibase client is installed
+		if ( class_exists( 'Wikibase\Client\WikibaseClient' ) ) {
+			$entityIdLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
+			->getStore()
+			->getEntityIdLookup();
+			$itemId = $entityIdLookup->getEntityIdForTitle( $title );
+			// check if this page has an associated item page
+			$entityLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
+			->getStore()
+			->getEntityLookup();
+			/** @var Wikibase\DataModel\Entity\Item $item */
+			if ( $itemId != null ) {
+				$item = $entityLookup->getEntity( $itemId );
+				$statements = $item->getStatements()->getWithPropertyId(
+						new Wikibase\DataModel\Entity\PropertyId(
+							$wgBannerProperty
+						)
+					)->getBestStatements();
+				if ( !$statements->isEmpty() ) {
+					$statements = $statements->toArray();
+					$snak = $statements[0]->getMainSnak();
+					if ( $snak instanceof Wikibase\DataModel\Snak\PropertyValueSnak ) {
+						$banner = $snak->getDataValue()->getValue();
+					}
+				}
+			}
+		}
+		return $banner;
 	}
 }

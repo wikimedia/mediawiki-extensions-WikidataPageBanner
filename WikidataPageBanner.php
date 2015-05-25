@@ -23,16 +23,16 @@ $wgExtensionCredits['other'][] = array(
 );
 
 /**
- * Options:
- *
  * $wgPBImage - default pagebanner image file, use only filename, do not prefix 'File:',
  * e.g. $wgPBImage = 'Foo.jpg'
- * $wgBannerNamespace - Namespaces on which to display banner
- * $wgStandardSizes - Array of standard predefined screen widths in increasing order
  */
 $wgPBImage = "";
+/** $wgBannerNamespace - Namespaces on which to display banner */
 $wgBannerNamespaces = array( NS_MAIN );
+/** $wgStandardSizes - Array of standard predefined screen widths in increasing order */
 $wgStandardSizes = array( 320, 640, 1280, 2560 );
+/** $wgBannerProperty - Banner property on wikidata which holds commons media file */
+$wgBannerProperty = "";
 
 /* Setup */
 // autoloader
