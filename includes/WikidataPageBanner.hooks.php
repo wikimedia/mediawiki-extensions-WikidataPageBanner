@@ -121,22 +121,14 @@ class WikidataPageBanner {
 	 * TODO:Move this banner html code to a template.
 	 */
 	public static function getBannerHtml( $bannerurl, $title ) {
-		$banner = Html::openElement( 'div', array( 'class' => 'noprint' ) ) .
-			Html::openElement( 'div', array( 'class' => 'ext-wpb-pagebanner',
-									'style' => "background-image:url($bannerurl);"
-								)
-							) .
-			Html::openElement( 'div', array( 'class' => 'topbanner' ) ) .
-			Html::element( 'div',
-				array( 'class' => 'name' ),
-				$title
-			) .
-			Html::element( 'div',
-				array( 'class' => 'iconbox' )
-			) .
-			Html::closeElement( 'div' ) .
-			Html::closeElement( 'div' ) .
-			Html::closeElement( 'div' );
+		$templateParser = new TemplateParser( __DIR__ . '/../templates' );
+		$banner = $templateParser->processTemplate(
+				'banner',
+				array(
+					'banner' => $bannerurl,
+					'title' => $title
+				)
+			);
 		return $banner;
 	}
 
