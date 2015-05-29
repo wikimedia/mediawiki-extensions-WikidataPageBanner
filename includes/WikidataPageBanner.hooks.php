@@ -25,14 +25,14 @@ class WikidataPageBanner {
 				&& !$title->isMainPage() ) {
 				// if the page uses no 'PAGEBANNER' invocation, insert default banner or
 				// WikidataBanner, first try to obtain bannername from Wikidata
-				$bannername = self::getWikidataBanner( $title );
+				$bannername = static::getWikidataBanner( $title );
 				if ( $bannername === null ) {
 					// if Wikidata banner not found, set bannername to default banner
 					$bannername = $wgPBImage;
 				}
 				// add title to template parameters
 				$paramsForBannerTemplate = array( 'title' => $title );
-				$banner = self::getBannerHtml( $bannername, $paramsForBannerTemplate );
+				$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
 				// add banner only if one found with given banner name
 				if ( $banner !== null ) {
 					// add the banner to output page if a valid one found
@@ -99,7 +99,7 @@ class WikidataPageBanner {
 				$title = $argumentsFromParserFunction['pgname'];
 			}
 			$paramsForBannerTemplate['title'] = $title;
-			$banner = self::getBannerHtml( $bannername, $paramsForBannerTemplate );
+			$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
 			// if given banner does not exist, return
 			if ( $banner === null ) {
 				return array( '', 'noparse' => true, 'isHTML' => true );
@@ -156,7 +156,7 @@ class WikidataPageBanner {
 	 */
 	public static function getBannerHtml( $bannername, $options = array() ) {
 		global $wgStandardSizes, $wgArticlePath;
-		$urls = self::getStandardSizeUrls( $bannername );
+		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
 		$srcset = "";
@@ -213,7 +213,7 @@ class WikidataPageBanner {
 		global $wgStandardSizes;
 		$urlSet = array();
 		foreach ( $wgStandardSizes as $size ) {
-			$url = self::getBannerUrl( $filename, $size );
+			$url = static::getBannerUrl( $filename, $size );
 			if ( $url != null ) {
 				$urlSet[] = $url;
 			}
@@ -280,5 +280,24 @@ class WikidataPageBanner {
 			}
 		}
 		return $results;
+	}
+
+	/*
+	 * UnitTestsList hook handler
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/UnitTestsList
+	 *
+	 * @param array $files
+	 * @return bool
+	 */
+	public static function onUnitTestsList( &$files ) {
+		// traverse test/phpunit/ directory and add test files
+		$it = new RecursiveDirectoryIterator( __DIR__ . '/../tests/phpunit' );
+		$it = new RecursiveIteratorIterator( $it );
+		foreach ( $it as $path => $file ) {
+			if ( substr( $path, -8 ) === 'Test.php' ) {
+				$files[] = $path;
+			}
+		}
+		return true;
 	}
 }
