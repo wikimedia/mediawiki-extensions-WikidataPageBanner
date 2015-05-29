@@ -21,18 +21,22 @@ class WikidataPageBanner {
 		} elseif ( $article->getParserOutput()->getProperty( 'articlebanner' ) == null ) {
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
-			// if no image exists with given bannerurl, no banner will be added
 			if ( in_array( $ns, $wgBannerNamespaces )
 				&& !$title->isMainPage() ) {
 				// if the page uses no 'PAGEBANNER' invocation, insert default banner or
-				// WikidataBanner
-				// only set articlebanner property on OutputPage
+				// WikidataBanner, first try to obtain bannername from Wikidata
 				$bannername = self::getWikidataBanner( $title );
 				if ( $bannername === null ) {
+					// if Wikidata banner not found, set bannername to default banner
 					$bannername = $wgPBImage;
 				}
-				$banner = self::getBannerHtml( $title, $bannername );
+				// add title to template parameters
+				$paramsForBannerTemplate = array( 'title' => $title );
+				$banner = self::getBannerHtml( $bannername, $paramsForBannerTemplate );
+				// add banner only if one found with given banner name
 				if ( $banner !== null ) {
+					// add the banner to output page if a valid one found
+					// only set articlebanner property on OutputPage
 					$out->addHtml( $banner );
 					$out->setProperty( 'articlebanner', $banner );
 				}
@@ -67,16 +71,29 @@ class WikidataPageBanner {
 	 * Parser function hooked to 'PAGEBANNER' magic word, to expand and load banner.
 	 *
 	 * @param  $parser Parser
-	 * @param  $bannerurl Url of custom banner
+	 * @param  $bannername Name of custom banner
 	 * @return output
 	 */
 	public static function addCustomBanner( $parser, $bannername ) {
 		global $wgBannerNamespaces;
+		// @var array to get arguments passed to {{PAGEBANNER}} function
+		$argumentsFromParserFunction = array();
+		// @var array to hold parameters to be passed to banner template
+		$paramsForBannerTemplate = array();
+		// skip parser function name and bannername in arguments
+		$argumentsFromParserFunction = array_slice( func_get_args(), 2 );
+		// Convert $argumentsFromParserFunction into an associative array
+		$argumentsFromParserFunction = self::extractOptions( $argumentsFromParserFunction );
+		// if given banner does not exist, return
 		$banner = '';
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
 		if ( in_array( $ns, $wgBannerNamespaces ) && !$title->isMainPage() ) {
-			$banner = self::getBannerHtml( $title, $bannername );
+			if ( isset( $argumentsFromParserFunction['pgname'] ) ) {
+				$title = $argumentsFromParserFunction['pgname'];
+			}
+			$paramsForBannerTemplate['title'] = $title;
+			$banner = self::getBannerHtml( $bannername, $paramsForBannerTemplate );
 			// if given banner does not exist, return
 			if ( $banner === null ) {
 				return array( '', 'noparse' => true, 'isHTML' => true );
@@ -127,11 +144,11 @@ class WikidataPageBanner {
 	 * WikidataPageBanner::getBannerHtml
 	 * Returns the html code for the pagebanner
 	 *
-	 * @param string $title Title to display on banner
 	 * @param string $bannername FileName of banner image
+	 * @param array  $options additional parameters passed to template
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
-	public static function getBannerHtml( $title, $bannername ) {
+	public static function getBannerHtml( $bannername, $options = array() ) {
 		global $wgStandardSizes, $wgArticlePath;
 		$urls = self::getStandardSizeUrls( $bannername );
 		$banner = null;
@@ -156,14 +173,12 @@ class WikidataPageBanner {
 			$bannerurl = $urls[0];
 			$bannerfile = str_replace( "$1", "File:$bannername", $wgArticlePath );
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
+			$options['bannerfile'] =  $bannerfile;
+			$options['banner'] = $bannerurl;
+			$options['srcset'] = $srcset;
 			$banner = $templateParser->processTemplate(
 					'banner',
-					array(
-						'bannerfile' => $bannerfile,
-						'banner' => $bannerurl,
-						'title' => $title,
-						'srcset' => $srcset
-					)
+					$options
 				);
 		}
 		return $banner;
@@ -239,5 +254,25 @@ class WikidataPageBanner {
 			}
 		}
 		return $banner;
+	}
+
+	/**
+	 * Converts an array of values in form [0] => "name=value" into a real
+	 * associative array in form [name] => value
+	 *
+	 * @param array string[] $options
+	 * @return array $results
+	 */
+	public static function extractOptions( array $options ) {
+		$results = array();
+		foreach ( $options as $option ) {
+			$pair = explode( '=', $option, 2 );
+			if ( count( $pair ) == 2 ) {
+				$name = trim( $pair[0] );
+				$value = trim( $pair[1] );
+				$results[$name] = $value;
+			}
+		}
+		return $results;
 	}
 }
