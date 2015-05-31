@@ -99,10 +99,19 @@ class WikidataPageBanner {
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
 		if ( in_array( $ns, $wgBannerNamespaces ) && !$title->isMainPage() ) {
+			// set title and tooltip attribute to default title
+			$paramsForBannerTemplate['tooltip'] = $title->getText();
+			$paramsForBannerTemplate['title'] = $title->getText();
 			if ( isset( $argumentsFromParserFunction['pgname'] ) ) {
-				$title = $argumentsFromParserFunction['pgname'];
+				// set tooltip attribute to  parameter 'pgname', if set
+				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['pgname'];
+				// set title attribute to 'pgname' if set
+				$paramsForBannerTemplate['title'] = $argumentsFromParserFunction['pgname'];
 			}
-			$paramsForBannerTemplate['title'] = $title;
+			// set tooltip attribute to  parameter 'tooltip', if set, which takes highest preference
+			if ( isset( $argumentsFromParserFunction['tooltip'] ) ) {
+				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['tooltip'];
+			}
 			WikidataPageBannerFunctions::addToc( $parser->getOutput(),
 					$argumentsFromParserFunction );
 			$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
