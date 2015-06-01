@@ -15,6 +15,7 @@ class WikidataPageBanner {
 		global $wgPBImage, $wgBannerNamespaces;
 		$title = $article->getTitle();
 		$out = $article->getContext()->getOutput();
+		$out->enableOOUI();
 		// if the page does not exist, or can not be viewed, return
 		if ( !$title->isKnown() ) {
 			return true;
@@ -114,6 +115,9 @@ class WikidataPageBanner {
 			}
 			WikidataPageBannerFunctions::addToc( $parser->getOutput(),
 					$argumentsFromParserFunction );
+			WikidataPageBannerFunctions::addIcons( $paramsForBannerTemplate,
+					$argumentsFromParserFunction );
+			OOUI\Theme::setSingleton( new OOUI\MediaWikiTheme );
 			$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
 			// if given banner does not exist, return
 			if ( $banner === null ) {
@@ -126,7 +130,7 @@ class WikidataPageBanner {
 	}
 
 	/**
-	 * WikidataPageBanner::getBannerUrl
+	 * WikidataPageBanner::getImageUrl
 	 * Return the full url of the banner image, stored on the wiki, given the
 	 * image name. Additionally, if a width parameter is specified, it creates
 	 * and returns url of an image of specified width.
@@ -134,7 +138,7 @@ class WikidataPageBanner {
 	 * @param  string $filename Filename of the banner image
 	 * @return string|null Full url of the banner image on the wiki or null
 	 */
-	public static function getBannerUrl( $filename, $bannerwidth = null ) {
+	public static function getImageUrl( $filename, $imagewidth = null ) {
 		// make title object from image name
 		$title = Title::makeTitleSafe( NS_IMAGE, $filename );
 		$file = wfFindFile( $title );
@@ -146,13 +150,8 @@ class WikidataPageBanner {
 			return null;
 		}
 		// validate $bannerwidth to be a width within 3000
-		elseif ( filter_var( $bannerwidth, FILTER_VALIDATE_INT, $options ) !== false ) {
-			// return null if querying for a width greater than original width,
-			// so that when srcset is generated from this, urls are not repeated
-			if ( $bannerwidth > $file->getWidth() ) {
-				return null;
-			}
-			$mto = $file->transform( array( 'width' => $bannerwidth ) );
+		elseif ( filter_var( $imagewidth, FILTER_VALIDATE_INT, $options ) !== false ) {
+			$mto = $file->transform( array( 'width' => $imagewidth ) );
 			$url = wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
 			return $url;
 		} else {
@@ -226,11 +225,11 @@ class WikidataPageBanner {
 		global $wgStandardSizes;
 		$urlSet = array();
 		foreach ( $wgStandardSizes as $size ) {
-			$url = static::getBannerUrl( $filename, $size );
-			if ( $url != null ) {
+			$url = static::getImageUrl( $filename, $size );
+			// prevent duplication in urlSet
+			if ( $url !== null && !in_array( $url, $urlSet, true ) ) {
 				$urlSet[] = $url;
 			}
-			$prevurl = $url;
 		}
 		return $urlSet;
 	}

@@ -59,6 +59,15 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'pgname must be set' );
 		$this->assertEquals( $output[0]['tooltip'], 'hovertext',
 			'pgname must be set' );
+
+		$output = MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1',
+			'pgname=Banner2', 'icons=unesco,star' );
+		$this->assertEquals( $output[0]['title'], 'Banner2',
+			'pgname must be set' );
+		$this->assertEquals( $output[0]['icons'][0]['icon']->getTitle(), 'unesco',
+			'unesco icon must be set' );
+		$this->assertEquals( $output[0]['icons'][1]['icon']->getTitle(), 'star',
+			'star icon must be set' );
 	}
 
 	/**

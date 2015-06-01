@@ -34,3 +34,18 @@ h1.firstHeading {
 	width: 100%;
 	height: auto;
 }
+
+.iconbox{
+	top: 0;
+	position: absolute;
+	margin-top: -2px;
+	right: 0px;
+	padding: 3px;
+	z-index: 3;
+	background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+	border-bottom-left-radius: 5px;
+	// each <a> link of icon will be wrapped in a <p> tag by mustache, so float them left
+	p {
+		float: left;
+	}
+}

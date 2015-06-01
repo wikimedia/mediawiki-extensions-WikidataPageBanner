@@ -2,8 +2,12 @@
 	<div class="ext-wpb-pagebanner">
 		<div class="topbanner">
 			<div class="name">{{title}}</div>
-			<div class="iconbox"></div>
 			<a title="{{tooltip}}" href={{bannerfile}}><img src={{banner}} srcset="{{srcset}}" class="banner-image"></a>
+			<div class="iconbox">
+				{{#icons}}
+					{{{icon}}}
+				{{/icons}}
+			</div>
 			<div class="topbanner-toc"></div>
 		</div>
 	</div>
