@@ -33,7 +33,7 @@ $wgBannerNamespaces = array( NS_MAIN );
 
 /* Setup */
 // autoloader
-$wgAutoloadClasses['WikidataPageBanner'] = __DIR__ . 'includes/WikidataPageBanner.hooks.php';
+$wgAutoloadClasses['WikidataPageBanner'] = __DIR__ . '/includes/WikidataPageBanner.hooks.php';
 
 // Register files
 $wgMessagesDirs['WikidataPageBanner'] = __DIR__ . '/i18n';
