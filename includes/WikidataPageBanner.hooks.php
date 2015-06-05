@@ -65,7 +65,7 @@ class WikidataPageBanner {
 	 * @return output
 	 */
 	public static function addCustomBanner( $parser, $bannername ) {
-		global $wgBannerNamespaces, $wgStandardSizes;
+		global $wgBannerNamespaces;
 		$banner = '';
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
@@ -126,7 +126,7 @@ class WikidataPageBanner {
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
 	public static function getBannerHtml( $title, $bannername ) {
-		global $wgStandardSizes, $wgScript, $wgArticlePath;
+		global $wgStandardSizes, $wgArticlePath;
 		$urls = self::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */

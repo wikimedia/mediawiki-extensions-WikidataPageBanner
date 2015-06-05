@@ -40,8 +40,10 @@ $wgAutoloadClasses['WikidataPageBanner'] = __DIR__ . '/includes/WikidataPageBann
 
 // Register files
 $wgMessagesDirs['WikidataPageBanner'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['WikidataPageBannerAlias'] = __DIR__ . '/WikidataPageBanner.i18n.alias.php';
-$wgExtensionMessagesFiles['WikidataPageBannerMagic'] = __DIR__ . '/WikidataPageBanner.i18n.magic.php';
+$wgExtensionMessagesFiles['WikidataPageBannerAlias'] =
+	__DIR__ . '/WikidataPageBanner.i18n.alias.php';
+$wgExtensionMessagesFiles['WikidataPageBannerMagic'] =
+	__DIR__ . '/WikidataPageBanner.i18n.magic.php';
 
 // Register hooks
 // Hook to inject banner code
