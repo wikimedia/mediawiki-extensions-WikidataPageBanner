@@ -48,6 +48,10 @@ class WikidataPageBanner {
 				$article->getParserOutput()->getProperty( 'articlebanner' )
 			);
 		}
+		if ( $article->getParserOutput()->getProperty( 'bannertoc' ) && $out->isTOCEnabled() ) {
+			$out->addJsConfigVars( 'wgWPBToc', true );
+			$out->addModules( 'ext.WikidataPageBanner.toc' );
+		}
 		return true;
 	}
 
@@ -99,6 +103,8 @@ class WikidataPageBanner {
 				$title = $argumentsFromParserFunction['pgname'];
 			}
 			$paramsForBannerTemplate['title'] = $title;
+			WikidataPageBannerFunctions::addToc( $parser->getOutput(),
+					$argumentsFromParserFunction );
 			$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
 			// if given banner does not exist, return
 			if ( $banner === null ) {

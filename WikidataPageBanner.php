@@ -37,6 +37,8 @@ $wgBannerProperty = "";
 /* Setup */
 // autoloader
 $wgAutoloadClasses['WikidataPageBanner'] = __DIR__ . '/includes/WikidataPageBanner.hooks.php';
+$wgAutoloadClasses['WikidataPageBannerFunctions'] =
+	__DIR__ . '/includes/WikidataPageBanner.functions.php';
 
 // Register files
 $wgMessagesDirs['WikidataPageBanner'] = __DIR__ . '/i18n';
