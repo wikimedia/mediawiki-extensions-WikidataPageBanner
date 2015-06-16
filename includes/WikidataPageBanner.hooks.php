@@ -59,10 +59,16 @@ class WikidataPageBanner {
 	 * @return  bool
 	 */
 	public static function loadModules( $out, $parserOutput ) {
-		if ( $out->getProperty( 'articlebanner' ) != null ) {
-			// if articlebanner property is set, we need to add banner styles
-			$out->addModuleStyles( 'ext.WikidataPageBanner' );
-			$out->addModules( 'ext.WikidataPageBanner.loadImage' );
+		global $wgBannerNamespaces;
+		$pageTitle = $out->getPageTitle();
+		$title = Title::newFromText( $pageTitle );
+		if ( isset( $title ) ) {
+			$ns = $title->getNamespace();
+			if ( in_array( $ns, $wgBannerNamespaces ) ) {
+				// add banner style on allowed namespaces, so that banners are visible even on
+				// preview
+				$out->addModuleStyles( 'ext.WikidataPageBanner' );
+			}
 		}
 	}
 
