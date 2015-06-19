@@ -1,12 +1,15 @@
 {
 	"name": "mediawiki/wikidata-page-banner",
 	"description": "MediaWiki WikidataPageBanner extension",
-	"keywords": ["mediawiki","WikidataPageBanner"],
+	"keywords": [
+		"mediawiki",
+		"WikidataPageBanner"
+	],
 	"type": "mediawiki-extension",
 	"license": "GPL-2.0",
 	"require-dev": {
-		"jakub-onderka/php-parallel-lint": "0.8.*",
-		"mediawiki/mediawiki-codesniffer": "0.2.0"
+		"jakub-onderka/php-parallel-lint": "0.9",
+		"mediawiki/mediawiki-codesniffer": "0.3.0"
 	},
 	"scripts": {
 		"test": [
