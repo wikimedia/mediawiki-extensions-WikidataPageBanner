@@ -70,6 +70,9 @@ class WikidataPageBanner {
 		if ( isset( $title ) ) {
 			$ns = $title->getNamespace();
 			if ( in_array( $ns, $wgBannerNamespaces ) ) {
+				// hide primary title
+				$out->setPageTitle( '' );
+				$out->setHTMLTitle( $out->getTitle() );
 				// add banner style on allowed namespaces, so that banners are visible even on
 				// preview
 				$out->addModuleStyles( 'ext.WikidataPageBanner' );
