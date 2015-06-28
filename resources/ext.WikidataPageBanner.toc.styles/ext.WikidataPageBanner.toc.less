@@ -21,7 +21,6 @@
 		width: 100%;
 	}
 
-	// this is the original toc's clone, just with a new classname
 	.wpb-banner-toc {
 		display: table;
 		color: white;
@@ -37,7 +36,7 @@
 			display: none;
 		}
 
-		ul {
+		>div>ul {
 			list-style: none;
 			margin: 0;
 			background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%;
@@ -59,6 +58,12 @@
 			position: relative;
 			padding: .5em;
 			margin: 0;
+			>ul {
+				list-style: none;
+				margin: 0;
+				background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%;
+				z-index: 4;
+			}
 		}
 
 		// On hovering over a list item, show the list items which are immediate child of this item
@@ -99,10 +104,15 @@
 				top: 0;
 			}
 		}
+
+		// Hide TOC title
+		#toctitle {
+			display: none;
+		}
 	}
 
-	// Hide TOC title
-	#toctitle {
+	// hide original toc by default
+	.toc, #toc {
 		display: none;
 	}
 }

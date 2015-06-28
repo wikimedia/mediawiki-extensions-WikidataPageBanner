@@ -38,15 +38,15 @@ $wgResourceModules['ext.WikidataPageBanner'] = array(
 	'dependencies' => 'oojs-ui'
 );
 
-$wgResourceModules['ext.WikidataPageBanner.toc'] = array(
+$wgResourceModules['ext.WikidataPageBanner.toc.styles'] = array(
 	'styles' => array(
-		'ext.WikidataPageBanner.toc/ext.WikidataPageBanner.toc.less',
-	),
-	'scripts' => array(
-		'ext.WikidataPageBanner.toc/ext.WikidataPageBanner.toc.js'
+		'ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.toc.less',
 	),
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'WikidataPageBanner/resources',
+	'skinStyles' => array(
+		'minerva' => 'ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.toc.minerva.less'
+	),
 	'targets' => array( 'desktop', 'mobile' ),
-	'position' => 'bottom'
+	'position' => 'top'
 );

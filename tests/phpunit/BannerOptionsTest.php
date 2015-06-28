@@ -40,33 +40,41 @@ class BannerOptionsTest extends MediaWikiTestCase {
 	public function testBannerOptions() {
 		$parser = $this->createParser( 'BannerWithOptions', NS_MAIN );
 
-		$output = MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1' );
-		$this->assertEquals( $output[0]['title'], 'BannerWithOptions',
+		MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1' );
+		$pOut = $parser->getOutput();
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['title'], 'BannerWithOptions',
 			'pgname must be set to title' );
-		$this->assertEquals( $output[0]['tooltip'], 'BannerWithOptions',
+		$this->assertEquals( $bannerparams['tooltip'], 'BannerWithOptions',
 			'tooltip must be set to title' );
 
-		$output = MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1',
+		$pOut->setProperty( 'wpb-banner-options', null );
+		MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2' );
-		$this->assertEquals( $output[0]['title'], 'Banner2',
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['title'], 'Banner2',
 			'pgname must be set' );
-		$this->assertEquals( $output[0]['tooltip'], 'Banner2',
+		$this->assertEquals( $bannerparams['tooltip'], 'Banner2',
 			'tooltip must be set to pgname' );
 
-		$output = MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1',
+		$pOut->setProperty( 'wpb-banner-options', null );
+		MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'tooltip=hovertext' );
-		$this->assertEquals( $output[0]['title'], 'Banner2',
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['title'], 'Banner2',
 			'pgname must be set' );
-		$this->assertEquals( $output[0]['tooltip'], 'hovertext',
+		$this->assertEquals( $bannerparams['tooltip'], 'hovertext',
 			'pgname must be set' );
 
+		$pOut->setProperty( 'wpb-banner-options', null );
 		$output = MockWikidataPageBannerOptions::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'icons=unesco,star' );
-		$this->assertEquals( $output[0]['title'], 'Banner2',
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['title'], 'Banner2',
 			'pgname must be set' );
-		$this->assertEquals( $output[0]['icons'][0]['icon']->getTitle(), 'unesco',
+		$this->assertEquals( $bannerparams['icons'][0]['icon']->getTitle(), 'unesco',
 			'unesco icon must be set' );
-		$this->assertEquals( $output[0]['icons'][1]['icon']->getTitle(), 'star',
+		$this->assertEquals( $bannerparams['icons'][1]['icon']->getTitle(), 'star',
 			'star icon must be set' );
 	}
 

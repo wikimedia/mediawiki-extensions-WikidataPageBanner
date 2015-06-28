@@ -26,24 +26,15 @@ class BannerTest extends MediaWikiTestCase {
 	/**
 	 * Set of pages.
 	 * array follows the pattern:
-	 * array( 0 => TestPageName, 1 => Namespace, 2 => isCustomBanner, 3 => expected articlebanner
+	 * array( 0 => TestPageName, 1 => Namespace, 2 => customBannerValue, 3 => expected articlebanner
 	 * property
 	 */
 	protected $testPagesForDefaultBanner = array(
 			array( 'PageWithoutCustomBanner', NS_MAIN, false, "Banner" ),
-			array( 'PageWithCustomBanner', NS_MAIN, true, "Banner" ),
-			array( 'PageInTalkNamespace', NS_TALK, false, null ),
-			array( 'NoWikidataBanner', NS_MAIN, false, "Banner" )
-		);
-	/**
-	 * Set of pages.
-	 * array follows the pattern:
-	 * array( 0 => TestPageName, 1 => Namespace, 2 => expected output of parser function
-	 */
-	protected $testPagesForCustomBanner = array(
-			array( 'PageWithCustomBanner', NS_MAIN, "Banner" ),
-			array( 'PageInTalkNamespace', NS_TALK, '' ),
-			array( 'NoBanner', NS_MAIN, "Banner" )
+			array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "Banner" ),
+			array( 'PageInFileNamespace', NS_FILE, false, null ),
+			array( 'NoWikidataBanner', NS_MAIN, false, "Banner" ),
+			array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "Banner" )
 		);
 
 	/**
@@ -76,40 +67,48 @@ class BannerTest extends MediaWikiTestCase {
 	 * @dataProvider provideTestDefaultBanner
 	 * @covers addDefaultBanner(...)
 	 */
-	public function testDefaultBanner( $title, $ns, $isCustomBanner, $expected ) {
-		$article = $this->createPage( $title, $ns, $isCustomBanner );
-		MockWikidataPageBanner::addDefaultBanner( $article );
-		$out = $article->getContext()->getOutput();
+	public function testDefaultBanner( $title, $ns, $customBanner, $expected ) {
+		$out = $this->createPage( $title, $ns, $customBanner );
+		MockWikidataPageBanner::addBanner( $out, null );
 		$this->assertEquals( $out->getProperty( 'articlebanner' ), $expected,
 			'articlebanner property must only be set when a valid banner is added' );
 	}
 
 	/**
-	 * @dataProvider provideTestCustomBanner
 	 * @covers addCustomBanner(...)
 	 */
-	public function testCustomBanner( $title, $ns, $expected ) {
-		$parser = $this->createParser( $title, $ns );
-		$output = MockWikidataPageBanner::addCustomBanner( $parser, $title );
-		$this->assertEquals( $output[0], $expected,
-			'articlebanner property must only be set when a valid banner is added' );
+	public function testCustomBanner() {
+		$parser = $this->createParser( 'PageWithCustomBanner', NS_MAIN );
+		$output = MockWikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		$pOut = $parser->getOutput();
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['name'], 'Banner',
+			'banner parameters must be set on valid namespaces' );
+
+		$parser = $this->createParser( 'PageInTalkNamespace', NS_TALK );
+		$output = MockWikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		$pOut = $parser->getOutput();
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertFalse( $bannerparams, 'Banner',
+			'bannerparameters property should be null for not-allowed namespaces' );
 	}
 
 	/**
 	 * Helper function for testDefaultBanner
 	 * @return  Article Article object representing test pages
 	 */
-	protected function createPage( $title, $namespace, $isCustomBanner ) {
+	protected function createPage( $title, $namespace, $customBanner ) {
 		$context = new RequestContext();
 		$curTitle = Title::newFromText( $title, $namespace );
 		$context->setTitle( $curTitle );
-		$article = Article::newFromTitle( $curTitle, $context );
-		$parserOutput = new ParserOutput();
-		$article->mParserOutput = $parserOutput;
-		if ( $isCustomBanner ) {
-			$parserOutput->setProperty( 'articlebanner', "Banner" );
+		$out = $context->getOutput();
+		$out->setTitle( $curTitle );
+		$out->setPageTitle( $title );
+		$out->setArticleFlag( true );
+		if ( $customBanner ) {
+			$out->setProperty( 'wpb-banner-options', array( 'name' => $customBanner ) );
 		}
-		return $article;
+		return $out;
 	}
 
 	/**
@@ -132,12 +131,5 @@ class BannerTest extends MediaWikiTestCase {
 	 */
 	public function provideTestDefaultBanner() {
 		return $this->testPagesForDefaultBanner;
-	}
-
-	/**
-	 * Data Provider for testDefaultBanner
-	 */
-	public function provideTestCustomBanner() {
-		return $this->testPagesForCustomBanner;
 	}
 }

@@ -1,31 +1,49 @@
 <?php
 class WikidataPageBanner {
-
 	/**
-	 * WikidataPageBanner::addDefaultBanner
-	 * This method is only for rendering a default banner, in case no
-	 * user-defined banner is added using the 'PAGEBANNER' parser function, to
-	 * the article. Otherwise, it only sets the 'articlebanner' property on
-	 * OutputPage if a banner has been added
+	 * WikidataPageBanner::addBanner Generates banner from given options and adds it and its styles
+	 * to Output Page
 	 *
-	 * @param Article $article
-	 * @return bool
+	 * @param $out OutputPage
+	 * @param $skin Skin Object
+	 * @return  bool
 	 */
-	public static function addDefaultBanner( $article ) {
+	public static function addBanner( $out, $skin ) {
 		global $wgPBImage, $wgBannerNamespaces;
-		$title = $article->getTitle();
-		$out = $article->getContext()->getOutput();
-		$out->enableOOUI();
-		// if the page does not exist, or can not be viewed, return
-		if ( !$title->isKnown() ) {
-			return true;
-		} elseif ( $article->getParserOutput()->getProperty( 'articlebanner' ) == null ) {
+		$title = $out->getTitle();
+		// if banner-options are set, add banner anyway
+		if ( $out->getProperty( 'wpb-banner-options' ) !== null ) {
+			$params = $out->getProperty( 'wpb-banner-options' );
+			$bannername = $params['name'];
+			OOUI\Theme::setSingleton( new OOUI\MediaWikiTheme );
+			$out->enableOOUI();
+			$banner = static::getBannerHtml( $bannername, $params );
+			// attempt to get WikidataBanner
+			if ( $banner === null ) {
+				$bannername = static::getWikidataBanner( $title );
+				$banner = static::getBannerHtml( $bannername, $params );
+			}
+			// only add banner and styling if valid banner generated
+			if ( $banner !== null ) {
+				$out->addModuleStyles( 'ext.WikidataPageBanner' );
+				if ( isset( $params['toc'] ) ) {
+					$out->addModuleStyles( 'ext.WikidataPageBanner.toc.styles' );
+				}
+				$out->prependHtml( $banner );
+				// hide primary title
+				$out->setPageTitle( '' );
+				$out->setHTMLTitle( $out->getTitle() );
+				// set articlebanner property on OutputPage
+				$out->setProperty( 'articlebanner', $banner );
+			}
+		}
+		// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
+		elseif ( $title->isKnown() && $out->isArticle() ) {
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
 			if ( in_array( $ns, $wgBannerNamespaces )
 				&& !$title->isMainPage() ) {
-				// if the page uses no 'PAGEBANNER' invocation, insert default banner or
-				// WikidataBanner, first try to obtain bannername from Wikidata
+				// first try to obtain bannername from Wikidata
 				$bannername = static::getWikidataBanner( $title );
 				if ( $bannername === null ) {
 					// if Wikidata banner not found, set bannername to default banner
@@ -34,49 +52,45 @@ class WikidataPageBanner {
 				// add title to template parameters
 				$paramsForBannerTemplate = array( 'title' => $title );
 				$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
-				// add banner only if one found with given banner name
+				// only add banner and styling if valid banner generated
 				if ( $banner !== null ) {
-					// add the banner to output page if a valid one found
-					// only set articlebanner property on OutputPage
-					$out->addHtml( $banner );
+					$out->addModuleStyles( 'ext.WikidataPageBanner' );
+					$out->prependHtml( $banner );
+					// hide primary title
+					$out->setPageTitle( '' );
+					$out->setHTMLTitle( $out->getTitle() );
+					// set articlebanner property on OutputPage
 					$out->setProperty( 'articlebanner', $banner );
 				}
 			}
-		} else {
-			// set 'articlebanner' property on OutputPage
-			$out->setProperty(
-				'articlebanner',
-				$article->getParserOutput()->getProperty( 'articlebanner' )
-			);
-		}
-		if ( $article->getParserOutput()->getProperty( 'bannertoc' ) && $out->isTOCEnabled() ) {
-			$out->addJsConfigVars( 'wgWPBToc', true );
-			$out->addModules( 'ext.WikidataPageBanner.toc' );
 		}
 		return true;
 	}
 
 	/**
-	 * WikidataPageBanner::loadModules
-	 *
-	 * @param $out OutputPage
-	 * @param $parserOutput ParserOutput
-	 * @return  bool
+	 * WikidataPageBanner::onOutputPageParserOutput add banner parameters from ParserOutput to
+	 * Output page
+	 * @param  OutputPage $out
+	 * @param  ParserOutput $pOut
 	 */
-	public static function loadModules( $out, $parserOutput ) {
-		global $wgBannerNamespaces;
-		$pageTitle = $out->getPageTitle();
-		$title = Title::newFromText( $pageTitle );
-		if ( isset( $title ) ) {
-			$ns = $title->getNamespace();
-			if ( in_array( $ns, $wgBannerNamespaces ) ) {
-				// hide primary title
-				$out->setPageTitle( '' );
-				$out->setHTMLTitle( $out->getTitle() );
-				// add banner style on allowed namespaces, so that banners are visible even on
-				// preview
-				$out->addModuleStyles( 'ext.WikidataPageBanner' );
+	public static function onOutputPageParserOutput( $out, $pOut ) {
+		if ( $pOut->getProperty( 'wpb-banner-options' ) != null ) {
+			$options = $pOut->getProperty( 'wpb-banner-options' );
+			// if toc parameter set and toc enabled, remove original classes and add banner class
+			if ( isset( $options['toc'] ) && $pOut->getTOCEnabled() ) {
+				$options['toc'] = $pOut->getTOCHTML();
+				// replace id and class of toc with blank
+				// FIXME! This code is hacky, until core has better handling of toc contents
+				// See https://phabricator.wikimedia.org/T105520
+				if ( strpos( $options['toc'], 'id="toc"' ) !== false ) {
+					$options['toc'] = str_replace( 'id="toc"', '', $options['toc'] );
+				}
+				if ( strpos( $options['toc'], 'class="toc"' ) !== false ) {
+					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
+				}
+				$out->enableTOC( false );
 			}
+			$out->setProperty( 'wpb-banner-options', $options );
 		}
 	}
 
@@ -116,24 +130,15 @@ class WikidataPageBanner {
 			if ( isset( $argumentsFromParserFunction['tooltip'] ) ) {
 				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['tooltip'];
 			}
-			WikidataPageBannerFunctions::addToc( $parser->getOutput(),
+			WikidataPageBannerFunctions::addToc( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
 			WikidataPageBannerFunctions::addIcons( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
-			OOUI\Theme::setSingleton( new OOUI\MediaWikiTheme );
-			$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
-			// if given banner does not exist, return
-			if ( $banner === null ) {
-				$bannername = static::getWikidataBanner( $title );
-				$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
-				if ( $banner === null ) {
-					return array( '', 'noparse' => true, 'isHTML' => true );
-				}
-			}
-			// Set 'articlebanner' property for future reference
-			$parser->getOutput()->setProperty( 'articlebanner', $banner );
+			$paramsForBannerTemplate['name'] = $bannername;
+			// Set 'wpb-banner-options' property for generating banner later
+			$parser->getOutput()->setProperty( 'wpb-banner-options', $paramsForBannerTemplate );
 		}
-		return array( $banner, 'noparse' => true, 'isHTML' => true );
+		return array( '', 'noparse' => true, 'isHTML' => true );
 	}
 
 	/**

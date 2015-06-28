@@ -47,9 +47,9 @@ $wgExtensionMessagesFiles['WikidataPageBannerMagic'] =
 
 // Register hooks
 // Hook to inject banner code
-$wgHooks['ArticleViewHeader'][] = 'WikidataPageBanner::addDefaultBanner';
-// Load Banner modules, styles
-$wgHooks['BeforePageDisplay'][] = 'WikidataPageBanner::loadModules';
+$wgHooks['BeforePageDisplay'][] = 'WikidataPageBanner::addBanner';
+// hook to pass banner data from ParserOutput to OutputPage
+$wgHooks['OutputPageParserOutput'][] = 'WikidataPageBanner::onOutputPageParserOutput';
 $wgHooks['ParserFirstCallInit'][] = 'WikidataPageBanner::onParserFirstCallInit';
 $wgHooks['UnitTestsList'][] = 'WikidataPageBanner::onUnitTestsList';
 

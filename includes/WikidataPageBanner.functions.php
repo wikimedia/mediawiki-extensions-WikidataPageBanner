@@ -6,12 +6,12 @@
 class WikidataPageBannerFunctions {
 	/**
 	 * Set bannertoc variable on parser output object
-	 * @param ParserOutput $parserOutput ParserOutput object
+	 * @param array $paramsForBannerTemplate banner parameters array
 	 * @param array $options options from parser function
 	 */
-	public static function addToc( $parserOutput, $options ) {
-		if ( isset( $options['toc'] ) && $options['toc'] == 'yes' ) {
-			$parserOutput->setProperty( 'bannertoc', true );
+	public static function addToc( &$paramsForBannerTemplate, $options ) {
+		if ( isset( $options['toc'] ) && $options['toc'] === 'yes' ) {
+			$paramsForBannerTemplate['toc'] = true;
 		}
 	}
 
