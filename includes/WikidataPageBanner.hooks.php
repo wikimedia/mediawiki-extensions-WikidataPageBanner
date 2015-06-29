@@ -260,7 +260,7 @@ class WikidataPageBanner {
 			/** @var Wikibase\DataModel\Entity\Item $item */
 			if ( $itemId != null ) {
 				$item = $entityLookup->getEntity( $itemId );
-				$statements = $item->getStatements()->getWithPropertyId(
+				$statements = $item->getStatements()->getByPropertyId(
 						new Wikibase\DataModel\Entity\PropertyId(
 							$wgBannerProperty
 						)
