@@ -42,8 +42,6 @@ $wgAutoloadClasses['WikidataPageBannerFunctions'] =
 
 // Register files
 $wgMessagesDirs['WikidataPageBanner'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['WikidataPageBannerAlias'] =
-	__DIR__ . '/WikidataPageBanner.i18n.alias.php';
 $wgExtensionMessagesFiles['WikidataPageBannerMagic'] =
 	__DIR__ . '/WikidataPageBanner.i18n.magic.php';
 
