@@ -174,7 +174,7 @@ class WikidataPageBanner {
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
-		$srcset = "";
+		$srcset = array();
 		// if a valid bannername given, set banner
 		if ( !empty( $urls ) ) {
 			// @var int index variable
@@ -183,14 +183,12 @@ class WikidataPageBanner {
 				$size = $wgStandardSizes[$i];
 				// add url with width and a comma if not adding the last url
 				if ( $i < count( $urls ) ) {
-					$srcset .= "$url {$size}w,";
+					$srcset[] = "$url {$size}w";
 				}
 				$i++;
 			}
-			// only use the largest size url as a hi-res banner url, as a mix
-			// of 'w' and 'x' causes issues in chrome
-			$url = $urls[$i-1];
-			$srcset .= "$url 2x";
+			// create full src set from individual urls, separated by comma
+			$srcset = implode( ',', $srcset );
 			$bannerurl = $urls[0];
 			$bannerfile = str_replace( "$1", "File:$bannername", $wgArticlePath );
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
