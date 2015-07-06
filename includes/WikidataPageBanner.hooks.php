@@ -121,7 +121,11 @@ class WikidataPageBanner {
 			$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
 			// if given banner does not exist, return
 			if ( $banner === null ) {
-				return array( '', 'noparse' => true, 'isHTML' => true );
+				$bannername = static::getWikidataBanner( $title );
+				$banner = static::getBannerHtml( $bannername, $paramsForBannerTemplate );
+				if ( $banner === null ) {
+					return array( '', 'noparse' => true, 'isHTML' => true );
+				}
 			}
 			// Set 'articlebanner' property for future reference
 			$parser->getOutput()->setProperty( 'articlebanner', $banner );

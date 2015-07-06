@@ -43,7 +43,7 @@ class BannerTest extends MediaWikiTestCase {
 	protected $testPagesForCustomBanner = array(
 			array( 'PageWithCustomBanner', NS_MAIN, "Banner" ),
 			array( 'PageInTalkNamespace', NS_TALK, '' ),
-			array( 'NoBanner', NS_MAIN, '' )
+			array( 'NoBanner', NS_MAIN, "Banner" )
 		);
 
 	/**
