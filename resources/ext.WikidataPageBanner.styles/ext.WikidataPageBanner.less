@@ -10,6 +10,7 @@
 	position: relative;
 	max-width: 1800px;
 	height: auto;
+	margin: 1em 0;
 }
 
 .topbanner .name {
@@ -30,7 +31,7 @@ h1.firstHeading {
 	display: none;
 }
 
-.topbanner .banner-image{
+.topbanner .wpb-banner-image{
 	width: 100%;
 	height: auto;
 }
@@ -47,5 +48,11 @@ h1.firstHeading {
 	// each <a> link of icon will be wrapped in a <p> tag by mustache, so float them left
 	p {
 		float: left;
+	}
+}
+
+@media screen and ( max-width: 768px ) {
+	.topbanner .name {
+		font-size: 1em;
 	}
 }
