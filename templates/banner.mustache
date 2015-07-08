@@ -3,11 +3,13 @@
 		<div class="topbanner">
 			<div class="name">{{title}}</div>
 			<a title="{{tooltip}}" href={{bannerfile}}><img src={{banner}} srcset="{{srcset}}" class="wpb-banner-image"></a>
+			{{#hasIcons}}
 			<div class="iconbox">
 				{{#icons}}
 					{{{icon}}}
 				{{/icons}}
 			</div>
+			{{/hasIcons}}
 			<div class="topbanner-toc"></div>
 		</div>
 	</div>

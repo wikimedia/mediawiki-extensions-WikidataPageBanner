@@ -33,7 +33,8 @@ class WikidataPageBannerFunctions {
 				) );
 				$iconsToAdd[] = array( 'icon' => $icon );
 			}
+			$paramsForBannerTemplate['hasIcons'] = true;
+			$paramsForBannerTemplate['icons'] = $iconsToAdd;
 		}
-		$paramsForBannerTemplate['icons'] = $iconsToAdd;
 	}
 }
