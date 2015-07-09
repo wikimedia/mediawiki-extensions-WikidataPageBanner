@@ -195,7 +195,8 @@ class WikidataPageBanner {
 			}
 			// create full src set from individual urls, separated by comma
 			$srcset = implode( ',', $srcset );
-			$bannerurl = $urls[0];
+			// use largest image url as src attribute
+			$bannerurl = $urls[count( $urls ) - 1];
 			$bannerfile = str_replace( "$1", "File:$bannername", $wgArticlePath );
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
 			$options['bannerfile'] =  $bannerfile;
