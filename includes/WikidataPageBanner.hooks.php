@@ -181,7 +181,7 @@ class WikidataPageBanner {
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
 	public static function getBannerHtml( $bannername, $options = array() ) {
-		global $wgStandardSizes, $wgArticlePath;
+		global $wgStandardSizes;
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
@@ -202,9 +202,9 @@ class WikidataPageBanner {
 			$srcset = implode( ',', $srcset );
 			// use largest image url as src attribute
 			$bannerurl = $urls[count( $urls ) - 1];
-			$bannerfile = str_replace( "$1", "File:$bannername", $wgArticlePath );
+			$bannerfile = Title::newFromText( "File:$bannername" );
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
-			$options['bannerfile'] =  $bannerfile;
+			$options['bannerfile'] = $bannerfile->getLocalUrl();
 			$options['banner'] = $bannerurl;
 			$options['srcset'] = $srcset;
 			$banner = $templateParser->processTemplate(
