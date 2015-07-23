@@ -15,7 +15,6 @@ class WikidataPageBanner {
 		if ( $out->getProperty( 'wpb-banner-options' ) !== null ) {
 			$params = $out->getProperty( 'wpb-banner-options' );
 			$bannername = $params['name'];
-			OOUI\Theme::setSingleton( new OOUI\MediaWikiTheme );
 			$out->enableOOUI();
 			$banner = static::getBannerHtml( $bannername, $params );
 			// attempt to get WikidataBanner
