@@ -34,8 +34,7 @@ $wgResourceModules['ext.WikidataPageBanner'] = array(
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'WikidataPageBanner/resources',
 	'targets' => array( 'desktop', 'mobile' ),
-	'position' => 'top',
-	'dependencies' => 'oojs-ui'
+	'position' => 'top'
 );
 
 $wgResourceModules['ext.WikidataPageBanner.toc.styles'] = array(
