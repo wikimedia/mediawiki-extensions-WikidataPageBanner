@@ -6,20 +6,20 @@
  * @author Sumit Asthana, 2015
  * @license GNU General Public Licence 2.0 or later
  */
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
 
 $wgExtensionCredits['other'][] = array(
-	'path'           => __FILE__,
-	'name'           => 'WikidataPageBanner',
-	'namemsg'        => "WikidataPageBanner",
-	'description'    => "Render banners on wikivoyage",
-	'descriptionmsg' => 'Display pagewide banners on wikivoyage',
-	'author'         => array( 'Sumit Asthana' ),
-	'version'        => '0.0.1',
-	'url'            => 'https://www.mediawiki.org/wiki/Extension:WikidataPageBanner',
-	'license-name'   => 'GPL-2.0+',
+	'path' => __FILE__,
+	'name' => 'WikidataPageBanner',
+	'namemsg' => 'Wikidatapagebanner-extname',
+	'descriptionmsg' => 'wikidatapagebanner-desc',
+	'author' => array( 'Sumit Asthana' ),
+	'version' => '0.0.1',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:WikidataPageBanner',
+	'license-name' => 'GPL-2.0+',
 );
 
 /**

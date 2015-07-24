@@ -2,6 +2,6 @@
 	"@metadata": {
 		"authors": []
 	},
-	"boilerplate-desc": "This is an example extension",
-	"boilerplate-i18n-welcome": "Welcome to the localization file of the BoilerPlate extension."
+	"wikidatapagebanner-extname": "WikidataPageBanner",
+	"wikidatapagebanner-desc": "Render banners on specified pages of wiki at the beginning of articles"
 }

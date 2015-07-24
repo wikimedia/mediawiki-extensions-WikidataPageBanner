@@ -1,10 +1,7 @@
 {
 	"@metadata": {
-		"authors": [
-			"Shirayuki",
-			"Umherirrender"
-		]
+		"authors": []
 	},
-	"boilerplate-desc": "{{desc|name=Boilerplate|url=https://www.mediawiki.org/wiki/Extension:Boilerplate}}",
-	"boilerplate-i18n-welcome": "Used to greet the user when reading the .i18n.php file."
+	"wikidatapagebanner-extname": "Used for the name of extension.",
+	"wikidatapagebanner-desc": "{{desc|name=WikidataPageBanner|url=https://www.mediawiki.org/wiki/Extension:WikidataPageBanner}}"
 }
