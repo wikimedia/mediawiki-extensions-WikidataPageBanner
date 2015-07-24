@@ -9,7 +9,7 @@ class WikidataPageBanner {
 	 * @return  bool
 	 */
 	public static function addBanner( $out, $skin ) {
-		global $wgPBImage, $wgBannerNamespaces;
+		global $wgWPBImage, $wgWPBNamespaces;
 		$title = $out->getTitle();
 		// if banner-options are set, add banner anyway
 		if ( $out->getProperty( 'wpb-banner-options' ) !== null ) {
@@ -40,13 +40,13 @@ class WikidataPageBanner {
 		elseif ( $title->isKnown() && $out->isArticle() ) {
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
-			if ( in_array( $ns, $wgBannerNamespaces )
+			if ( in_array( $ns, $wgWPBNamespaces )
 				&& !$title->isMainPage() ) {
 				// first try to obtain bannername from Wikidata
 				$bannername = static::getWikidataBanner( $title );
 				if ( $bannername === null ) {
 					// if Wikidata banner not found, set bannername to default banner
-					$bannername = $wgPBImage;
+					$bannername = $wgWPBImage;
 				}
 				// add title to template parameters
 				$paramsForBannerTemplate = array( 'title' => $title );
@@ -102,7 +102,7 @@ class WikidataPageBanner {
 	 * @return output
 	 */
 	public static function addCustomBanner( $parser, $bannername ) {
-		global $wgBannerNamespaces;
+		global $wgWPBNamespaces;
 		// @var array to get arguments passed to {{PAGEBANNER}} function
 		$argumentsFromParserFunction = array();
 		// @var array to hold parameters to be passed to banner template
@@ -115,7 +115,7 @@ class WikidataPageBanner {
 		$banner = '';
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
-		if ( in_array( $ns, $wgBannerNamespaces ) && !$title->isMainPage() ) {
+		if ( in_array( $ns, $wgWPBNamespaces ) && !$title->isMainPage() ) {
 			// set title and tooltip attribute to default title
 			$paramsForBannerTemplate['tooltip'] = $title->getText();
 			$paramsForBannerTemplate['title'] = $title->getText();
@@ -184,7 +184,7 @@ class WikidataPageBanner {
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
 	public static function getBannerHtml( $bannername, $options = array() ) {
-		global $wgStandardSizes;
+		global $wgWPBStandardSizes;
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
@@ -194,7 +194,7 @@ class WikidataPageBanner {
 			// @var int index variable
 			$i = 0;
 			foreach ( $urls as $url ) {
-				$size = $wgStandardSizes[$i];
+				$size = $wgWPBStandardSizes[$i];
 				// add url with width and a comma if not adding the last url
 				if ( $i < count( $urls ) ) {
 					$srcset[] = "$url {$size}w";
@@ -232,15 +232,15 @@ class WikidataPageBanner {
 
 	/**
 	 * WikidataPageBanner::getStandardSizeUrls
-	 * returns an array of urls of standard image sizes defined by $wgStandardSizes
+	 * returns an array of urls of standard image sizes defined by $wgWPBStandardSizes
 	 *
 	 * @param  String $filename Name of Image file
 	 * @return array
 	 */
 	public static function getStandardSizeUrls( $filename ) {
-		global $wgStandardSizes;
+		global $wgWPBStandardSizes;
 		$urlSet = array();
-		foreach ( $wgStandardSizes as $size ) {
+		foreach ( $wgWPBStandardSizes as $size ) {
 			$url = static::getImageUrl( $filename, $size );
 			// prevent duplication in urlSet
 			if ( $url !== null && !in_array( $url, $urlSet, true ) ) {
@@ -258,9 +258,9 @@ class WikidataPageBanner {
 	 * or null if none found
 	 */
 	public static function getWikidataBanner( $title ) {
-		global $wgBannerProperty;
+		global $wgWPBBannerProperty;
 		$banner = null;
-		if ( empty( $wgBannerProperty ) ) {
+		if ( empty( $wgWPBBannerProperty ) ) {
 			return null;
 		}
 		// Ensure Wikibase client is installed
@@ -278,7 +278,7 @@ class WikidataPageBanner {
 				$item = $entityLookup->getEntity( $itemId );
 				$statements = $item->getStatements()->getByPropertyId(
 						new Wikibase\DataModel\Entity\PropertyId(
-							$wgBannerProperty
+							$wgWPBBannerProperty
 						)
 					)->getBestStatements();
 				if ( !$statements->isEmpty() ) {
