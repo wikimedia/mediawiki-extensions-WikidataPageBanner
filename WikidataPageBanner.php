@@ -54,7 +54,4 @@ $wgHooks['ParserFirstCallInit'][] = 'WikidataPageBanner::onParserFirstCallInit';
 $wgHooks['UnitTestsList'][] = 'WikidataPageBanner::onUnitTestsList';
 
 // include WikidataPageBanner class file
-require_once __DIR__ . "/includes/WikidataPageBanner.hooks.php";
 require_once __DIR__ . "/resources/Resources.php";
-
-
