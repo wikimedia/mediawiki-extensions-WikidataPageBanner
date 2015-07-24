@@ -40,6 +40,7 @@ $wgResourceModules['ext.WikidataPageBanner'] = array(
 $wgResourceModules['ext.WikidataPageBanner.toc.styles'] = array(
 	'styles' => array(
 		'ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.toc.less',
+		'ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.bottomtoc.less'
 	),
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'WikidataPageBanner/resources',

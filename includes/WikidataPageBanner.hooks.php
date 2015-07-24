@@ -129,6 +129,10 @@ class WikidataPageBanner {
 			if ( isset( $argumentsFromParserFunction['tooltip'] ) ) {
 				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['tooltip'];
 			}
+			if ( isset( $argumentsFromParserFunction['bottomtoc'] ) &&
+					$argumentsFromParserFunction['bottomtoc'] === 'yes' ) {
+				$paramsForBannerTemplate['bottomtoc'] = true;
+			}
 			WikidataPageBannerFunctions::addToc( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
 			WikidataPageBannerFunctions::addIcons( $paramsForBannerTemplate,
