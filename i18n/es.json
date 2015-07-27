@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Macofe"
+		]
+	},
+	"wikidatapagebanner-extname": "WikidataPageBanner",
+	"wikidatapagebanner-desc": "Despliega pancartas en páginas especificadas del wiki, al principio de los artículos"
+}

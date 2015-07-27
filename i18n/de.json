@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Metalhead64"
+		]
+	},
+	"wikidatapagebanner-extname": "WikidataPageBanner",
+	"wikidatapagebanner-desc": "Rendert Banner auf angegebenen Wikiseiten am Artikelanfang"
+}
