@@ -33,7 +33,8 @@ class WikidataPageBanner {
 				$out->setPageTitle( '' );
 				$out->setHTMLTitle( $out->getTitle() );
 				// set articlebanner property on OutputPage
-				$out->setProperty( 'articlebanner', $banner );
+				// FIXME: This is currently only needed to support testing
+				$out->setProperty( 'articlebanner', $bannername );
 			}
 		}
 		// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
@@ -59,7 +60,8 @@ class WikidataPageBanner {
 					$out->setPageTitle( '' );
 					$out->setHTMLTitle( $out->getTitle() );
 					// set articlebanner property on OutputPage
-					$out->setProperty( 'articlebanner', $banner );
+					// FIXME: This is currently only needed to support testing
+					$out->setProperty( 'articlebanner', $bannername );
 				}
 			}
 		}

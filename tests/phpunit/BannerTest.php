@@ -17,7 +17,7 @@ class MockWikidataPageBanner extends WikidataPageBanner {
 		if ( $title == 'NoWikidataBanner' ) {
 			return null;
 		}
-		return "Banner";
+		return "WikidataBanner";
 	}
 }
 
@@ -30,11 +30,11 @@ class BannerTest extends MediaWikiTestCase {
 	 * property
 	 */
 	protected $testPagesForDefaultBanner = array(
-			array( 'PageWithoutCustomBanner', NS_MAIN, false, "Banner" ),
-			array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "Banner" ),
+			array( 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ),
+			array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ),
 			array( 'PageInFileNamespace', NS_FILE, false, null ),
-			array( 'NoWikidataBanner', NS_MAIN, false, "Banner" ),
-			array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "Banner" )
+			array( 'NoWikidataBanner', NS_MAIN, false, "DefaultBanner" ),
+			array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "WikidataBanner" )
 		);
 
 	/**
@@ -56,6 +56,7 @@ class BannerTest extends MediaWikiTestCase {
 	}
 	protected function setUp() {
 		parent::setUp();
+		$this->setMwGlobals( 'wgWPBImage', "DefaultBanner" );
 		$this->addDBData();
 	}
 
