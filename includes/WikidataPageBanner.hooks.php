@@ -2,7 +2,8 @@
 class WikidataPageBanner {
 	/**
 	 * WikidataPageBanner::addBanner Generates banner from given options and adds it and its styles
-	 * to Output Page
+	 * to Output Page. If no options defined through {{PAGEBANNER}}, tries to add a wikidata banner
+	 * or a default one.
 	 *
 	 * @param $out OutputPage
 	 * @param $skin Skin Object
@@ -71,6 +72,7 @@ class WikidataPageBanner {
 	/**
 	 * WikidataPageBanner::onOutputPageParserOutput add banner parameters from ParserOutput to
 	 * Output page
+	 *
 	 * @param  OutputPage $out
 	 * @param  ParserOutput $pOut
 	 */
@@ -89,19 +91,22 @@ class WikidataPageBanner {
 				if ( strpos( $options['toc'], 'class="toc"' ) !== false ) {
 					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
 				}
+				// disable default TOC
 				$out->enableTOC( false );
 			}
+			// set banner properties as an OutputPage property
 			$out->setProperty( 'wpb-banner-options', $options );
 		}
 	}
 
 	/**
 	 * WikidataPageBanner::addCustomBanner
-	 * Parser function hooked to 'PAGEBANNER' magic word, to expand and load banner.
+	 * Parser function hooked to 'PAGEBANNER' magic word, to define a custom banner and options to
+	 * customize banner such as icons,horizontal TOC,etc. The method does not return any content but
+	 * sets the banner parameters in ParserOutput object for use at a later stage to generate banner
 	 *
 	 * @param  $parser Parser
 	 * @param  $bannername Name of custom banner
-	 * @return output
 	 */
 	public static function addCustomBanner( $parser, $bannername ) {
 		global $wgWPBNamespaces;
@@ -131,6 +136,7 @@ class WikidataPageBanner {
 			if ( isset( $argumentsFromParserFunction['tooltip'] ) ) {
 				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['tooltip'];
 			}
+			// set 'bottomtoc' parameter to allow TOC completely below the banner
 			if ( isset( $argumentsFromParserFunction['bottomtoc'] ) &&
 					$argumentsFromParserFunction['bottomtoc'] === 'yes' ) {
 				$paramsForBannerTemplate['bottomtoc'] = true;
@@ -143,7 +149,6 @@ class WikidataPageBanner {
 			// Set 'wpb-banner-options' property for generating banner later
 			$parser->getOutput()->setProperty( 'wpb-banner-options', $paramsForBannerTemplate );
 		}
-		return array( '', 'noparse' => true, 'isHTML' => true );
 	}
 
 	/**
@@ -253,7 +258,7 @@ class WikidataPageBanner {
 	}
 
 	/**
-	 * Fetches banner from wikidata for the specified page
+	 * WikidataPageBanner::getWikidataBanner Fetches banner from wikidata for the specified page
 	 *
 	 * @param   Title $title Title of the page
 	 * @return  String|null file name of the banner from wikidata
