@@ -254,12 +254,15 @@ class WikidataPageBanner {
 	 * Fetches banner from wikidata for the specified page
 	 *
 	 * @param   Title $title Title of the page
-	 * @return  String|null file name of the banner from wikitata [description]
+	 * @return  String|null file name of the banner from wikidata
 	 * or null if none found
 	 */
 	public static function getWikidataBanner( $title ) {
 		global $wgBannerProperty;
 		$banner = null;
+		if ( empty( $wgBannerProperty ) ) {
+			return null;
+		}
 		// Ensure Wikibase client is installed
 		if ( class_exists( 'Wikibase\Client\WikibaseClient' ) ) {
 			$entityIdLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
