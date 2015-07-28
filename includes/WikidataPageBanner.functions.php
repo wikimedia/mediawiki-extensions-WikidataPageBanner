@@ -26,6 +26,10 @@ class WikidataPageBannerFunctions {
 		if ( isset( $argumentsFromParserFunction['icons'] ) ) {
 			$icons = explode( ',', $argumentsFromParserFunction['icons'] );
 			foreach ( $icons as $iconname ) {
+				// avoid icon generation when empty iconname
+				if ( empty( $iconname ) ) {
+					continue;
+				}
 				$iconName = Sanitizer::escapeClass( $iconname );
 				$icon = new OOUI\IconWidget( array(
 					'icon' => $iconName,
@@ -33,8 +37,11 @@ class WikidataPageBannerFunctions {
 				) );
 				$iconsToAdd[] = array( 'icon' => $icon );
 			}
-			$paramsForBannerTemplate['hasIcons'] = true;
-			$paramsForBannerTemplate['icons'] = $iconsToAdd;
+			// only set hasIcons to true if parser function gives some non-empty icon names
+			if ( !empty( $iconsToAdd ) ) {
+				$paramsForBannerTemplate['hasIcons'] = true;
+				$paramsForBannerTemplate['icons'] = $iconsToAdd;
+			}
 		}
 	}
 }
