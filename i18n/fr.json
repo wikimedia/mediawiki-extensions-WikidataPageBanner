@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ash Crow"
+		]
+	},
+	"wikidatapagebanner-extname": "WikidataPageBanner",
+	"wikidatapagebanner-desc": "Affiche des bannières sur des pages wiki spécifiques au début des articles"
+}
