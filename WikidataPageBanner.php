@@ -23,16 +23,16 @@ $wgExtensionCredits['other'][] = array(
 );
 
 /**
- * $wgPBImage - default pagebanner image file, use only filename, do not prefix 'File:',
- * e.g. $wgPBImage = 'Foo.jpg'
+ * $wgWPBImage - default pagebanner image file, use only filename, do not prefix 'File:',
+ * e.g. $wgWPBImage = 'Foo.jpg'
  */
-$wgPBImage = "";
-/** $wgBannerNamespace - Namespaces on which to display banner */
-$wgBannerNamespaces = array( NS_MAIN );
-/** $wgStandardSizes - Array of standard predefined screen widths in increasing order */
-$wgStandardSizes = array( 320, 640, 1280, 2560 );
-/** $wgBannerProperty - Banner property on wikidata which holds commons media file */
-$wgBannerProperty = "";
+$wgWPBImage = "";
+/** $wgWPBNamespace - Namespaces on which to display banner */
+$wgWPBNamespaces = array( NS_MAIN );
+/** $wgWPBStandardSizes - Array of standard predefined screen widths in increasing order */
+$wgWPBStandardSizes = array( 320, 640, 1280, 2560 );
+/** $wgWPBBannerProperty - Banner property on wikidata which holds commons media file */
+$wgWPBBannerProperty = "";
 
 /* Setup */
 // autoloader
