@@ -1,0 +1,85 @@
+{
+	"name": "WikidataPageBanner",
+	"namemsg": "Wikidatapagebanner-extname",
+	"version": "0.0.1",
+	"author": [
+		"Sumit Asthana"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:WikidataPageBanner",
+	"descriptionmsg": "wikidatapagebanner-desc",
+	"license-name": "GPL-2.0+",
+	"type": "other",
+	"MessagesDirs": {
+		"WikidataPageBanner": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"WikidataPageBannerMagic": "WikidataPageBanner.i18n.magic.php"
+	},
+	"AutoloadClasses": {
+		"WikidataPageBanner": "includes/WikidataPageBanner.hooks.php",
+		"WikidataPageBannerFunctions": "includes/WikidataPageBanner.functions.php"
+	},
+	"ResourceModules": {
+		"ext.WikidataPageBanner": {
+			"styles": [
+				"ext.WikidataPageBanner.styles/ext.WikidataPageBanner.less"
+			],
+			"skinStyles": {
+				"minerva": "ext.WikidataPageBanner.styles/ext.WikidataPageBanner.minerva.less"
+			},
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"position": "top"
+		},
+		"ext.WikidataPageBanner.toc.styles": {
+			"styles": [
+				"ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.toc.less",
+				"ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.bottomtoc.less"
+			],
+			"skinStyles": {
+				"minerva": "ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.toc.minerva.less"
+			},
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"position": "top"
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "WikidataPageBanner/resources"
+	},
+	"Hooks": {
+		"BeforePageDisplay": [
+			"WikidataPageBanner::addBanner"
+		],
+		"OutputPageParserOutput": [
+			"WikidataPageBanner::onOutputPageParserOutput"
+		],
+		"ParserFirstCallInit": [
+			"WikidataPageBanner::onParserFirstCallInit"
+		],
+		"UnitTestsList": [
+			"WikidataPageBanner::onUnitTestsList"
+		]
+	},
+	"config": {
+		"WPBImage": "",
+		"WPBNamespaces": [
+			0
+		],
+		"WPBStandardSizes": [
+			320,
+			640,
+			1280,
+			2560
+		],
+		"WPBBannerProperty": ""
+	},
+	"manifest_version": 1
+}
