@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xuacu"
+		]
+	},
+	"wikidatapagebanner-extname": "WikidataPageBanner",
+	"wikidatapagebanner-desc": "Despliega pancartes en páxines determinaes de la wiki al principiu de los artículos"
+}
