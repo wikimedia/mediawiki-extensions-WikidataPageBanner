@@ -145,6 +145,8 @@ class WikidataPageBanner {
 					$argumentsFromParserFunction );
 			WikidataPageBannerFunctions::addIcons( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
+			WikidataPageBannerFunctions::addFocus( $paramsForBannerTemplate,
+					$argumentsFromParserFunction );
 			$paramsForBannerTemplate['name'] = $bannername;
 			// Set 'wpb-banner-options' property for generating banner later
 			$parser->getOutput()->setProperty( 'wpb-banner-options', $paramsForBannerTemplate );

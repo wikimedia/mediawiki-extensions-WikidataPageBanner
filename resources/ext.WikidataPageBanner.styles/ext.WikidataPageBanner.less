@@ -2,6 +2,13 @@
  * Stylesheet for page-wide Banner in WikidataPageBanner extension.
  */
 @import "mediawiki.mixins";
+.transform ( ... ) {
+	-webkit-transform: @arguments;
+	-moz-transform: @arguments;
+	-o-transform: @arguments;
+	transform: @arguments;
+}
+
 .ext-wpb-pagebanner {
 	width:100%;
 }
@@ -54,5 +61,42 @@ h1.firstHeading {
 @media screen and ( max-width: 768px ) {
 	.wpb-topbanner .wpb-name {
 		font-size: 1em;
+	}
+}
+
+// banner enlargement and faking banner cropping for small screens
+@media screen and ( max-width: 400px ) {
+	.wpb-topbanner {
+		overflow: hidden;
+		// rule for banners whose height may be much due to a different aspect ratio other than
+		// Wikivoyage banners
+		max-height: 300px;
+
+		.wpb-banner-image {
+			// this rule overrides the max-width:100% rule for images in Skin Minerva so that banner
+			// can be increased in size for increasing the height accordingly. The overflowing
+			// banner is cropped by setting overflow hidden on containing element
+			max-width: none !important;
+			width: auto;
+			// Set min height to no more than 100px so that atleast a 3:1 aspect ratio of banners is
+			// kept(screen width is around 300px-400px)
+			min-height: 100px;
+			// centre the banner by default
+			margin-left: 50%;
+			.transform ( translateX( -50% ) );
+		}
+
+		/**
+		 * The rules below define custom positioning for banner in case the cropped banner needs to be
+		 * shifted to allow focus to a different area
+		 */
+
+		.wpb-left{
+			.transform ( translateX( -25% ) );
+		}
+
+		.wpb-right{
+			.transform ( translateX( -75% ) );
+		}
 	}
 }
