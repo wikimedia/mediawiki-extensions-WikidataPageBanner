@@ -6,7 +6,7 @@
 /**
  * Mock class for WikidataPageBanner
  */
-class MockWikidataPageBanner extends WikidataPageBanner {
+class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 	public static function getBannerHtml( $bannername, $options = array() ) {
 		if ( $bannername == 'NoBanner' ) {
 			return null;
@@ -70,7 +70,10 @@ class BannerTest extends MediaWikiTestCase {
 	 */
 	public function testDefaultBanner( $title, $ns, $customBanner, $expected ) {
 		$out = $this->createPage( $title, $ns, $customBanner );
-		MockWikidataPageBanner::addBanner( $out, null );
+		// store a mock object in $wpbFunctionsClass static variable so that hooks call mock functions
+		// through this variable when performing tests
+		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
+		WikidataPageBanner::addBanner( $out, null );
 		$this->assertEquals( $out->getProperty( 'articlebanner' ), $expected,
 			'articlebanner property must only be set when a valid banner is added' );
 	}
@@ -80,14 +83,18 @@ class BannerTest extends MediaWikiTestCase {
 	 */
 	public function testCustomBanner() {
 		$parser = $this->createParser( 'PageWithCustomBanner', NS_MAIN );
-		$output = MockWikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock
+		// functions through this variable when performing tests
+		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
+		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
 		$this->assertEquals( $bannerparams['name'], 'Banner',
 			'banner parameters must be set on valid namespaces' );
 
 		$parser = $this->createParser( 'PageInTalkNamespace', NS_TALK );
-		$output = MockWikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
+		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
 		$this->assertFalse( $bannerparams, 'Banner',
