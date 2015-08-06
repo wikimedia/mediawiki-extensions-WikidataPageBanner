@@ -71,14 +71,18 @@ class BannerOptionsTest extends MediaWikiTestCase {
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
-			'pgname=Banner2', 'icons=unesco,star' );
+			'pgname=Banner2', 'icon-unesco=', 'icon-star=Main Page' );
 		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
 		$this->assertEquals( $bannerparams['title'], 'Banner2',
 			'pgname must be set' );
 		$this->assertEquals( $bannerparams['icons'][0]['icon']->getTitle(), 'unesco',
 			'unesco icon must be set' );
-		$this->assertEquals( $bannerparams['icons'][1]['icon']->getTitle(), 'star',
+		$this->assertEquals( '#', $bannerparams['icons'][0]['iconurl'],
+			'iconurl must be a default #' );
+		$this->assertEquals( $bannerparams['icons'][1]['icon']->getTitle(), 'Main Page',
 			'star icon must be set' );
+		$this->assertContains( 'Main_Page', $bannerparams['icons'][1]['iconurl'],
+			'iconurl must be a valid main page url' );
 	}
 
 	/**

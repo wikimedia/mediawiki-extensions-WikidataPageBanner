@@ -22,26 +22,37 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function addIcons( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
 		$iconsToAdd = array();
-		if ( isset( $argumentsFromParserFunction['icons'] ) ) {
-			$icons = explode( ',', $argumentsFromParserFunction['icons'] );
-			foreach ( $icons as $iconname ) {
-				// avoid icon generation when empty iconname
-				// @FIXME don't use empty here
-				if ( empty( $iconname ) ) {
+		// check all parameters and look for one's starting with icon-
+		// The old format of icons=star,unesco would not generate any icons
+		foreach ( $argumentsFromParserFunction as $key => $value ) {
+			// found a valid icon parameter, so process it
+			if ( substr( $key, 0, 5 ) === 'icon-' ) {
+				// extract iconname after 'icon-' til the end of key
+				$iconname = substr( $key, 5 );
+				if ( !isset( $iconname, $value ) ) {
 					continue;
 				}
 				$iconName = Sanitizer::escapeClass( $iconname );
-				$icon = new OOUI\IconWidget( array(
+				$iconUrl = Title::newFromText( $value );
+				$iconTitleText = $iconName;
+				$finalIcon = array( 'iconurl' => '#' );
+				// reference article for icons provided and is valid, then add its link
+				if ( $iconUrl ) {
+					$finalIcon['iconurl'] = $iconUrl->getLocalUrl();
+					// set icon title to title of referring article
+					$iconTitleText = $iconUrl->getText();
+				}
+				$finalIcon['icon'] = new OOUI\IconWidget( array(
 					'icon' => $iconName,
-					'title' => $iconName
-				) );
-				$iconsToAdd[] = array( 'icon' => $icon );
+					'title' => $iconTitleText,
+				) );;
+				$iconsToAdd[] = $finalIcon;
 			}
-			// only set hasIcons to true if parser function gives some non-empty icon names
-			if ( $iconsToAdd ) {
-				$paramsForBannerTemplate['hasIcons'] = true;
-				$paramsForBannerTemplate['icons'] = $iconsToAdd;
-			}
+		}
+		// only set hasIcons to true if parser function gives some non-empty icon names
+		if ( $iconsToAdd ) {
+			$paramsForBannerTemplate['hasIcons'] = true;
+			$paramsForBannerTemplate['icons'] = $iconsToAdd;
 		}
 	}
 
