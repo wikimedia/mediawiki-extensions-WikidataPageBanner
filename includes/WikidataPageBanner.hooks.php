@@ -5,11 +5,10 @@ class WikidataPageBanner {
 	 * to Output Page. If no options defined through {{PAGEBANNER}}, tries to add a wikidata banner
 	 * or a default one.
 	 *
-	 * @param $out OutputPage
-	 * @param $skin Skin Object
+	 * @param OutputPage $out
 	 * @return  bool
 	 */
-	public static function addBanner( $out, $skin ) {
+	public static function addBanner( OutputPage $out ) {
 		global $wgWPBImage, $wgWPBNamespaces;
 		$title = $out->getTitle();
 		// if banner-options are set, add banner anyway
@@ -76,7 +75,7 @@ class WikidataPageBanner {
 	 * @param  OutputPage $out
 	 * @param  ParserOutput $pOut
 	 */
-	public static function onOutputPageParserOutput( $out, $pOut ) {
+	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ) {
 		if ( $pOut->getProperty( 'wpb-banner-options' ) != null ) {
 			$options = $pOut->getProperty( 'wpb-banner-options' );
 			// if toc parameter set and toc enabled, remove original classes and add banner class
@@ -105,13 +104,11 @@ class WikidataPageBanner {
 	 * customize banner such as icons,horizontal TOC,etc. The method does not return any content but
 	 * sets the banner parameters in ParserOutput object for use at a later stage to generate banner
 	 *
-	 * @param  $parser Parser
-	 * @param  $bannername Name of custom banner
+	 * @param Parser $parser
+	 * @param string $bannername Name of custom banner
 	 */
-	public static function addCustomBanner( $parser, $bannername ) {
+	public static function addCustomBanner( Parser $parser, $bannername ) {
 		global $wgWPBNamespaces;
-		// @var array to get arguments passed to {{PAGEBANNER}} function
-		$argumentsFromParserFunction = array();
 		// @var array to hold parameters to be passed to banner template
 		$paramsForBannerTemplate = array();
 		// skip parser function name and bannername in arguments
@@ -119,7 +116,6 @@ class WikidataPageBanner {
 		// Convert $argumentsFromParserFunction into an associative array
 		$argumentsFromParserFunction = self::extractOptions( $argumentsFromParserFunction );
 		// if given banner does not exist, return
-		$banner = '';
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
 		if ( in_array( $ns, $wgWPBNamespaces ) && !$title->isMainPage() ) {
@@ -234,7 +230,7 @@ class WikidataPageBanner {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	public static function onParserFirstCallInit( $parser ) {
+	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setFunctionHook( 'PAGEBANNER', 'WikidataPageBanner::addCustomBanner', SFH_NO_HASH );
 		return true;
 	}
@@ -282,8 +278,8 @@ class WikidataPageBanner {
 			$entityLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
 			->getStore()
 			->getEntityLookup();
-			/** @var Wikibase\DataModel\Entity\Item $item */
 			if ( $itemId != null ) {
+				/** @var Wikibase\DataModel\Entity\Item $item */
 				$item = $entityLookup->getEntity( $itemId );
 				$statements = $item->getStatements()->getByPropertyId(
 						new Wikibase\DataModel\Entity\PropertyId(
