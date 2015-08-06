@@ -17,9 +17,8 @@ class WikidataPageBannerFunctions {
 
 	/**
 	 * Render icons using OOJS-UI for icons which are set in arguments
-	 * @param  array $paramsForBannerTemplate Parameters defined for banner template
-	 * @param  array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
-	 * @return
+	 * @param array $paramsForBannerTemplate Parameters defined for banner template
+	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
 	public static function addIcons( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
 		$iconsToAdd = array();
@@ -27,6 +26,7 @@ class WikidataPageBannerFunctions {
 			$icons = explode( ',', $argumentsFromParserFunction['icons'] );
 			foreach ( $icons as $iconname ) {
 				// avoid icon generation when empty iconname
+				// @FIXME don't use empty here
 				if ( empty( $iconname ) ) {
 					continue;
 				}
@@ -38,7 +38,7 @@ class WikidataPageBannerFunctions {
 				$iconsToAdd[] = array( 'icon' => $icon );
 			}
 			// only set hasIcons to true if parser function gives some non-empty icon names
-			if ( !empty( $iconsToAdd ) ) {
+			if ( $iconsToAdd ) {
 				$paramsForBannerTemplate['hasIcons'] = true;
 				$paramsForBannerTemplate['icons'] = $iconsToAdd;
 			}
@@ -47,9 +47,8 @@ class WikidataPageBannerFunctions {
 
 	/**
 	 * Sets focus parameter on banner templates to shift focus on banner when cropped
-	 * @param  array $paramsForBannerTemplate Parameters defined for banner template
-	 * @param  array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
-	 * @return
+	 * @param array $paramsForBannerTemplate Parameters defined for banner template
+	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
 	public static function addFocus( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
 		// default centering would be 0, and -1 would represent extreme left and extreme top
@@ -59,7 +58,7 @@ class WikidataPageBannerFunctions {
 		if ( isset( $argumentsFromParserFunction['origin'] ) ) {
 			// split the origin into x and y coordinates
 			$coords = explode( ',', $argumentsFromParserFunction['origin'] );
-			if ( count ( $coords ) === 2 ) {
+			if ( count( $coords ) === 2 ) {
 				$positionx = $coords[0];
 				$positiony = $coords[1];
 				// TODO:Add a js module to use the data-pos values being set below to fine tune the
