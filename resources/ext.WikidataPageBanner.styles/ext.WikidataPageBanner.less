@@ -18,6 +18,10 @@
 	max-width: 1800px;
 	height: auto;
 	margin: 1em 0;
+	overflow: hidden;
+	// rule for banners whose height may be much due to a different aspect ratio other than
+	// Wikivoyage banners
+	max-height: 300px;
 }
 
 .wpb-topbanner .wpb-name {
@@ -67,11 +71,6 @@ h1.firstHeading {
 // banner enlargement and faking banner cropping for small screens
 @media screen and ( max-width: 400px ) {
 	.wpb-topbanner {
-		overflow: hidden;
-		// rule for banners whose height may be much due to a different aspect ratio other than
-		// Wikivoyage banners
-		max-height: 300px;
-
 		.wpb-banner-image {
 			// this rule overrides the max-width:100% rule for images in Skin Minerva so that banner
 			// can be increased in size for increasing the height accordingly. The overflowing
