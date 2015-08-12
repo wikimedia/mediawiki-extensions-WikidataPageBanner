@@ -19,7 +19,7 @@ class WikidataPageBanner {
 	 * @return  bool
 	 */
 	public static function addBanner( OutputPage $out ) {
-		global $wgWPBImage, $wgWPBNamespaces;
+		global $wgWPBImage, $wgWPBNamespaces, $wgWPBEnableDefaultBanner;
 		$title = $out->getTitle();
 		// if banner-options are set, add banner anyway
 		if ( $out->getProperty( 'wpb-banner-options' ) !== null ) {
@@ -49,7 +49,7 @@ class WikidataPageBanner {
 			}
 		}
 		// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
-		elseif ( $title->isKnown() && $out->isArticle() ) {
+		elseif ( $title->isKnown() && $out->isArticle() && $wgWPBEnableDefaultBanner ) {
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
 			if ( in_array( $ns, $wgWPBNamespaces )
