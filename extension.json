@@ -69,7 +69,7 @@
 		]
 	},
 	"config": {
-		"WPBEnableDefaultBanner": "false",
+		"WPBEnableDefaultBanner": false,
 		"WPBImage": "",
 		"WPBNamespaces": [
 			0

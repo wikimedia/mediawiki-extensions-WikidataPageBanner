@@ -57,6 +57,7 @@ class BannerTest extends MediaWikiTestCase {
 	protected function setUp() {
 		parent::setUp();
 		$this->setMwGlobals( 'wgWPBImage', "DefaultBanner" );
+		$this->setMwGlobals( 'wgWPBEnableDefaultBanner', true );
 		$this->addDBData();
 	}
 
