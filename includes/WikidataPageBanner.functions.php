@@ -149,6 +149,8 @@ class WikidataPageBannerFunctions {
 			$options['bannerfile'] = $bannerfile->getLocalUrl();
 			$options['banner'] = $bannerurl;
 			$options['srcset'] = $srcset;
+			$file = wfFindFile( $bannerfile );
+			$options['maxWidth'] = $file->getWidth();
 			$banner = $templateParser->processTemplate(
 					'banner',
 					$options
