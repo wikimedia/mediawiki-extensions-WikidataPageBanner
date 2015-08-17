@@ -48,6 +48,17 @@
 				"mobile"
 			],
 			"position": "top"
+		},
+		"ext.WikidataPageBanner.positionBanner": {
+			"scripts": [
+				"ext.WikidataPageBanner.positionBanner/ext.WikidataPageBanner.positionBanner.js"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"dependencies": "jquery.throttle-debounce",
+			"position": "bottom"
 		}
 	},
 	"ResourceFileModulePaths": {
@@ -66,6 +77,9 @@
 		],
 		"UnitTestsList": [
 			"WikidataPageBanner::onUnitTestsList"
+		],
+		"ResourceLoaderTestModules": [
+			"WikidataPageBanner::onResourceLoaderTestModules"
 		]
 	},
 	"config": {

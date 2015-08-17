@@ -36,6 +36,7 @@ class WikidataPageBanner {
 			// only add banner and styling if valid banner generated
 			if ( $banner !== null ) {
 				$out->addModuleStyles( 'ext.WikidataPageBanner' );
+				$out->addModules( 'ext.WikidataPageBanner.positionBanner' );
 				if ( isset( $params['toc'] ) ) {
 					$out->addModuleStyles( 'ext.WikidataPageBanner.toc.styles' );
 				}
@@ -68,6 +69,7 @@ class WikidataPageBanner {
 				// only add banner and styling if valid banner generated
 				if ( $banner !== null ) {
 					$out->addModuleStyles( 'ext.WikidataPageBanner' );
+					$out->addModules( 'ext.WikidataPageBanner.positionBanner' );
 					$out->prependHtml( $banner );
 					// hide primary title
 					$out->setPageTitle( '' );
@@ -209,5 +211,27 @@ class WikidataPageBanner {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Register QUnit tests.
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderTestModules
+	 *
+	 * @param array $files
+	 * @return bool
+	 */
+	public static function onResourceLoaderTestModules( &$modules, &$rl ) {
+		$boilerplate = array(
+			'localBasePath' => __DIR__ . '/../tests/qunit/',
+			'remoteExtPath' => 'WikidataPageBanner/tests/qunit',
+			'targets' => array( 'desktop', 'mobile' ),
+		);
+
+		$modules['qunit']['ext.WikidataPageBanner.positionBanner.test'] = $boilerplate + array(
+			'scripts' => array(
+				'ext.WikidataPageBanner.positionBanner/test_ext.WikidataPageBanner.positionBanner.js',
+			),
+			'dependencies' => array( 'ext.WikidataPageBanner.positionBanner' ),
+		);
 	}
 }
