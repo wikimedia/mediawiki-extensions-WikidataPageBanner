@@ -161,6 +161,22 @@ class WikidataPageBanner {
 			$paramsForBannerTemplate['name'] = $bannername;
 			// Set 'wpb-banner-options' property for generating banner later
 			$parser->getOutput()->setProperty( 'wpb-banner-options', $paramsForBannerTemplate );
+
+			// add the valid banner to image links
+			// @FIXME:Since bannernames which are to be added are generated here, getBannerHtml can
+			// be cleaned to only accept a valid title object pointing to a banner file
+			// Default banner is not added to imagelinks as that is the property of this extension
+			// and is uniform across all pages
+			$wikidataBanner = $wpbFunctionsClass::getWikidataBanner( $title );
+			$bannerTitle = null;
+			if ( $wpbFunctionsClass::getImageUrl( $paramsForBannerTemplate['name'] ) !== null ) {
+				$bannerTitle = Title::makeTitleSafe( NS_FILE, $paramsForBannerTemplate['name'] );
+			} elseif ( $wpbFunctionsClass::getImageUrl( $wikidataBanner ) !== null ) {
+				$bannerTitle = Title::makeTitleSafe( NS_FILE, $wikidataBanner );
+			}
+			if ( $bannerTitle !== null ) {
+				$parser->fetchFileAndTitle( $bannerTitle );
+			}
 		}
 	}
 
