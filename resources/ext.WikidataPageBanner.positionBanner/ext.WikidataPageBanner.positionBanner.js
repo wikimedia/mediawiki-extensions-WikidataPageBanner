@@ -63,7 +63,7 @@
 	$( window ).on( 'resize', $.debounce(
 			100,
 			function() {
-				positionBanner( $wpbBannerImageContainer )
+				positionBanner( $wpbBannerImageContainer );
 			}
 		) );
 	positionBanner( $wpbBannerImageContainer );

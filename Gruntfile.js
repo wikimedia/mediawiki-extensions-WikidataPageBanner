@@ -10,7 +10,8 @@ module.exports = function ( grunt ) {
 				jshintrc: true
 			},
 			all: [
-				'*.js'
+				'resources/**/*.js',
+				'tests/qunit/**/*.js'
 			]
 		},
 		banana: {
