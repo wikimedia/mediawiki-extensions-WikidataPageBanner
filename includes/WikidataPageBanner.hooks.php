@@ -21,8 +21,9 @@ class WikidataPageBanner {
 	public static function addBanner( OutputPage $out ) {
 		global $wgWPBImage, $wgWPBNamespaces, $wgWPBEnableDefaultBanner;
 		$title = $out->getTitle();
-		// if banner-options are set, add banner anyway
-		if ( $out->getProperty( 'wpb-banner-options' ) !== null ) {
+		$isDiff = $out->getRequest()->getVal( 'diff' );
+		// if banner-options are set and not a diff page, add banner anyway
+		if ( $out->getProperty( 'wpb-banner-options' ) !== null && !$isDiff ) {
 			$params = $out->getProperty( 'wpb-banner-options' );
 			$bannername = $params['name'];
 			$out->enableOOUI();
@@ -50,7 +51,7 @@ class WikidataPageBanner {
 			}
 		}
 		// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
-		elseif ( $title->isKnown() && $out->isArticle() && $wgWPBEnableDefaultBanner ) {
+		elseif ( $title->isKnown() && $out->isArticle() && $wgWPBEnableDefaultBanner && !$isDiff ) {
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
 			if ( in_array( $ns, $wgWPBNamespaces )
