@@ -42,9 +42,11 @@ class WikidataPageBanner {
 					$out->addModuleStyles( 'ext.WikidataPageBanner.toc.styles' );
 				}
 				$out->prependHtml( $banner );
+				$htmlTitle = $out->getHTMLTitle();
 				// hide primary title
 				$out->setPageTitle( '' );
-				$out->setHTMLTitle( $out->getTitle() );
+				// set html title again, because above call also empties the <title> tag
+				$out->setHTMLTitle( $htmlTitle );
 				// set articlebanner property on OutputPage
 				// FIXME: This is currently only needed to support testing
 				$out->setProperty( 'articlebanner', $bannername );
