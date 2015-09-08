@@ -11,6 +11,20 @@ class WikidataPageBanner {
 	static $wpbFunctionsClass = "WikidataPageBannerFunctions";
 
 	/**
+	 * Expands icons for rendering via template
+	 *
+	 * @param Array[] $icons of options for IconWidget
+	 */
+	protected static function expandIconTemplateOptions( array $icons ) {
+		foreach ( $icons as $key => $iconData ) {
+			$widget = new OOUI\IconWidget( $iconData );
+			$iconData['html'] = $widget->toString();
+			$icons[$key] = $iconData;
+		}
+		return $icons;
+	}
+
+	/**
 	 * WikidataPageBanner::addBanner Generates banner from given options and adds it and its styles
 	 * to Output Page. If no options defined through {{PAGEBANNER}}, tries to add a wikidata banner
 	 * or a default one.
@@ -26,7 +40,10 @@ class WikidataPageBanner {
 		if ( $out->getProperty( 'wpb-banner-options' ) !== null && !$isDiff ) {
 			$params = $out->getProperty( 'wpb-banner-options' );
 			$bannername = $params['name'];
-			$out->enableOOUI();
+			if ( isset( $params['icons'] ) ){
+				$out->enableOOUI();
+				$params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
+			}
 			$wpbFunctionsClass = self::$wpbFunctionsClass;
 			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
 			// attempt to get WikidataBanner

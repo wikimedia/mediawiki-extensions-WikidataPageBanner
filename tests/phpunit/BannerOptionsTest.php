@@ -75,13 +75,13 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
 		$this->assertEquals( $bannerparams['title'], 'Banner2',
 			'pgname must be set' );
-		$this->assertEquals( $bannerparams['icons'][0]['icon']->getTitle(), 'unesco',
+		$this->assertEquals( $bannerparams['icons'][0]['title'], 'unesco',
 			'unesco icon must be set' );
-		$this->assertEquals( '#', $bannerparams['icons'][0]['iconurl'],
+		$this->assertEquals( '#', $bannerparams['icons'][0]['url'],
 			'iconurl must be a default #' );
-		$this->assertEquals( $bannerparams['icons'][1]['icon']->getTitle(), 'Main Page',
+		$this->assertEquals( $bannerparams['icons'][1]['title'], 'Main Page',
 			'star icon must be set' );
-		$this->assertContains( 'Main_Page', $bannerparams['icons'][1]['iconurl'],
+		$this->assertContains( 'Main_Page', $bannerparams['icons'][1]['url'],
 			'iconurl must be a valid main page url' );
 
 		$pOut->setProperty( 'wpb-banner-options', null );

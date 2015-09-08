@@ -35,17 +35,15 @@ class WikidataPageBannerFunctions {
 				$iconName = Sanitizer::escapeClass( $iconname );
 				$iconUrl = Title::newFromText( $value );
 				$iconTitleText = $iconName;
-				$finalIcon = array( 'iconurl' => '#' );
+				$finalIcon = array( 'url' => '#' );
 				// reference article for icons provided and is valid, then add its link
 				if ( $iconUrl ) {
-					$finalIcon['iconurl'] = $iconUrl->getLocalUrl();
+					$finalIcon['url'] = $iconUrl->getLocalUrl();
 					// set icon title to title of referring article
 					$iconTitleText = $iconUrl->getText();
 				}
-				$finalIcon['icon'] = new OOUI\IconWidget( array(
-					'icon' => $iconName,
-					'title' => $iconTitleText,
-				) );;
+				$finalIcon['icon'] = $iconName;
+				$finalIcon['title'] =  $iconTitleText;
 				$iconsToAdd[] = $finalIcon;
 			}
 		}
