@@ -18,7 +18,9 @@
 			transform: 'translate(0)',
 			MozTransform: 'translate(0)',
 			WebkitTransform: 'translate(0)',
-			msTransform: 'translate(0)'
+			msTransform: 'translate(0)',
+			'margin-left': 0,
+			'margin-top': 0
 		} );
 		// Adjust vertical focus
 		if ( $wpbBannerImage.height() > $container.height() ) {
@@ -66,7 +68,10 @@
 				positionBanner( $wpbBannerImageContainer );
 			}
 		) );
-	positionBanner( $wpbBannerImageContainer );
+	// set focus after image has loaded
+	$( 'img.wpb-banner-image' ).load( function() {
+		positionBanner( $wpbBannerImageContainer );
+	} );
 	// Expose interface for testing.
 	mw.wpb = {
 		positionBanner: positionBanner
