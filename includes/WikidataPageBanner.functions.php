@@ -5,6 +5,12 @@
  */
 class WikidataPageBannerFunctions {
 	/**
+	 * @var string[] name of skins that do not implement 'prebodyhtml'
+	 *  banners for these skin will be prepended to body content
+	 */
+	static $blacklistSkins = array( 'monobook', 'modern', 'cologneblue' );
+
+	/**
 	 * Set bannertoc variable on parser output object
 	 * @param array $paramsForBannerTemplate banner parameters array
 	 * @param array $options options from parser function
@@ -122,6 +128,7 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function getBannerHtml( $bannername, $options = array() ) {
 		global $wgWPBStandardSizes;
+
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
@@ -248,5 +255,28 @@ class WikidataPageBannerFunctions {
 			}
 		}
 		return $banner;
+	}
+
+	/**
+	 * Insert banner HTML into the page
+	 *
+	 * @param OutputPage $out to inject banner into
+	 * @param string $html of banner to insert
+	 */
+	public static function insertBannerIntoOutputPage( $out, $html ) {
+		if ( in_array( $out->getSkin()->getSkinName(), self::$blacklistSkins ) ) {
+			$out->prependHtml( $banner );
+		}
+		$htmlTitle = $out->getHTMLTitle();
+		// hide primary title
+		$out->setPageTitle( '' );
+		// set html title again, because above call also empties the <title> tag
+		$out->setHTMLTitle( $htmlTitle );
+		// set articlebanner property on OutputPage for getSkinTemplateOutputPageBeforeExec hook
+		$out->setProperty( 'articlebanner', $html );
+
+		// Add common resources
+		$out->addModuleStyles( 'ext.WikidataPageBanner' );
+		$out->addModules( 'ext.WikidataPageBanner.positionBanner' );
 	}
 }

@@ -25,17 +25,38 @@ class WikidataPageBanner {
 	}
 
 	/**
+	 * GetSkinTemplateOutputPageBeforeExec
+	 * Modifies the template to add the banner html for rendering by the skin. Note not
+	 * all skins render the prebodyhtml template variable so in some skins this will have no impact
+	 * whatsoever.
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateOutputPageBeforeExec
+	 *
+	 * @param Skin &$skin
+	 * @param SkinTemplate &$tpl
+	 * @return bool
+	 */
+	public static function onSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
+		$banner = $skin->getOutput()->getProperty( 'articlebanner' );
+		$tpl->set( 'prebodyhtml', $banner . $tpl->get( 'prebodyhtml', '' ) );
+		return true;
+	}
+
+	/**
 	 * WikidataPageBanner::addBanner Generates banner from given options and adds it and its styles
 	 * to Output Page. If no options defined through {{PAGEBANNER}}, tries to add a wikidata banner
 	 * or a default one.
 	 *
 	 * @param OutputPage $out
+	 * @param Skin Skin object being rendered
 	 * @return  bool
 	 */
-	public static function addBanner( OutputPage $out ) {
+	public static function addBanner( OutputPage $out, Skin $skin ) {
 		global $wgWPBImage, $wgWPBNamespaces, $wgWPBEnableDefaultBanner;
+
 		$title = $out->getTitle();
 		$isDiff = $out->getRequest()->getVal( 'diff' );
+		$wpbFunctionsClass = self::$wpbFunctionsClass;
+
 		// if banner-options are set and not a diff page, add banner anyway
 		if ( $out->getProperty( 'wpb-banner-options' ) !== null && !$isDiff ) {
 			$params = $out->getProperty( 'wpb-banner-options' );
@@ -44,7 +65,6 @@ class WikidataPageBanner {
 				$out->enableOOUI();
 				$params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 			}
-			$wpbFunctionsClass = self::$wpbFunctionsClass;
 			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
 			// attempt to get WikidataBanner
 			if ( $banner === null ) {
@@ -53,20 +73,13 @@ class WikidataPageBanner {
 			}
 			// only add banner and styling if valid banner generated
 			if ( $banner !== null ) {
-				$out->addModuleStyles( 'ext.WikidataPageBanner' );
-				$out->addModules( 'ext.WikidataPageBanner.positionBanner' );
 				if ( isset( $params['toc'] ) ) {
 					$out->addModuleStyles( 'ext.WikidataPageBanner.toc.styles' );
 				}
-				$out->prependHtml( $banner );
-				$htmlTitle = $out->getHTMLTitle();
-				// hide primary title
-				$out->setPageTitle( '' );
-				// set html title again, because above call also empties the <title> tag
-				$out->setHTMLTitle( $htmlTitle );
-				// set articlebanner property on OutputPage
+				$wpbFunctionsClass::insertBannerIntoOutputPage( $out, $banner );
+
 				// FIXME: This is currently only needed to support testing
-				$out->setProperty( 'articlebanner', $bannername );
+				$out->setProperty( 'articlebanner-name', $bannername );
 			}
 		}
 		// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
@@ -75,7 +88,6 @@ class WikidataPageBanner {
 			// banner only on specified namespaces, and not Main Page of wiki
 			if ( in_array( $ns, $wgWPBNamespaces )
 				&& !$title->isMainPage() ) {
-				$wpbFunctionsClass = self::$wpbFunctionsClass;
 				// first try to obtain bannername from Wikidata
 				$bannername = $wpbFunctionsClass::getWikidataBanner( $title );
 				if ( $bannername === null ) {
@@ -88,15 +100,11 @@ class WikidataPageBanner {
 					getBannerHtml( $bannername, $paramsForBannerTemplate );
 				// only add banner and styling if valid banner generated
 				if ( $banner !== null ) {
-					$out->addModuleStyles( 'ext.WikidataPageBanner' );
-					$out->addModules( 'ext.WikidataPageBanner.positionBanner' );
-					$out->prependHtml( $banner );
-					// hide primary title
-					$out->setPageTitle( '' );
-					$out->setHTMLTitle( $out->getTitle() );
+					$wpbFunctionsClass::insertBannerIntoOutputPage( $out, $banner );
+
 					// set articlebanner property on OutputPage
 					// FIXME: This is currently only needed to support testing
-					$out->setProperty( 'articlebanner', $bannername );
+					$out->setProperty( 'articlebanner-name', $bannername );
 				}
 			}
 		}

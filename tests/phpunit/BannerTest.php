@@ -74,9 +74,12 @@ class BannerTest extends MediaWikiTestCase {
 		// store a mock object in $wpbFunctionsClass static variable so that hooks call mock functions
 		// through this variable when performing tests
 		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
-		WikidataPageBanner::addBanner( $out, null );
-		$this->assertEquals( $out->getProperty( 'articlebanner' ), $expected,
-			'articlebanner property must only be set when a valid banner is added' );
+		$skin = $this->getMock( "Skin" );
+		$skin->expects( $this->any() )->method( 'getSkinName' )
+			->will( $this->returnValue( "vector" ) );
+		WikidataPageBanner::addBanner( $out, $skin );
+		$this->assertEquals( $out->getProperty( 'articlebanner-name' ), $expected,
+			'articlebanner-name property must only be set when a valid banner is added' );
 	}
 
 	/**

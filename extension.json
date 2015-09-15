@@ -75,6 +75,9 @@
 		"ParserFirstCallInit": [
 			"WikidataPageBanner::onParserFirstCallInit"
 		],
+		"SkinTemplateOutputPageBeforeExec": [
+			"WikidataPageBanner::onSkinTemplateOutputPageBeforeExec"
+		],
 		"UnitTestsList": [
 			"WikidataPageBanner::onUnitTestsList"
 		],
