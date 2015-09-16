@@ -15,11 +15,21 @@ class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 		return "Banner";
 	}
 
-	public static function getWikidataBanner( $title ) {
-		if ( $title == 'NoWikidataBanner' ) {
+	public static function getPageImagesBanner( $title ) {
+		if ( in_array( $title, array( 'WikidataBanner', 'PageWithPageImageBanner' ) ) ) {
+			return "PageImagesBanner";
+		} else {
 			return null;
 		}
-		return "WikidataBanner";
+	}
+
+	public static function getWikidataBanner( $title ) {
+		if ( in_array( $title, array( 'WikidataBanner', 'PageWithoutCustomBanner',
+			'PageWithCustomBanner', 'PageWithInvalidCustomBanner' ) ) ) {
+			return "WikidataBanner";
+		} else {
+			return null;
+		}
 	}
 
 	public static function getImageUrl( $filename, $imagewidth = null ) {
@@ -41,12 +51,14 @@ class BannerTest extends MediaWikiTestCase {
 	 * property
 	 */
 	protected $testPagesForDefaultBanner = array(
-		array( 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ),
-		array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ),
-		array( 'PageInFileNamespace', NS_FILE, false, null ),
-		array( 'NoWikidataBanner', NS_MAIN, false, "DefaultBanner" ),
-		array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "WikidataBanner" )
-	);
+			array( 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ),
+			array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ),
+			array( 'PageInFileNamespace', NS_FILE, false, null ),
+			array( 'NoWikidataBanner', NS_MAIN, false, "DefaultBanner" ),
+			array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "WikidataBanner" ),
+			array( 'PageWithPageImageBanner', NS_MAIN, false, "PageImagesBanner" ),
+			array( 'PageWithPageImageBanner', NS_MAIN, "NoBanner", "PageImagesBanner" ),
+		);
 
 	/**
 	 * Add test pages to database
@@ -68,12 +80,17 @@ class BannerTest extends MediaWikiTestCase {
 		parent::setUp();
 		$this->setMwGlobals( 'wgWPBImage', "DefaultBanner" );
 		$this->setMwGlobals( 'wgWPBEnableDefaultBanner', true );
+		$this->setMwGlobals( 'wgWPBEnablePageImagesBanners', true );
 		$this->addDBData();
 	}
 
 	/**
 	 * @dataProvider provideTestDefaultBanner
 	 * @covers addDefaultBanner(...)
+	 * @param {String} $title of page banner being generated on
+	 * @param {Number} $ns namespace of title
+	 * @param {String} $customBanner parameter given to PAGEBANNER magic word
+	 * @param {String} $expected the name of the banner we output.
 	 */
 	public function testDefaultBanner( $title, $ns, $customBanner, $expected ) {
 		$out = $this->createPage( $title, $ns, $customBanner );
@@ -84,7 +101,7 @@ class BannerTest extends MediaWikiTestCase {
 		$skin->expects( $this->any() )->method( 'getSkinName' )
 			->will( $this->returnValue( "vector" ) );
 		WikidataPageBanner::onBeforePageDisplay( $out, $skin );
-		$this->assertEquals( $out->getProperty( 'articlebanner-name' ), $expected,
+		$this->assertEquals( $expected, $out->getProperty( 'articlebanner-name' ),
 			'articlebanner-name property must only be set when a valid banner is added' );
 	}
 

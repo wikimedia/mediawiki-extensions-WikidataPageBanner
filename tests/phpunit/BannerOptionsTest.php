@@ -37,6 +37,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 	protected function setUp() {
 		parent::setUp();
 		$this->addDBData();
+		$this->setMwGlobals( 'wgWPBEnablePageImagesBanners', false );
 	}
 
 	protected function tearDown() {

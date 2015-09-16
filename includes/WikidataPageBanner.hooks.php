@@ -67,7 +67,8 @@ class WikidataPageBanner {
 	/**
 	 * WikidataPageBanner::addBanner Generates banner from given options and adds it and its styles
 	 * to Output Page. If no options defined through {{PAGEBANNER}}, tries to add a wikidata banner
-	 * or a default one.
+	 * or an image as defined by the PageImages extension or a default one
+	 * dependent on how extension is configured.
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin Skin object being rendered
@@ -95,9 +96,9 @@ class WikidataPageBanner {
 				$params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 			}
 			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
-			// attempt to get WikidataBanner
+			// attempt to get an automatic banner
 			if ( $banner === null ) {
-				$bannername = $wpbFunctionsClass::getWikidataBanner( $title );
+				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
 				$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
 			}
 			// only add banner and styling if valid banner generated
@@ -121,11 +122,7 @@ class WikidataPageBanner {
 			// banner only on specified namespaces (but all if true), and not Main Page of wiki
 			if ( $wpbFunctionsClass::validateNamespace( $ns ) && !$title->isMainPage() ) {
 				// first try to obtain bannername from Wikidata
-				$bannername = $wpbFunctionsClass::getWikidataBanner( $title );
-				if ( $bannername === null ) {
-					// if Wikidata banner not found, set bannername to default banner
-					$bannername = $config->get( 'WPBImage' );
-				}
+				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
 				// add title to template parameters
 				$paramsForBannerTemplate = array( 'title' => $title );
 				$banner = $wpbFunctionsClass::
@@ -275,13 +272,14 @@ class WikidataPageBanner {
 			// be cleaned to only accept a valid title object pointing to a banner file
 			// Default banner is not added to imagelinks as that is the property of this extension
 			// and is uniform across all pages
-			$wikidataBanner = $wpbFunctionsClass::getWikidataBanner( $title );
-
 			$bannerTitle = null;
 			if ( $wpbFunctionsClass::getImageUrl( $paramsForBannerTemplate['name'] ) !== null ) {
 				$bannerTitle = Title::makeTitleSafe( NS_FILE, $paramsForBannerTemplate['name'] );
-			} elseif ( $wpbFunctionsClass::getImageUrl( $wikidataBanner ) !== null ) {
-				$bannerTitle = Title::makeTitleSafe( NS_FILE, $wikidataBanner );
+			} else {
+				$fallbackBanner = $wpbFunctionsClass::getAutomaticBanner( $title );
+				if ( $wpbFunctionsClass::getImageUrl( $fallbackBanner ) !== null ) {
+					$bannerTitle = Title::makeTitleSafe( NS_FILE, $fallbackBanner );
+				}
 			}
 			// add custom or wikidata banner properties to page_props table if a valid banner exists
 			// in, checking for custom banner first, then wikidata banner
