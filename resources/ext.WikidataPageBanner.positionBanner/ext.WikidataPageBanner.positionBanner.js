@@ -1,5 +1,7 @@
 ( function( mw, $ ) {
-	var $wpbBannerImageContainer = $( '.wpb-topbanner' );
+	var $wpbBannerImageContainer = $( '.wpb-topbanner' ),
+		$img = $( 'img.wpb-banner-image' );
+
 	function positionBanner( $container ) {
 		/**
 		 * Javascript to fine tune position of banner according to position coordinates.
@@ -69,9 +71,13 @@
 			}
 		) );
 	// set focus after image has loaded
-	$( 'img.wpb-banner-image' ).load( function() {
+	$img.load( function() {
 		positionBanner( $wpbBannerImageContainer );
 	} );
+	// Image might be cached
+	if ( $img.length && $img[0].complete ) {
+		positionBanner( $wpbBannerImageContainer );
+	}
 	// Expose interface for testing.
 	mw.wpb = {
 		positionBanner: positionBanner
