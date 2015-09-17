@@ -97,7 +97,8 @@
 			1280,
 			2560
 		],
-		"WPBBannerProperty": ""
+		"WPBBannerProperty": "",
+		"WPBSkinBlacklist": []
 	},
 	"ConfigRegistry": {
 		"wikidatapagebanner": "GlobalVarConfig::newInstance"

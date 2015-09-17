@@ -266,12 +266,16 @@ class WikidataPageBannerFunctions {
 	 * @param string $html of banner to insert
 	 */
 	public static function insertBannerIntoOutputPage( $out, $html ) {
-		global $wgWPBEnableHeadingOverride;
+		$config = WikidataPageBannerFunctions::getWPBConfig();
 
-		if ( in_array( $out->getSkin()->getSkinName(), self::$blacklistSkins ) ) {
+		$skinName = $out->getSkin()->getSkinName();
+		$doNotShow = in_array( $skinName, $config->get( 'WPBSkinBlacklist' ) );
+
+		if ( !$doNotShow
+			&& in_array( $skinName, self::$blacklistSkins ) ) {
 			$out->prependHtml( $banner );
 		}
-		if ( $wgWPBEnableHeadingOverride ) {
+		if ( $config->get( 'WPBEnableHeadingOverride' ) && !$doNotShow ) {
 			$htmlTitle = $out->getHTMLTitle();
 			// hide primary title
 			$out->setPageTitle( '' );

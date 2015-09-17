@@ -36,8 +36,13 @@ class WikidataPageBanner {
 	 * @return bool
 	 */
 	public static function onSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
+		$config = WikidataPageBannerFunctions::getWPBConfig();
+		$blacklist = $config->get( 'WPBSkinBlacklist' );
+
 		$banner = $skin->getOutput()->getProperty( 'articlebanner' );
-		$tpl->set( 'prebodyhtml', $banner . $tpl->get( 'prebodyhtml', '' ) );
+		if ( !in_array( $skin->getSkinName(), $blacklist ) ) {
+			$tpl->set( 'prebodyhtml', $banner . $tpl->get( 'prebodyhtml', '' ) );
+		}
 		return true;
 	}
 
