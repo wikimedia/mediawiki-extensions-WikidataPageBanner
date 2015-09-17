@@ -127,7 +127,7 @@ class WikidataPageBannerFunctions {
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
 	public static function getBannerHtml( $bannername, $options = array() ) {
-		global $wgWPBStandardSizes;
+		global $wgWPBStandardSizes, $wgWPBEnableHeadingOverride;
 
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
@@ -156,6 +156,7 @@ class WikidataPageBannerFunctions {
 			$options['srcset'] = $srcset;
 			$file = wfFindFile( $bannerfile );
 			$options['maxWidth'] = $file->getWidth();
+			$options['isHeadingOverrideEnabled'] = $wgWPBEnableHeadingOverride;
 			$banner = $templateParser->processTemplate(
 					'banner',
 					$options
@@ -264,14 +265,18 @@ class WikidataPageBannerFunctions {
 	 * @param string $html of banner to insert
 	 */
 	public static function insertBannerIntoOutputPage( $out, $html ) {
+		global $wgWPBEnableHeadingOverride;
+
 		if ( in_array( $out->getSkin()->getSkinName(), self::$blacklistSkins ) ) {
 			$out->prependHtml( $banner );
 		}
-		$htmlTitle = $out->getHTMLTitle();
-		// hide primary title
-		$out->setPageTitle( '' );
-		// set html title again, because above call also empties the <title> tag
-		$out->setHTMLTitle( $htmlTitle );
+		if ( $wgWPBEnableHeadingOverride ) {
+			$htmlTitle = $out->getHTMLTitle();
+			// hide primary title
+			$out->setPageTitle( '' );
+			// set html title again, because above call also empties the <title> tag
+			$out->setHTMLTitle( $htmlTitle );
+		}
 		// set articlebanner property on OutputPage for getSkinTemplateOutputPageBeforeExec hook
 		$out->setProperty( 'articlebanner', $html );
 

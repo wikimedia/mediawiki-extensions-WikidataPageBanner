@@ -45,10 +45,6 @@
 	max-width: 95%;
 }
 
-h1.firstHeading {
-	display: none;
-}
-
 .wpb-topbanner .wpb-banner-image{
 	width: 100%;
 	height: auto;
@@ -86,9 +82,8 @@ h1.firstHeading {
 			// banner is cropped by setting overflow hidden on containing element
 			max-width: none !important;
 			width: auto;
-			// Set min height to no more than 100px so that atleast a 3:1 aspect ratio of banners is
-			// kept(screen width is around 300px-400px)
-			min-height: 100px;
+			// Banners on mobile screens should be using the origin parameter and be at least 180px in height
+			min-height: 180px;
 			// centre the banner by default
 			margin-left: 50%;
 			.transform ( translateX( -50% ) );
