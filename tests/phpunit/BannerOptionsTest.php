@@ -50,6 +50,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'pgname must be set to title' );
 		$this->assertEquals( $bannerparams['tooltip'], 'BannerWithOptions',
 			'tooltip must be set to title' );
+		$this->assertEquals( array(), $pOut->getWarnings() );
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -59,6 +60,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'pgname must be set' );
 		$this->assertEquals( $bannerparams['tooltip'], 'Banner2',
 			'tooltip must be set to pgname' );
+		$this->assertEquals( array(), $pOut->getWarnings() );
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -68,6 +70,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'pgname must be set' );
 		$this->assertEquals( $bannerparams['tooltip'], 'hovertext',
 			'pgname must be set' );
+		$this->assertEquals( array(), $pOut->getWarnings() );
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -83,6 +86,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'star icon must be set' );
 		$this->assertContains( 'Main_Page', $bannerparams['icons'][1]['url'],
 			'iconurl must be a valid main page url' );
+		$this->assertEquals( array(), $pOut->getWarnings() );
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -94,6 +98,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos-x must be set' );
 		$this->assertEquals( $bannerparams['data-pos-y'], 0.2,
 			'data-pos-x must be set' );
+		$this->assertEquals( array(), $pOut->getWarnings() );
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -103,6 +108,29 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos must default to 0' );
 		$this->assertEquals( $bannerparams['data-pos-y'], 0,
 			'data-pos-x must default to 0' );
+		$this->assertEquals( array(), $pOut->getWarnings() );
+
+		$pOut->setProperty( 'wpb-banner-options', null );
+		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
+			'pgname=Banner2', 'origin=0.3', 'test=testparam' );
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['data-pos-x'], 0,
+			'data-pos must default to 0' );
+		$this->assertEquals( $bannerparams['data-pos-y'], 0,
+			'data-pos-x must default to 0' );
+		$this->assertEquals( array(
+			'Following arguments used in PAGEBANNER are invalid or unknown: test' ), $pOut->getWarnings() );
+
+		$pOut->setProperty( 'wpb-banner-options', null );
+		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
+			'pgname=Banner2', 'origin=0.3', 'test=testparam', 'test2' );
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['data-pos-x'], 0,
+			'data-pos must default to 0' );
+		$this->assertEquals( $bannerparams['data-pos-y'], 0,
+			'data-pos-x must default to 0' );
+		$this->assertEquals( array(
+			'Following arguments used in PAGEBANNER are invalid or unknown: test' ), $pOut->getWarnings() );
 	}
 
 	/**

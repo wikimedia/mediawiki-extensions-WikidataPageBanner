@@ -11,6 +11,17 @@ class WikidataPageBanner {
 	public static $wpbFunctionsClass = "WikidataPageBannerFunctions";
 
 	/**
+	 * Holds an array of valid parameters fr PAGEBANNER hook.
+	 */
+	private static $allowedParameters = array(
+		'pgname',
+		'tooltip',
+		'bottomtoc',
+		'origin',
+		'icon-*',
+	);
+
+	/**
 	 * Expands icons for rendering via template
 	 *
 	 * @param Array[] $icons of options for IconWidget
@@ -146,6 +157,42 @@ class WikidataPageBanner {
 	}
 
 	/**
+	 * Validates a given array of parameters against a set of allowed parameters and adds a
+	 * warning message with a list of unknown parameters and a tracking category, if there are any.
+	 *
+	 * @param array $args Array of parameters to check
+	 * @param Parser $parser ParserOutput object to add the warning message
+	 * @return Status A Status object, if there are invalid/unknown parameters,
+	 *	they will be added as warnings.
+	 */
+	public static function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
+		global $wgLang;
+
+		$badParams = array();
+		$allowedParams = array_flip( self::$allowedParameters );
+		foreach ( $args as $param => $value ) {
+			// manually check for icons, they can have any name with the "icon-" prefix
+			if ( !isset( $allowedParams[$param] ) && substr( $param, 0, 5 ) !== 'icon-' ) {
+				$badParams[] = $param;
+			}
+		}
+
+		if ( $badParams ) {
+			// if there are unknown parameters, add a tracking category
+			$parser->addTrackingCategory( 'wikidatapagebanner-invalid-arguments-cat' );
+
+			// this message will be visible when the page preview button is used, but not when the page is
+			// saved. It contains a list of unknown parameters.
+			$parser->getOutput()->addWarning(
+				wfMessage( 'wikidatapagebanner-invalid-arguments', $wgLang->commaList( $badParams ) )
+					->title( $parser->getTitle() )
+					->inContentLanguage()
+					->text()
+			);
+		}
+	}
+
+	/**
 	 * WikidataPageBanner::addCustomBanner
 	 * Parser function hooked to 'PAGEBANNER' magic word, to define a custom banner and options to
 	 * customize banner such as icons,horizontal TOC,etc. The method does not return any content but
@@ -170,6 +217,9 @@ class WikidataPageBanner {
 			in_array( $ns, WikidataPageBannerFunctions::getWPBConfig()->get( 'WPBNamespaces' ) ) &&
 			!$title->isMainPage()
 		) {
+			// check for unknown parameters used in the parser hook and add a warning if there is any
+			$status = self::addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
+
 			// set title and tooltip attribute to default title
 			$paramsForBannerTemplate['tooltip'] = $title->getText();
 			$paramsForBannerTemplate['title'] = $title->getText();
