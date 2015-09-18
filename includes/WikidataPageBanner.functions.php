@@ -4,6 +4,8 @@
  * to render the banner
  */
 class WikidataPageBannerFunctions {
+	private static $wpbConfig = null;
+
 	/**
 	 * @var string[] name of skins that do not implement 'prebodyhtml'
 	 *  banners for these skin will be prepended to body content
@@ -127,8 +129,7 @@ class WikidataPageBannerFunctions {
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
 	public static function getBannerHtml( $bannername, $options = array() ) {
-		global $wgWPBStandardSizes, $wgWPBEnableHeadingOverride;
-
+		$config = self::getWPBConfig();
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
@@ -138,7 +139,8 @@ class WikidataPageBannerFunctions {
 			// @var int index variable
 			$i = 0;
 			foreach ( $urls as $url ) {
-				$size = $wgWPBStandardSizes[$i];
+				$size = $config->get( 'WPBStandardSizes' );
+				$size = $size[$i];
 				// add url with width and a comma if not adding the last url
 				if ( $i < count( $urls ) ) {
 					$srcset[] = "$url {$size}w";
@@ -156,7 +158,7 @@ class WikidataPageBannerFunctions {
 			$options['srcset'] = $srcset;
 			$file = wfFindFile( $bannerfile );
 			$options['maxWidth'] = $file->getWidth();
-			$options['isHeadingOverrideEnabled'] = $wgWPBEnableHeadingOverride;
+			$options['isHeadingOverrideEnabled'] = $config->get( 'WPBEnableHeadingOverride' );
 			$banner = $templateParser->processTemplate(
 					'banner',
 					$options
@@ -204,9 +206,8 @@ class WikidataPageBannerFunctions {
 	 * @return array
 	 */
 	public static function getStandardSizeUrls( $filename ) {
-		global $wgWPBStandardSizes;
 		$urlSet = array();
-		foreach ( $wgWPBStandardSizes as $size ) {
+		foreach ( self::getWPBConfig()->get( 'WPBStandardSizes' ) as $size ) {
 			$url = static::getImageUrl( $filename, $size );
 			// prevent duplication in urlSet
 			if ( $url !== null && !in_array( $url, $urlSet, true ) ) {
@@ -224,9 +225,9 @@ class WikidataPageBannerFunctions {
 	 * or null if none found
 	 */
 	public static function getWikidataBanner( $title ) {
-		global $wgWPBBannerProperty;
 		$banner = null;
-		if ( empty( $wgWPBBannerProperty ) ) {
+		$wpbBannerProperty = self::getWPBConfig()->get( 'WPBBannerProperty' );
+		if ( empty( $wpbBannerProperty ) ) {
 			return null;
 		}
 		// Ensure Wikibase client is installed
@@ -243,7 +244,7 @@ class WikidataPageBannerFunctions {
 				$item = $entityLookup->getEntity( $itemId );
 				$statements = $item->getStatements()->getByPropertyId(
 						new Wikibase\DataModel\Entity\PropertyId(
-							$wgWPBBannerProperty
+							$wpbBannerProperty
 						)
 					)->getBestStatements();
 				if ( !$statements->isEmpty() ) {
@@ -283,5 +284,18 @@ class WikidataPageBannerFunctions {
 		// Add common resources
 		$out->addModuleStyles( 'ext.WikidataPageBanner' );
 		$out->addModules( 'ext.WikidataPageBanner.positionBanner' );
+	}
+
+	/**
+	 * Returns a new or cached config object for WikidataPageBanner extension.
+	 *
+	 * @return Config
+	 */
+	public static function getWPBConfig() {
+		if ( self::$wpbConfig === null ) {
+			self::$wpbConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'wikidatapagebanner' );
+		}
+
+		return self::$wpbConfig;
 	}
 }
