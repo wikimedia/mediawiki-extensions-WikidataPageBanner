@@ -8,7 +8,7 @@ class WikidataPageBanner {
 	 * in it externally
 	 * @var string Classname of WikidataPageBannerFunctions
 	 */
-	static $wpbFunctionsClass = "WikidataPageBannerFunctions";
+	public static $wpbFunctionsClass = "WikidataPageBannerFunctions";
 
 	/**
 	 * Expands icons for rendering via template
@@ -51,8 +51,7 @@ class WikidataPageBanner {
 	 * @return  bool
 	 */
 	public static function addBanner( OutputPage $out, Skin $skin ) {
-		global $wgWPBImage, $wgWPBNamespaces, $wgWPBEnableDefaultBanner;
-
+		$config = WikidataPageBannerFunctions::getWPBConfig();
 		$title = $out->getTitle();
 		$isDiff = $out->getRequest()->getVal( 'diff' );
 		$wpbFunctionsClass = self::$wpbFunctionsClass;
@@ -83,16 +82,21 @@ class WikidataPageBanner {
 			}
 		}
 		// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
-		elseif ( $title->isKnown() && $out->isArticle() && $wgWPBEnableDefaultBanner && !$isDiff ) {
+		elseif (
+			$title->isKnown() &&
+			$out->isArticle() &&
+			$config->get( 'WPBEnableDefaultBanner' ) &&
+			!$isDiff
+		) {
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
-			if ( in_array( $ns, $wgWPBNamespaces )
+			if ( in_array( $ns, $config->get( 'WPBNamespaces' ) )
 				&& !$title->isMainPage() ) {
 				// first try to obtain bannername from Wikidata
 				$bannername = $wpbFunctionsClass::getWikidataBanner( $title );
 				if ( $bannername === null ) {
 					// if Wikidata banner not found, set bannername to default banner
-					$bannername = $wgWPBImage;
+					$bannername = $config->get( 'WPBImage' );
 				}
 				// add title to template parameters
 				$paramsForBannerTemplate = array( 'title' => $title );
@@ -151,7 +155,6 @@ class WikidataPageBanner {
 	 * @param string $bannername Name of custom banner
 	 */
 	public static function addCustomBanner( Parser $parser, $bannername ) {
-		global $wgWPBNamespaces;
 		// @var array to hold parameters to be passed to banner template
 		$paramsForBannerTemplate = array();
 		// skip parser function name and bannername in arguments
@@ -163,7 +166,10 @@ class WikidataPageBanner {
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
-		if ( in_array( $ns, $wgWPBNamespaces ) && !$title->isMainPage() ) {
+		if (
+			in_array( $ns, WikidataPageBannerFunctions::getWPBConfig()->get( 'WPBNamespaces' ) ) &&
+			!$title->isMainPage()
+		) {
 			// set title and tooltip attribute to default title
 			$paramsForBannerTemplate['tooltip'] = $title->getText();
 			$paramsForBannerTemplate['title'] = $title->getText();
