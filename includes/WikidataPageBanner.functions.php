@@ -10,7 +10,7 @@ class WikidataPageBannerFunctions {
 	 * @var string[] name of skins that do not implement 'prebodyhtml'
 	 *  banners for these skin will be prepended to body content
 	 */
-	static $blacklistSkins = array( 'monobook', 'modern', 'cologneblue' );
+	protected static $blacklistSkins = array( 'monobook', 'modern', 'cologneblue' );
 
 	/**
 	 * Set bannertoc variable on parser output object
