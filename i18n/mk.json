@@ -4,6 +4,8 @@
 			"Bjankuloski06"
 		]
 	},
-	"wikidatapagebanner-extname": "ВикиподатоциПодениченРазглас",
-	"wikidatapagebanner-desc": "Дава разгласи на почетокот на одредени статии на едно вики"
+	"wikidatapagebanner-extname": "Поединечен разглас",
+	"wikidatapagebanner-desc": "Дава разгласи на почетокот на одредени статии на едно вики",
+	"wikidatapagebanner-invalid-arguments": "Следниве аргументи што се користат во PAGEBANNER се неважечки или непознати: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "Поединечен разглас со непознати параметри"
 }

@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sujiniku"
+		]
+	},
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNERで用いられている以下の引数が、無効または不明です: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "不明なパラメータのウィキデータ・ページバナー"
+}

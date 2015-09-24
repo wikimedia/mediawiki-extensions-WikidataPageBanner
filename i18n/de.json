@@ -5,5 +5,7 @@
 		]
 	},
 	"wikidatapagebanner-extname": "WikidataPageBanner",
-	"wikidatapagebanner-desc": "Rendert Banner auf angegebenen Wikiseiten am Artikelanfang"
+	"wikidatapagebanner-desc": "Rendert Banner auf angegebenen Wikiseiten am Artikelanfang",
+	"wikidatapagebanner-invalid-arguments": "Folgende Argumente, die in PAGEBANNER verwendet werden, sind ungültig oder unbekannt: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner mit unbekannten Parametern"
 }

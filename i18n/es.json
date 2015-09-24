@@ -5,5 +5,7 @@
 		]
 	},
 	"wikidatapagebanner-extname": "WikidataPageBanner",
-	"wikidatapagebanner-desc": "Despliega pancartas en páginas especificadas del wiki, al principio de los artículos"
+	"wikidatapagebanner-desc": "Despliega pancartas en páginas especificadas del wiki, al principio de los artículos",
+	"wikidatapagebanner-invalid-arguments": "Los siguientes argumentos utilizados en PAGEBANNER no son válidos o se desconocen: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner con parámetros desconocidos"
 }
