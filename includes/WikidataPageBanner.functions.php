@@ -273,7 +273,7 @@ class WikidataPageBannerFunctions {
 
 		if ( !$doNotShow
 			&& in_array( $skinName, self::$blacklistSkins ) ) {
-			$out->prependHtml( $banner );
+			$out->prependHtml( $html );
 		}
 		if ( $config->get( 'WPBEnableHeadingOverride' ) && !$doNotShow ) {
 			$htmlTitle = $out->getHTMLTitle();
