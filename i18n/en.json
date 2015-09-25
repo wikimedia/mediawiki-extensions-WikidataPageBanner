@@ -2,7 +2,7 @@
 	"@metadata": {
 		"authors": []
 	},
-	"wikidatapagebanner-extname": "WikidataPageBanner",
+	"wikidatapagebanner-extensionname": "WikidataPageBanner",
 	"wikidatapagebanner-desc": "Render banners on specified pages of wiki at the beginning of articles",
 	"wikidatapagebanner-invalid-arguments": "Following arguments used in PAGEBANNER are invalid or unknown: $1",
 	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner with unknown parameters"

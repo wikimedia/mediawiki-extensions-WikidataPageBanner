@@ -4,7 +4,7 @@
 			"Amire80"
 		]
 	},
-	"wikidatapagebanner-extname": "WikidataPageBanner",
+	"wikidatapagebanner-extensionname": "WikidataPageBanner",
 	"wikidatapagebanner-desc": "תיצוג כרזות על דפים מסוימים בוויקי בתחילתם של ערכים",
 	"wikidatapagebanner-invalid-arguments": "הפרמטרים הבאים שמשמשים ב־PAGEBANNER בלתי־תקינים או בלתי־ידועים: $1",
 	"wikidatapagebanner-invalid-arguments-cat": "כרזת דף ויקינתונים עם פרמטרים בלתי־ידועים"

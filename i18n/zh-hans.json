@@ -4,6 +4,6 @@
 			"Liuxinyu970226"
 		]
 	},
-	"wikidatapagebanner-extname": "维基数据页面横幅",
+	"wikidatapagebanner-extensionname": "维基数据页面横幅",
 	"wikidatapagebanner-desc": "在指定的wiki页面中，在条目开头渲染横幅"
 }

@@ -1,6 +1,6 @@
 {
 	"@metadata": [],
-	"wikidatapagebanner-extname": "Used for the name of extension.",
+	"wikidatapagebanner-extensionname": "{{name}}",
 	"wikidatapagebanner-desc": "{{desc|name=WikidataPageBanner|url=https://www.mediawiki.org/wiki/Extension:WikidataPageBanner}}",
 	"wikidatapagebanner-invalid-arguments": "Message shown, if the user added the PAGEBANNER parser hook, but used unknown or invalid parameters.\n\n* $1 - comma-seperated list of invalid or unknown parameters",
 	"wikidatapagebanner-invalid-arguments-cat": "Name of the tracking category added to a page with a PAGEBANNER parser hook with invalid or unknown parameters."

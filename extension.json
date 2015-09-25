@@ -1,6 +1,6 @@
 {
 	"name": "WikidataPageBanner",
-	"namemsg": "Wikidatapagebanner-extname",
+	"namemsg": "wikidatapagebanner-extensionname",
 	"version": "0.0.1",
 	"author": [
 		"Sumit Asthana"
