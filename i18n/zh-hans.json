@@ -5,5 +5,7 @@
 		]
 	},
 	"wikidatapagebanner-extensionname": "维基数据页面横幅",
-	"wikidatapagebanner-desc": "在指定的wiki页面中，在条目开头渲染横幅"
+	"wikidatapagebanner-desc": "在指定的wiki页面中，在条目开头渲染横幅",
+	"wikidatapagebanner-invalid-arguments": "在PAGEBANNER中使用的以下参数无效或未知：$1",
+	"wikidatapagebanner-invalid-arguments-cat": "带未知参数的维基数据页面横幅"
 }
