@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Ash Crow",
-			"Wladek92"
+			"Wladek92",
+			"Gomoko"
 		]
 	},
 	"wikidatapagebanner-extensionname": "WikidataPageBanner",
-	"wikidatapagebanner-desc": "Affiche les bannières des pages wiki spécifiées au début des articles"
+	"wikidatapagebanner-desc": "Affiche les bannières des pages wiki spécifiées au début des articles",
+	"wikidatapagebanner-invalid-arguments": "Les arguments suivants utilisés dans PAGEBANNER ne sont pas valides ou sont inconnus : $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner avec des paramètres inconnus"
 }
