@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vriullop"
+		]
+	},
+	"wikidatapagebanner-desc": "Crea bàners per capçaleres d'articles en les pàgines wiki especificades",
+	"wikidatapagebanner-invalid-arguments": "Els següents arguments utilitzats a PAGEBANNER no són vàlids o són desconeguts: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "Capçalera de pàgina amb paràmetres desconeguts"
+}
