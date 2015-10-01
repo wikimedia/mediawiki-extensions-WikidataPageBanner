@@ -131,6 +131,15 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos-x must default to 0' );
 		$this->assertEquals( array(
 			'Following arguments used in PAGEBANNER are invalid or unknown: test' ), $pOut->getWarnings() );
+
+		$pOut->setProperty( 'wpb-banner-options', null );
+		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
+			'pgname=Banner2', 'toc=yes', 'test=testparam', 'test2' );
+		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['toc'], true,
+			'toc must default to yes' );
+		$this->assertEquals( array(
+			'Following arguments used in PAGEBANNER are invalid or unknown: test' ), $pOut->getWarnings() );
 	}
 
 	/**

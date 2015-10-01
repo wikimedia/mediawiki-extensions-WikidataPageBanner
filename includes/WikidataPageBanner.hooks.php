@@ -16,6 +16,7 @@ class WikidataPageBanner {
 	private static $allowedParameters = array(
 		'pgname',
 		'tooltip',
+		'toc',
 		'bottomtoc',
 		'origin',
 		'icon-*',
