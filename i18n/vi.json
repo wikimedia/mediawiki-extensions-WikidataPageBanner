@@ -5,5 +5,7 @@
 		]
 	},
 	"wikidatapagebanner-extensionname": "Cờ ngang Wikidata",
-	"wikidatapagebanner-desc": "Hiển thị cờ ngang về những trang wiki vào đầu bài viết"
+	"wikidatapagebanner-desc": "Hiển thị cờ ngang về những trang wiki vào đầu bài viết",
+	"wikidatapagebanner-invalid-arguments": "Các đối số được đưa vào PAGEBANNER là không hợp lệ hoặc không rõ: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner có tham số không rõ"
 }
