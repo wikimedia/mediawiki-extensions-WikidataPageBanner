@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toliño"
+			"Toliño",
+			"Elisardojm"
 		]
 	},
 	"wikidatapagebanner-extensionname": "WikidataPageBanner",
-	"wikidatapagebanner-desc": "Coloca un cartel nas páxinas especificadas dun wiki ao comezo dos artigos"
+	"wikidatapagebanner-desc": "Coloca un cartel nas páxinas especificadas dun wiki ao comezo dos artigos",
+	"wikidatapagebanner-invalid-arguments": "Os seguintes argumentos utilizados en PAGEBANNER non son válidos ou son descoñecidos: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner con parámetros descoñecidos"
 }
