@@ -1,5 +1,7 @@
 <?php
+
 class WikidataPageBanner {
+
 	/**
 	 * Singleton instance for helper class functions
 	 * This variable holds the class name for helper functions and is used to make calls to those
@@ -34,6 +36,7 @@ class WikidataPageBanner {
 			$iconData['html'] = $widget->toString();
 			$icons[$key] = $iconData;
 		}
+
 		return $icons;
 	}
 
@@ -56,6 +59,7 @@ class WikidataPageBanner {
 		if ( !in_array( $skin->getSkinName(), $blacklist ) ) {
 			$tpl->set( 'prebodyhtml', $banner . $tpl->get( 'prebodyhtml', '' ) );
 		}
+
 		return true;
 	}
 
@@ -130,6 +134,7 @@ class WikidataPageBanner {
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -143,6 +148,7 @@ class WikidataPageBanner {
 	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ) {
 		if ( $pOut->getProperty( 'wpb-banner-options' ) != null ) {
 			$options = $pOut->getProperty( 'wpb-banner-options' );
+
 			// if toc parameter set and toc enabled, remove original classes and add banner class
 			if ( isset( $options['toc'] ) && $pOut->getTOCEnabled() ) {
 				$options['toc'] = $pOut->getTOCHTML();
@@ -158,6 +164,7 @@ class WikidataPageBanner {
 				// disable default TOC
 				$out->enableTOC( false );
 			}
+
 			// set banner properties as an OutputPage property
 			$out->setProperty( 'wpb-banner-options', $options );
 		}
@@ -220,6 +227,7 @@ class WikidataPageBanner {
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
+
 		if (
 			in_array( $ns, WikidataPageBannerFunctions::getWPBConfig()->get( 'WPBNamespaces' ) ) &&
 			!$title->isMainPage()
@@ -261,6 +269,7 @@ class WikidataPageBanner {
 			// Default banner is not added to imagelinks as that is the property of this extension
 			// and is uniform across all pages
 			$wikidataBanner = $wpbFunctionsClass::getWikidataBanner( $title );
+
 			$bannerTitle = null;
 			if ( $wpbFunctionsClass::getImageUrl( $paramsForBannerTemplate['name'] ) !== null ) {
 				$bannerTitle = Title::makeTitleSafe( NS_FILE, $paramsForBannerTemplate['name'] );
@@ -296,11 +305,13 @@ class WikidataPageBanner {
 		// traverse test/phpunit/ directory and add test files
 		$it = new RecursiveDirectoryIterator( __DIR__ . '/../tests/phpunit' );
 		$it = new RecursiveIteratorIterator( $it );
+
 		foreach ( $it as $path => $file ) {
 			if ( substr( $path, -8 ) === 'Test.php' ) {
 				$files[] = $path;
 			}
 		}
+
 		return true;
 	}
 
@@ -325,4 +336,5 @@ class WikidataPageBanner {
 			'dependencies' => array( 'ext.WikidataPageBanner.positionBanner' ),
 		);
 	}
+
 }

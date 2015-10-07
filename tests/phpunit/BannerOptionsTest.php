@@ -8,12 +8,15 @@
  * Mock class for WikidataPageBannerOptions
  */
 class MockWikidataPageBannerOptions extends WikidataPageBannerFunctions {
+
 	public static function getBannerHtml( $bannername, $options = array() ) {
 		return $options;
 	}
+
 }
 
 class BannerOptionsTest extends MediaWikiTestCase {
+
 	public function addDBData() {
 		try {
 			if ( !Title::newFromText( 'BannerWithOptions', NS_MAIN )->exists() ) {
@@ -118,7 +121,8 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		$this->assertEquals( $bannerparams['data-pos-y'], 0,
 			'data-pos-x must default to 0' );
 		$this->assertEquals( array(
-			'Following arguments used in PAGEBANNER are invalid or unknown: test' ), $pOut->getWarnings() );
+			'Following arguments used in PAGEBANNER are invalid or unknown: test'
+		), $pOut->getWarnings() );
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -129,7 +133,8 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		$this->assertEquals( $bannerparams['data-pos-y'], 0,
 			'data-pos-x must default to 0' );
 		$this->assertEquals( array(
-			'Following arguments used in PAGEBANNER are invalid or unknown: test' ), $pOut->getWarnings() );
+			'Following arguments used in PAGEBANNER are invalid or unknown: test'
+		), $pOut->getWarnings() );
 
 		$pOut->setProperty( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -138,7 +143,8 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		$this->assertEquals( $bannerparams['toc'], true,
 			'toc must default to yes' );
 		$this->assertEquals( array(
-			'Following arguments used in PAGEBANNER are invalid or unknown: test' ), $pOut->getWarnings() );
+			'Following arguments used in PAGEBANNER are invalid or unknown: test'
+		), $pOut->getWarnings() );
 	}
 
 	/**
@@ -149,12 +155,16 @@ class BannerOptionsTest extends MediaWikiTestCase {
 	 */
 	protected function createParser( $title, $namespace ) {
 		$parser = $this->getMock( 'Parser' );
+
 		$parserOutput = new ParserOutput();
 		$parser->expects( $this->any() )->method( 'getOutput' )
 			->will( $this->returnValue( $parserOutput ) );
+
 		$curTitle = Title::newFromText( $title, $namespace );
 		$parser->expects( $this->any() )->method( 'getTitle' )
 			->will( $this->returnValue( $curTitle ) );
+
 		return $parser;
 	}
+
 }

@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This class contains helper functions which are used by hooks in WikidataPageBanner
  * to render the banner
  */
 class WikidataPageBannerFunctions {
+
 	private static $wpbConfig = null;
 
 	/**
@@ -14,6 +16,7 @@ class WikidataPageBannerFunctions {
 
 	/**
 	 * Set bannertoc variable on parser output object
+	 *
 	 * @param array $paramsForBannerTemplate banner parameters array
 	 * @param array $options options from parser function
 	 */
@@ -25,11 +28,13 @@ class WikidataPageBannerFunctions {
 
 	/**
 	 * Render icons using OOJS-UI for icons which are set in arguments
+	 *
 	 * @param array $paramsForBannerTemplate Parameters defined for banner template
 	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
 	public static function addIcons( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
 		$iconsToAdd = array();
+
 		// check all parameters and look for one's starting with icon-
 		// The old format of icons=star,unesco would not generate any icons
 		foreach ( $argumentsFromParserFunction as $key => $value ) {
@@ -40,6 +45,7 @@ class WikidataPageBannerFunctions {
 				if ( !isset( $iconname, $value ) ) {
 					continue;
 				}
+
 				$iconName = Sanitizer::escapeClass( $iconname );
 				$iconUrl = Title::newFromText( $value );
 				$iconTitleText = $iconName;
@@ -55,6 +61,7 @@ class WikidataPageBannerFunctions {
 				$iconsToAdd[] = $finalIcon;
 			}
 		}
+
 		// only set hasIcons to true if parser function gives some non-empty icon names
 		if ( $iconsToAdd ) {
 			$paramsForBannerTemplate['hasIcons'] = true;
@@ -64,6 +71,7 @@ class WikidataPageBannerFunctions {
 
 	/**
 	 * Sets focus parameter on banner templates to shift focus on banner when cropped
+	 *
 	 * @param array $paramsForBannerTemplate Parameters defined for banner template
 	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
@@ -72,6 +80,7 @@ class WikidataPageBannerFunctions {
 		// Allowed values for each coordinate is between 0 and 1
 		$paramsForBannerTemplate['data-pos-x'] = 0;
 		$paramsForBannerTemplate['data-pos-y'] = 0;
+
 		if ( isset( $argumentsFromParserFunction['origin'] ) ) {
 			// split the origin into x and y coordinates
 			$coords = explode( ',', $argumentsFromParserFunction['origin'] );
@@ -109,6 +118,7 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function extractOptions( array $options ) {
 		$results = array();
+
 		foreach ( $options as $option ) {
 			$pair = explode( '=', $option, 2 );
 			if ( count( $pair ) == 2 ) {
@@ -117,6 +127,7 @@ class WikidataPageBannerFunctions {
 				$results[$name] = $value;
 			}
 		}
+
 		return $results;
 	}
 
@@ -134,6 +145,7 @@ class WikidataPageBannerFunctions {
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
 		$srcset = array();
+
 		// if a valid bannername given, set banner
 		if ( !empty( $urls ) ) {
 			// @var int index variable
@@ -160,10 +172,11 @@ class WikidataPageBannerFunctions {
 			$options['maxWidth'] = $file->getWidth();
 			$options['isHeadingOverrideEnabled'] = $config->get( 'WPBEnableHeadingOverride' );
 			$banner = $templateParser->processTemplate(
-					'banner',
-					$options
-				);
+				'banner',
+				$options
+			);
 		}
+
 		return $banner;
 	}
 
@@ -182,8 +195,8 @@ class WikidataPageBannerFunctions {
 		$title = Title::makeTitleSafe( NS_IMAGE, $filename );
 		$file = wfFindFile( $title );
 		$options = array(
-				'options' => array( 'min_range' => 0, 'max_range' => 3000 )
-			);
+			'options' => array( 'min_range' => 0, 'max_range' => 3000 )
+		);
 		// if file not found, return null
 		if ( $file == null ) {
 			return null;
@@ -208,6 +221,7 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function getStandardSizeUrls( $filename ) {
 		$urlSet = array();
+
 		foreach ( self::getWPBConfig()->get( 'WPBStandardSizes' ) as $size ) {
 			$url = static::getImageUrl( $filename, $size );
 			// prevent duplication in urlSet
@@ -215,6 +229,7 @@ class WikidataPageBannerFunctions {
 				$urlSet[] = $url;
 			}
 		}
+
 		return $urlSet;
 	}
 
@@ -231,6 +246,7 @@ class WikidataPageBannerFunctions {
 		if ( empty( $wpbBannerProperty ) ) {
 			return null;
 		}
+
 		// Ensure Wikibase client is installed
 		if ( class_exists( 'Wikibase\Client\WikibaseClient' ) ) {
 			$entityIdLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
@@ -257,6 +273,7 @@ class WikidataPageBannerFunctions {
 				}
 			}
 		}
+
 		return $banner;
 	}
 
@@ -272,10 +289,10 @@ class WikidataPageBannerFunctions {
 		$skinName = $out->getSkin()->getSkinName();
 		$doNotShow = in_array( $skinName, $config->get( 'WPBSkinBlacklist' ) );
 
-		if ( !$doNotShow
-			&& in_array( $skinName, self::$blacklistSkins ) ) {
+		if ( !$doNotShow && in_array( $skinName, self::$blacklistSkins ) ) {
 			$out->prependHtml( $html );
 		}
+
 		if ( $config->get( 'WPBEnableHeadingOverride' ) && !$doNotShow ) {
 			$htmlTitle = $out->getHTMLTitle();
 			// hide primary title
@@ -303,4 +320,5 @@ class WikidataPageBannerFunctions {
 
 		return self::$wpbConfig;
 	}
+
 }

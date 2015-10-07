@@ -7,21 +7,25 @@
  * Mock class for WikidataPageBanner
  */
 class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
+
 	public static function getBannerHtml( $bannername, $options = array() ) {
 		if ( $bannername == 'NoBanner' ) {
 			return null;
 		}
 		return "Banner";
 	}
+
 	public static function getWikidataBanner( $title ) {
 		if ( $title == 'NoWikidataBanner' ) {
 			return null;
 		}
 		return "WikidataBanner";
 	}
+
 }
 
 class BannerTest extends MediaWikiTestCase {
+
 	/**
 	 * Set of pages.
 	 * array follows the pattern:
@@ -29,12 +33,12 @@ class BannerTest extends MediaWikiTestCase {
 	 * property
 	 */
 	protected $testPagesForDefaultBanner = array(
-			array( 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ),
-			array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ),
-			array( 'PageInFileNamespace', NS_FILE, false, null ),
-			array( 'NoWikidataBanner', NS_MAIN, false, "DefaultBanner" ),
-			array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "WikidataBanner" )
-		);
+		array( 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ),
+		array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ),
+		array( 'PageInFileNamespace', NS_FILE, false, null ),
+		array( 'NoWikidataBanner', NS_MAIN, false, "DefaultBanner" ),
+		array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "WikidataBanner" )
+	);
 
 	/**
 	 * Add test pages to database
@@ -51,15 +55,12 @@ class BannerTest extends MediaWikiTestCase {
 		}
 
 	}
+
 	protected function setUp() {
 		parent::setUp();
 		$this->setMwGlobals( 'wgWPBImage', "DefaultBanner" );
 		$this->setMwGlobals( 'wgWPBEnableDefaultBanner', true );
 		$this->addDBData();
-	}
-
-	protected function tearDown() {
-		parent::tearDown();
 	}
 
 	/**
@@ -131,12 +132,15 @@ class BannerTest extends MediaWikiTestCase {
 	 */
 	protected function createParser( $title, $namespace ) {
 		$parser = $this->getMock( 'Parser' );
+
 		$parserOutput = new ParserOutput();
 		$parser->expects( $this->any() )->method( 'getOutput' )
 			->will( $this->returnValue( $parserOutput ) );
+
 		$curTitle = Title::newFromText( $title, $namespace );
 		$parser->expects( $this->any() )->method( 'getTitle' )
 			->will( $this->returnValue( $curTitle ) );
+
 		return $parser;
 	}
 
@@ -146,4 +150,5 @@ class BannerTest extends MediaWikiTestCase {
 	public function provideTestDefaultBanner() {
 		return $this->testPagesForDefaultBanner;
 	}
+
 }
