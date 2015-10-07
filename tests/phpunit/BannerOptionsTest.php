@@ -143,8 +143,10 @@ class BannerOptionsTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * Helper function for testCustomBanner
-	 * @return  Parser Parser object associated with test pages
+	 * Helper function for self::testBannerOptions.
+	 * @param string $title
+	 * @param int $namespace
+	 * @return Parser Parser object associated with test pages
 	 */
 	protected function createParser( $title, $namespace ) {
 		$parser = $this->getMock( 'Parser' );

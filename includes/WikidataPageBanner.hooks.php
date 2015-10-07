@@ -25,7 +25,8 @@ class WikidataPageBanner {
 	/**
 	 * Expands icons for rendering via template
 	 *
-	 * @param Array[] $icons of options for IconWidget
+	 * @param array[] $icons of options for IconWidget
+	 * @return array[]
 	 */
 	protected static function expandIconTemplateOptions( array $icons ) {
 		foreach ( $icons as $key => $iconData ) {
@@ -64,7 +65,7 @@ class WikidataPageBanner {
 	 * or a default one.
 	 *
 	 * @param OutputPage $out
-	 * @param Skin Skin object being rendered
+	 * @param Skin $skin Skin object being rendered
 	 * @return  bool
 	 */
 	public static function addBanner( OutputPage $out, Skin $skin ) {
@@ -307,8 +308,8 @@ class WikidataPageBanner {
 	 * Register QUnit tests.
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderTestModules
 	 *
-	 * @param array $files
-	 * @return bool
+	 * @param array[] &$modules
+	 * @param ResourceLoader &$rl
 	 */
 	public static function onResourceLoaderTestModules( &$modules, &$rl ) {
 		$boilerplate = array(

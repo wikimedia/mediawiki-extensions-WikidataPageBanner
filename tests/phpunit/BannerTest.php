@@ -107,7 +107,10 @@ class BannerTest extends MediaWikiTestCase {
 
 	/**
 	 * Helper function for testDefaultBanner
-	 * @return  Article Article object representing test pages
+	 * @param string $title
+	 * @param int $namespace
+	 * @param string $customBanner
+	 * @return OutputPage
 	 */
 	protected function createPage( $title, $namespace, $customBanner ) {
 		$context = new RequestContext();
@@ -125,7 +128,9 @@ class BannerTest extends MediaWikiTestCase {
 
 	/**
 	 * Helper function for testCustomBanner
-	 * @return  Parser Parser object associated with test pages
+	 * @param string $title
+	 * @param int $namespace
+	 * @return Parser Parser object associated with test pages
 	 */
 	protected function createParser( $title, $namespace ) {
 		$parser = $this->getMock( 'Parser' );
