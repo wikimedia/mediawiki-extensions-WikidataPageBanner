@@ -22,7 +22,6 @@ class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 }
 
 class BannerTest extends MediaWikiTestCase {
-	protected $exceptionFromAddDBData;
 	/**
 	 * Set of pages.
 	 * array follows the pattern:
@@ -48,9 +47,7 @@ class BannerTest extends MediaWikiTestCase {
 					$this->insertPage( $page[0], 'Some Text' );
 				}
 			}
-
 		} catch ( Exception $e ) {
-			$this->exceptionFromAddDBData = $e;
 		}
 
 	}
@@ -90,7 +87,7 @@ class BannerTest extends MediaWikiTestCase {
 		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock
 		// functions through this variable when performing tests
 		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
-		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
 		$this->assertEquals( $bannerparams['name'], 'Banner',
@@ -98,7 +95,7 @@ class BannerTest extends MediaWikiTestCase {
 
 		$parser = $this->createParser( 'PageInTalkNamespace', NS_TALK );
 		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
-		$output = WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
 		$this->assertFalse( $bannerparams, 'Banner',

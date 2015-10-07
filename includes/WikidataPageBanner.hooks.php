@@ -224,7 +224,7 @@ class WikidataPageBanner {
 			!$title->isMainPage()
 		) {
 			// check for unknown parameters used in the parser hook and add a warning if there is any
-			$status = self::addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
+			self::addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
 
 			// set title and tooltip attribute to default title
 			$paramsForBannerTemplate['tooltip'] = $title->getText();
