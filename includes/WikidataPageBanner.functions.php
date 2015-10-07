@@ -173,7 +173,8 @@ class WikidataPageBannerFunctions {
 	 * image name. Additionally, if a width parameter is specified, it creates
 	 * and returns url of an image of specified width.
 	 *
-	 * @param  string $filename Filename of the banner image
+	 * @param string $filename Filename of the banner image
+	 * @param int|null $imagewidth
 	 * @return string|null Full url of the banner image on the wiki or null
 	 */
 	public static function getImageUrl( $filename, $imagewidth = null ) {
