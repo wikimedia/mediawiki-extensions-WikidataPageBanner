@@ -5,5 +5,7 @@
 		]
 	},
 	"wikidatapagebanner-extensionname": "WikidataPageBanner",
-	"wikidatapagebanner-desc": "Despliega pancartes en páxines determinaes de la wiki al principiu de los artículos"
+	"wikidatapagebanner-desc": "Despliega pancartes en páxines determinaes de la wiki al principiu de los artículos",
+	"wikidatapagebanner-invalid-arguments": "Los siguientes argumentos utilizaos en PAGEBANNER nun son válidos o se desconocen: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner con parámetros desconocíos"
 }
