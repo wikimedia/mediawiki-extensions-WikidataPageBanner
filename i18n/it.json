@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"wikidatapagebanner-desc": "Consente di mostrare banner su pagine specifiche del wiki all'inizio delle voci",
+	"wikidatapagebanner-invalid-arguments": "I seguenti argomenti usati in PAGEBANNER sono sconosciuti o non validi: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner con parametri sconosciuti"
+}
