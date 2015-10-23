@@ -22,7 +22,7 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function addToc( &$paramsForBannerTemplate, $options ) {
 		if ( isset( $options['toc'] ) && $options['toc'] === 'yes' ) {
-			$paramsForBannerTemplate['toc'] = true;
+			$paramsForBannerTemplate['enable-toc'] = true;
 		}
 	}
 

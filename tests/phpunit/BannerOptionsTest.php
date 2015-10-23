@@ -140,7 +140,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'toc=yes', 'test=testparam', 'test2' );
 		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['toc'], true,
+		$this->assertEquals( $bannerparams['enable-toc'], true,
 			'toc must default to yes' );
 		$this->assertEquals( array(
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'

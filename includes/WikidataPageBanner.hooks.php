@@ -150,7 +150,7 @@ class WikidataPageBanner {
 			$options = $pOut->getProperty( 'wpb-banner-options' );
 
 			// if toc parameter set and toc enabled, remove original classes and add banner class
-			if ( isset( $options['toc'] ) && $pOut->getTOCEnabled() ) {
+			if ( isset( $options['enable-toc'] ) && $pOut->getTOCEnabled() ) {
 				$options['toc'] = $pOut->getTOCHTML();
 				// replace id and class of toc with blank
 				// FIXME! This code is hacky, until core has better handling of toc contents
