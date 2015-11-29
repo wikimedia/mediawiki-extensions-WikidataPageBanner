@@ -73,6 +73,13 @@ class WikidataPageBanner {
 	 * @return  bool
 	 */
 	public static function addBanner( OutputPage $out, Skin $skin ) {
+		// if images are disabled on Minerva skin, then do nothing
+		if ( class_exists( 'MobileContext' )
+				&& MobileContext::singleton()->shouldDisplayMobileView()
+				&& MobileContext::singleton()->imagesDisabled() === true
+			) {
+			return true;
+		}
 		$config = WikidataPageBannerFunctions::getWPBConfig();
 		$title = $out->getTitle();
 		$isDiff = $out->getRequest()->getVal( 'diff' );
