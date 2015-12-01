@@ -200,9 +200,8 @@ class WikidataPageBannerFunctions {
 		// if file not found, return null
 		if ( $file == null ) {
 			return null;
-		}
-		// validate $bannerwidth to be a width within 3000
-		elseif ( filter_var( $imagewidth, FILTER_VALIDATE_INT, $options ) !== false ) {
+		} elseif ( filter_var( $imagewidth, FILTER_VALIDATE_INT, $options ) !== false ) {
+			// validate $bannerwidth to be a width within 3000
 			$mto = $file->transform( array( 'width' => $imagewidth ) );
 			$url = wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
 			return $url;

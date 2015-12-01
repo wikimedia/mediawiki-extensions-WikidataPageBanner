@@ -102,14 +102,13 @@ class WikidataPageBanner {
 				// FIXME: This is currently only needed to support testing
 				$out->setProperty( 'articlebanner-name', $bannername );
 			}
-		}
-		// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
-		elseif (
+		} elseif (
 			$title->isKnown() &&
 			$out->isArticle() &&
 			$config->get( 'WPBEnableDefaultBanner' ) &&
 			!$isDiff
 		) {
+			// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
 			$ns = $title->getNamespace();
 			// banner only on specified namespaces, and not Main Page of wiki
 			if ( in_array( $ns, $config->get( 'WPBNamespaces' ) )
