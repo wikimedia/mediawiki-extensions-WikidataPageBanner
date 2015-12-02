@@ -152,8 +152,8 @@ class WikidataPageBanner {
 	 * @param  ParserOutput $pOut
 	 */
 	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ) {
-		if ( $pOut->getProperty( 'wpb-banner-options' ) != null ) {
-			$options = $pOut->getProperty( 'wpb-banner-options' );
+		if ( $pOut->getExtensionData( 'wpb-banner-options' ) != null ) {
+			$options = $pOut->getExtensionData( 'wpb-banner-options' );
 
 			// if toc parameter set and toc enabled, remove original classes and add banner class
 			if ( isset( $options['enable-toc'] ) && $pOut->getTOCEnabled() ) {
@@ -267,7 +267,7 @@ class WikidataPageBanner {
 					$argumentsFromParserFunction );
 			$paramsForBannerTemplate['name'] = $bannername;
 			// Set 'wpb-banner-options' property for generating banner later
-			$parser->getOutput()->setProperty( 'wpb-banner-options', $paramsForBannerTemplate );
+			$parser->getOutput()->setExtensionData( 'wpb-banner-options', $paramsForBannerTemplate );
 
 			// add the valid banner to image links
 			// @FIXME:Since bannernames which are to be added are generated here, getBannerHtml can
@@ -282,8 +282,15 @@ class WikidataPageBanner {
 			} elseif ( $wpbFunctionsClass::getImageUrl( $wikidataBanner ) !== null ) {
 				$bannerTitle = Title::makeTitleSafe( NS_FILE, $wikidataBanner );
 			}
+			// add custom or wikidata banner properties to page_props table if a valid banner exists
+			// in, checking for custom banner first, then wikidata banner
 			if ( $bannerTitle !== null ) {
 				$parser->fetchFileAndTitle( $bannerTitle );
+				$parser->getOutput()->setProperty( 'wpb_banner', $bannerTitle->getText() );
+				$parser->getOutput()->setProperty( 'wpb_banner_focus_x',
+						$paramsForBannerTemplate['data-pos-x'] );
+				$parser->getOutput()->setProperty( 'wpb_banner_focus_y',
+						$paramsForBannerTemplate['data-pos-y'] );
 			}
 		}
 	}

@@ -90,7 +90,7 @@ class BannerTest extends MediaWikiTestCase {
 		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
-		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
+		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
 		$this->assertEquals( $bannerparams['name'], 'Banner',
 			'banner parameters must be set on valid namespaces' );
 
@@ -98,8 +98,8 @@ class BannerTest extends MediaWikiTestCase {
 		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
-		$bannerparams = $pOut->getProperty( 'wpb-banner-options' );
-		$this->assertFalse( $bannerparams, 'Banner',
+		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
+		$this->assertNull( $bannerparams, 'Banner',
 			'bannerparameters property should be null for not-allowed namespaces' );
 	}
 
