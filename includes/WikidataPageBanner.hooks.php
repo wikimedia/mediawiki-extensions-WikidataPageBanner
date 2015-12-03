@@ -242,8 +242,11 @@ class WikidataPageBanner {
 			self::addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
 
 			// set title and tooltip attribute to default title
-			$paramsForBannerTemplate['tooltip'] = $title->getText();
-			$paramsForBannerTemplate['title'] = $title->getText();
+			// convert title to preferred language variant as done in core Parser.php
+			$paramsForBannerTemplate['tooltip'] = $parser->getConverterLanguage()
+				->convert( $title->getText() );
+			$paramsForBannerTemplate['title'] = $parser->getConverterLanguage()
+				->convert( $title->getText() );
 			if ( isset( $argumentsFromParserFunction['pgname'] ) ) {
 				// set tooltip attribute to  parameter 'pgname', if set
 				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['pgname'];
