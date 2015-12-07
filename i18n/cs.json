@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Matěj Suchánek",
+			"Mormegil"
+		]
+	},
+	"wikidatapagebanner-desc": "Na začátku článků vykresluje na vybraných stránkách wiki bannery",
+	"wikidatapagebanner-invalid-arguments": "Následující parametr použité v PAGEBANNER jsou neznámé či neplatné: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner s neznámými parametry"
+}
