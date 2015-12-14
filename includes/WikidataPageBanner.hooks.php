@@ -22,6 +22,7 @@ class WikidataPageBanner {
 		'bottomtoc',
 		'origin',
 		'icon-*',
+		'extraClass'
 	);
 
 	/**
@@ -253,6 +254,9 @@ class WikidataPageBanner {
 				// set title attribute to 'pgname' if set
 				$paramsForBannerTemplate['title'] = $argumentsFromParserFunction['pgname'];
 			}
+			// set extra CSS classes added with extraClass attribute
+			$wpbFunctionsClass::addCssClasses( $paramsForBannerTemplate,
+					$argumentsFromParserFunction );
 			// set tooltip attribute to  parameter 'tooltip', if set, which takes highest preference
 			if ( isset( $argumentsFromParserFunction['tooltip'] ) ) {
 				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['tooltip'];
