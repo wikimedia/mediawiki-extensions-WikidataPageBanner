@@ -118,9 +118,8 @@ class WikidataPageBanner {
 		) {
 			// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
 			$ns = $title->getNamespace();
-			// banner only on specified namespaces, and not Main Page of wiki
-			if ( in_array( $ns, $config->get( 'WPBNamespaces' ) )
-				&& !$title->isMainPage() ) {
+			// banner only on specified namespaces (but all if true), and not Main Page of wiki
+			if ( $wpbFunctionsClass::validateNamespace( $ns ) && !$title->isMainPage() ) {
 				// first try to obtain bannername from Wikidata
 				$bannername = $wpbFunctionsClass::getWikidataBanner( $title );
 				if ( $bannername === null ) {
@@ -234,11 +233,9 @@ class WikidataPageBanner {
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
+		$config = $wpbFunctionsClass::getWPBConfig();
 
-		if (
-			in_array( $ns, WikidataPageBannerFunctions::getWPBConfig()->get( 'WPBNamespaces' ) ) &&
-			!$title->isMainPage()
-		) {
+		if ( $wpbFunctionsClass::validateNamespace( $ns ) && !$title->isMainPage() ) {
 			// check for unknown parameters used in the parser hook and add a warning if there is any
 			self::addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
 

@@ -336,4 +336,21 @@ class WikidataPageBannerFunctions {
 			}
 		}
 	}
+
+	/**
+	 * Check if the namespace should have a banner on it by default.
+	 * $wgWPBNamespaces can be an array of namespaces, or true, in which case it applies to all
+	 * namespaces. If it's true, certain namespaces can be disabled with $wgWPBDisabledNamespaces.
+	 *
+	 * @param int $ns Namespace of page
+	 * @return bool
+	 */
+	public static function validateNamespace( $ns ) {
+		$config = self::getWPBConfig();
+		if ( $config->get( 'WPBNamespaces' ) === true ) {
+			return !in_array( $ns, $config->get( 'WPBDisabledNamespaces' ) );
+		} else {
+			return in_array( $ns, $config->get( 'WPBNamespaces' ) );
+		}
+	}
 }

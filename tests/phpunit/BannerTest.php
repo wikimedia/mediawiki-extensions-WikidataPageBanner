@@ -117,6 +117,16 @@ class BannerTest extends MediaWikiTestCase {
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
 		$this->assertNull( $bannerparams, 'Banner',
 			'bannerparameters property should be null for invalid Wikidata banner' );
+
+		$this->setMwGlobals( 'wgWPBNamespaces', true );
+		$parser = $this->createParser( 'PageWithCustomBanner', NS_TALK );
+		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
+		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		$pOut = $parser->getOutput();
+		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['name'], 'Banner',
+			'banner parameters must be set on valid namespaces' );
+		$this->setMwGlobals( 'wgWPBNamespaces', array( 0 ) );
 	}
 
 	/**
