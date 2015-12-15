@@ -22,6 +22,14 @@ class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 		return "WikidataBanner";
 	}
 
+	public static function getImageUrl( $filename, $imagewidth = null ) {
+		if ( $filename == 'NoWikidataBanner' || $filename == 'NoBanner' || $filename === null ) {
+			return null;
+		}
+
+		return "BannerUrl";
+	}
+
 }
 
 class BannerTest extends MediaWikiTestCase {
@@ -101,6 +109,14 @@ class BannerTest extends MediaWikiTestCase {
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
 		$this->assertNull( $bannerparams, 'Banner',
 			'bannerparameters property should be null for not-allowed namespaces' );
+
+		$parser = $this->createParser( 'NoWikidataBanner', NS_TALK );
+		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
+		WikidataPageBanner::addCustomBanner( $parser, 'NoBanner' );
+		$pOut = $parser->getOutput();
+		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
+		$this->assertNull( $bannerparams, 'Banner',
+			'bannerparameters property should be null for invalid Wikidata banner' );
 	}
 
 	/**
