@@ -1,6 +1,6 @@
 ( function ( mw, $ ) {
 	QUnit.module( 'ext.WikidataPageBanner.positionBanner', QUnit.newMwEnvironment() );
-	QUnit.test( 'testFocus', 10, function( assert ) {
+	QUnit.test( 'testFocus', 10, function ( assert ) {
 		this.$wpbBannerImageContainer = $( '<div/>', {
 			width: 600,
 			height: 300

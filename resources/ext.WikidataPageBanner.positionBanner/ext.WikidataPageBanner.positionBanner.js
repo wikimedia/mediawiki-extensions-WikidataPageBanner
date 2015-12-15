@@ -1,4 +1,4 @@
-( function( mw, $ ) {
+( function ( mw, $ ) {
 	var $wpbBannerImageContainer = $( '.wpb-topbanner' ),
 		$img = $( 'img.wpb-banner-image' );
 
@@ -66,20 +66,20 @@
 	}
 	$( window ).on( 'resize', $.debounce(
 			100,
-			function() {
+			function () {
 				positionBanner( $wpbBannerImageContainer );
 			}
 		) );
 	// set focus after image has loaded
-	$img.load( function() {
+	$img.load( function () {
 		positionBanner( $wpbBannerImageContainer );
 	} );
 	// Image might be cached
-	if ( $img.length && $img[0].complete ) {
+	if ( $img.length && $img[ 0 ].complete ) {
 		positionBanner( $wpbBannerImageContainer );
 	}
 	// Expose interface for testing.
 	mw.wpb = {
 		positionBanner: positionBanner
 	};
-} ( mediaWiki, jQuery ) );
+}( mediaWiki, jQuery ) );
