@@ -320,4 +320,20 @@ class WikidataPageBannerFunctions {
 		return self::$wpbConfig;
 	}
 
+	/**
+	 * Adds banner custom CSS classes according to extraClass parameter
+	 *
+	 * @param array $paramsForBannerTemplate Parameters defined for banner template
+	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
+	 */
+	public static function addCssClasses( &$paramsForBannerTemplate,
+			$argumentsFromParserFunction ) {
+		$paramsForBannerTemplate['extraClass'] = '';
+		if ( isset( $argumentsFromParserFunction['extraClass'] ) ) {
+			$classes = explode( ' ', $argumentsFromParserFunction['extraClass'] );
+			foreach ( $classes as $class ) {
+				$paramsForBannerTemplate['extraClass'] .= ' ' . Sanitizer::escapeClass( $class );
+			}
+		}
+	}
 }
