@@ -8,16 +8,10 @@
  */
 class BannerMFTest extends MediaWikiTestCase {
 	/**
-	 * Stores the original value for disableImages cookie
+	 * Stores the original value for MobileContext
 	 * @var bool $oldDisableImages;
 	 */
-	private $oldDisableImages;
-
-	/**
-	 * Stores the original value for forcedMobileView
-	 * @var bool $oldForceMobile;
-	 */
-	private $oldForceMobileView;
+	private static $oldMobileContext = null;
 
 	/**
 	 * Add test pages to database
@@ -35,11 +29,15 @@ class BannerMFTest extends MediaWikiTestCase {
 	protected function setUp() {
 		parent::setUp();
 		if ( class_exists( 'MobileContext' ) ) {
-			$mobileContext = MobileContext::singleton();
-			$this->oldDisableImages = $mobileContext->imagesDisabled();
-			$this->oldForceMobileView = $mobileContext->getForceMobileView();
-			$mobileContext->setDisableImagesCookie( true );
+			self::$oldMobileContext = MobileContext::singleton();
+			$mobileContext = $this->makeContext();
 			$mobileContext->setForceMobileView( true );
+			MobileContext::setInstance( $mobileContext );
+			// set protected disableImages property to true, so that we can simulate images disabled
+			$reflectionClass = new ReflectionClass( 'MobileContext' );
+			$reflectionProperty = $reflectionClass->getProperty( 'disableImages' );
+			$reflectionProperty->setAccessible( true );
+			$reflectionProperty->setValue( $mobileContext, true );
 		}
 		$this->addDBData();
 		$this->setMwGlobals( 'wgWPBImage', "DefaultBanner" );
@@ -48,9 +46,8 @@ class BannerMFTest extends MediaWikiTestCase {
 
 	protected function tearDown() {
 		if ( class_exists( 'MobileContext' ) ) {
-			$mobileContext = MobileContext::singleton();
-			$mobileContext->setDisableImagesCookie( $this->oldDisableImages );
-			$mobileContext->setForceMobileView( $this->oldForceMobileView );
+			// restore old mobile context class
+			MobileContext::setInstance( self::$oldMobileContext );
 		}
 		parent::tearDown();
 	}
@@ -82,5 +79,31 @@ class BannerMFTest extends MediaWikiTestCase {
 		$out->setPageTitle( $title );
 		$out->setArticleFlag( true );
 		return $out;
+	}
+
+	/**
+	 * @param string $url
+	 * @param array $cookies
+	 * @return MobileContext
+	 */
+	private function makeContext( $url = '/', $cookies = array() ) {
+		$query = array();
+		if ( $url ) {
+			$params = wfParseUrl( wfExpandUrl( $url ) );
+			if ( isset( $params['query'] ) ) {
+				$query = wfCgiToArray( $params['query'] );
+			}
+		}
+
+		$request = new FauxRequest( array() );
+		$request->setRequestURL( $url );
+		$request->setCookies( $cookies, '' );
+
+		$context = new DerivativeContext( RequestContext::getMain() );
+		$context->setRequest( $request );
+		$context->setOutput( new OutputPage( $context ) );
+		$instance = unserialize( 'O:13:"MobileContext":0:{}' );
+		$instance->setContext( $context );
+		return $instance;
 	}
 }
