@@ -13,6 +13,14 @@ class MockWikidataPageBannerOptions extends WikidataPageBannerFunctions {
 		return $options;
 	}
 
+	public static function getImageUrl( $filename, $imagewidth = null ) {
+		if ( $filename == 'NoWikidataBanner' || $filename == 'NoBanner' || $filename === null ) {
+			return null;
+		}
+
+		return "BannerUrl";
+	}
+
 }
 
 class BannerOptionsTest extends MediaWikiTestCase {

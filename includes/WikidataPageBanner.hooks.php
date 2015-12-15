@@ -269,8 +269,6 @@ class WikidataPageBanner {
 			WikidataPageBannerFunctions::addFocus( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
 			$paramsForBannerTemplate['name'] = $bannername;
-			// Set 'wpb-banner-options' property for generating banner later
-			$parser->getOutput()->setExtensionData( 'wpb-banner-options', $paramsForBannerTemplate );
 
 			// add the valid banner to image links
 			// @FIXME:Since bannernames which are to be added are generated here, getBannerHtml can
@@ -288,6 +286,7 @@ class WikidataPageBanner {
 			// add custom or wikidata banner properties to page_props table if a valid banner exists
 			// in, checking for custom banner first, then wikidata banner
 			if ( $bannerTitle !== null ) {
+				$parser->getOutput()->setExtensionData( 'wpb-banner-options', $paramsForBannerTemplate );
 				$parser->fetchFileAndTitle( $bannerTitle );
 				$parser->getOutput()->setProperty( 'wpb_banner', $bannerTitle->getText() );
 				$parser->getOutput()->setProperty( 'wpb_banner_focus_x',
