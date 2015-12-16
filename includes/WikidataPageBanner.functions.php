@@ -113,7 +113,7 @@ class WikidataPageBannerFunctions {
 	 * Converts an array of values in form [0] => "name=value" into a real
 	 * associative array in form [name] => value
 	 *
-	 * @param array string[] $options
+	 * @param string[] $options
 	 * @return array $results
 	 */
 	public static function extractOptions( array $options ) {
