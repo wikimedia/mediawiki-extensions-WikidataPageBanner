@@ -304,6 +304,7 @@ class WikidataPageBannerFunctions {
 
 		// Add common resources
 		$out->addModuleStyles( 'ext.WikidataPageBanner' );
+		$out->addModuleStyles( 'ext.WikidataPageBanner.print.styles' );
 		$out->addModules( 'ext.WikidataPageBanner.positionBanner' );
 	}
 

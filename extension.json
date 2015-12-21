@@ -49,6 +49,18 @@
 			],
 			"position": "top"
 		},
+		"ext.WikidataPageBanner.print.styles": {
+			"styles": {
+				"ext.WikidataPageBanner.print.styles/ext.WikidataPageBanner.print.less": {
+					"media": "print"
+				}
+			},
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"position": "top"
+		},
 		"ext.WikidataPageBanner.positionBanner": {
 			"scripts": [
 				"ext.WikidataPageBanner.positionBanner/ext.WikidataPageBanner.positionBanner.js"
