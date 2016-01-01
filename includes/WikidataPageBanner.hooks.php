@@ -186,7 +186,7 @@ class WikidataPageBanner {
 	 *	they will be added as warnings.
 	 */
 	public static function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
-		global $wgLang;
+		global $wgContLang;
 
 		$badParams = array();
 		$allowedParams = array_flip( self::$allowedParameters );
@@ -204,7 +204,7 @@ class WikidataPageBanner {
 			// this message will be visible when the page preview button is used, but not when the page is
 			// saved. It contains a list of unknown parameters.
 			$parser->getOutput()->addWarning(
-				wfMessage( 'wikidatapagebanner-invalid-arguments', $wgLang->commaList( $badParams ) )
+				wfMessage( 'wikidatapagebanner-invalid-arguments', $wgContLang->commaList( $badParams ) )
 					->title( $parser->getTitle() )
 					->inContentLanguage()
 					->text()
