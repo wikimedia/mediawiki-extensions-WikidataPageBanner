@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Uno20001"
+		]
+	},
+	"wikidatapagebanner-desc": "Bannert jelenít meg a wiki megadott oldalán a cikk elején",
+	"wikidatapagebanner-invalid-arguments": "A következő PAGABANNER-ben használt argumentumok érvénytelenek vagy ismeretlenek: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner ismeretlen paraméterekkel"
+}
