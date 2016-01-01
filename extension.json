@@ -79,7 +79,7 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": [
-			"WikidataPageBanner::addBanner"
+			"WikidataPageBanner::onBeforePageDisplay"
 		],
 		"OutputPageParserOutput": [
 			"WikidataPageBanner::onOutputPageParserOutput"

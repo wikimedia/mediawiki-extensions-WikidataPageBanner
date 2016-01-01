@@ -83,7 +83,7 @@ class BannerTest extends MediaWikiTestCase {
 		$skin = $this->getMock( "Skin" );
 		$skin->expects( $this->any() )->method( 'getSkinName' )
 			->will( $this->returnValue( "vector" ) );
-		WikidataPageBanner::addBanner( $out, $skin );
+		WikidataPageBanner::onBeforePageDisplay( $out, $skin );
 		$this->assertEquals( $out->getProperty( 'articlebanner-name' ), $expected,
 			'articlebanner-name property must only be set when a valid banner is added' );
 	}

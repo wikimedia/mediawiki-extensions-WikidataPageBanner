@@ -73,7 +73,7 @@ class WikidataPageBanner {
 	 * @param Skin $skin Skin object being rendered
 	 * @return  bool
 	 */
-	public static function addBanner( OutputPage $out, Skin $skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		// if images are disabled on Minerva skin, then do nothing
 		if ( class_exists( 'MobileContext' )
 				&& MobileContext::singleton()->shouldDisplayMobileView()

@@ -59,7 +59,7 @@ class BannerMFTest extends MediaWikiTestCase {
 		if ( class_exists( 'MobileContext' ) ) {
 			$skin = $this->getMock( "Skin" );
 			$out = $this->createPage( 'PageWithoutCustomBanner', NS_MAIN );
-			WikidataPageBanner::addBanner( $out, $skin );
+			WikidataPageBanner::onBeforePageDisplay( $out, $skin );
 			$this->assertNull( $out->getProperty( 'articlebanner-name' ) );
 		}
 	}
