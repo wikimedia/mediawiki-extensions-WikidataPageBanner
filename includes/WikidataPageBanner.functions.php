@@ -6,8 +6,6 @@
  */
 class WikidataPageBannerFunctions {
 
-	private static $wpbConfig = null;
-
 	/**
 	 * @var string[] name of skins that do not implement 'prebodyhtml'
 	 *  banners for these skin will be prepended to body content
@@ -314,11 +312,8 @@ class WikidataPageBannerFunctions {
 	 * @return Config
 	 */
 	public static function getWPBConfig() {
-		if ( self::$wpbConfig === null ) {
-			self::$wpbConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'wikidatapagebanner' );
-		}
-
-		return self::$wpbConfig;
+		return ConfigFactory::getDefaultInstance()
+			->makeConfig( 'wikidatapagebanner' );
 	}
 
 	/**
