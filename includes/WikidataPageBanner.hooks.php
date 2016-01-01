@@ -83,7 +83,7 @@ class WikidataPageBanner {
 		}
 		$config = WikidataPageBannerFunctions::getWPBConfig();
 		$title = $out->getTitle();
-		$isDiff = $out->getRequest()->getVal( 'diff' );
+		$isDiff = $out->getRequest()->getCheck( 'diff' );
 		$wpbFunctionsClass = self::$wpbFunctionsClass;
 
 		// if banner-options are set and not a diff page, add banner anyway
