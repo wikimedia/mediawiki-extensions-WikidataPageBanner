@@ -13,7 +13,7 @@ class WikidataPageBanner {
 	public static $wpbFunctionsClass = "WikidataPageBannerFunctions";
 
 	/**
-	 * Holds an array of valid parameters fr PAGEBANNER hook.
+	 * Holds an array of valid parameters for PAGEBANNER hook.
 	 */
 	private static $allowedParameters = array(
 		'pgname',
