@@ -233,7 +233,6 @@ class WikidataPageBanner {
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
-		$config = $wpbFunctionsClass::getWPBConfig();
 
 		if ( $wpbFunctionsClass::validateNamespace( $ns ) && !$title->isMainPage() ) {
 			// check for unknown parameters used in the parser hook and add a warning if there is any
