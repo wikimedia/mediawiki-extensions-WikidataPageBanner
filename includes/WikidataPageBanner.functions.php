@@ -231,6 +231,47 @@ class WikidataPageBannerFunctions {
 	}
 
 	/**
+	 * Fetches a banner for a given title when none has been specified by an editor
+	 *
+	 * @param   Title $title Title of the page
+	 * @return  String|null file name of a suitable automatic banner or null if none found
+	 */
+	public static function getAutomaticBanner( $title ) {
+		$config = self::getWPBConfig();
+		$bannername = static::getWikidataBanner( $title );
+
+		if ( $bannername === null ) {
+			$bannername = static::getPageImagesBanner( $title );
+		}
+		if ( $bannername === null ) {
+			// if Wikidata banner not found, set bannername to default banner
+			$bannername = $config->get( 'WPBImage' );
+		}
+		return $bannername;
+	}
+
+	/**
+	 * Fetches banner from PageImages
+	 *
+	 * @param   Title $title Title of the page
+	 * @return  String|null file name of the banner found via page images
+	 * or null if none found
+	 */
+	public static function getPageImagesBanner( $title ) {
+		$config = self::getWPBConfig();
+
+		// Ensure PageImages client is installed
+		if ( class_exists( 'PageImages' ) && $config->get( 'WPBEnablePageImagesBanners' ) ) {
+			$pi = PageImages::getPageImage( $title );
+			// getPageImage returns false if no page image.
+			if ( $pi ) {
+				return $pi->getTitle()->getDBkey();
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * WikidataPageBanner::getWikidataBanner Fetches banner from wikidata for the specified page
 	 *
 	 * @param   Title $title Title of the page
