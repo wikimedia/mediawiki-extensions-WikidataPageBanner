@@ -295,7 +295,7 @@ class WikidataPageBannerFunctions {
 			$entityLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
 			->getStore()
 			->getEntityLookup();
-			if ( $itemId != null ) {
+			if ( $itemId !== null ) {
 				$item = $entityLookup->getEntity( $itemId );
 				$statements = $item->getStatements()->getByPropertyId(
 						new Wikibase\DataModel\Entity\PropertyId(
