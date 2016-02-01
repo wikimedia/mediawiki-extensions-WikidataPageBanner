@@ -196,7 +196,7 @@ class WikidataPageBannerFunctions {
 			'options' => array( 'min_range' => 0, 'max_range' => 3000 )
 		);
 		// if file not found, return null
-		if ( $file === null ) {
+		if ( $file == null ) {
 			return null;
 		} elseif ( filter_var( $imagewidth, FILTER_VALIDATE_INT, $options ) !== false ) {
 			// validate $bannerwidth to be a width within 3000
@@ -295,7 +295,7 @@ class WikidataPageBannerFunctions {
 			$entityLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
 			->getStore()
 			->getEntityLookup();
-			if ( $itemId !== null ) {
+			if ( $itemId != null ) {
 				$item = $entityLookup->getEntity( $itemId );
 				$statements = $item->getStatements()->getByPropertyId(
 						new Wikibase\DataModel\Entity\PropertyId(

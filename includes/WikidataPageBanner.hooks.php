@@ -149,7 +149,7 @@ class WikidataPageBanner {
 	 * @param  ParserOutput $pOut
 	 */
 	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ) {
-		if ( $pOut->getExtensionData( 'wpb-banner-options' ) !== null ) {
+		if ( $pOut->getExtensionData( 'wpb-banner-options' ) != null ) {
 			$options = $pOut->getExtensionData( 'wpb-banner-options' );
 
 			// if toc parameter set and toc enabled, remove original classes and add banner class
