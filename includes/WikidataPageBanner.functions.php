@@ -297,6 +297,10 @@ class WikidataPageBannerFunctions {
 			->getEntityLookup();
 			if ( $itemId !== null ) {
 				$item = $entityLookup->getEntity( $itemId );
+				if ( !$item ) {
+					// Sometimes EntityIdLookup is not consistent/ up to date with repo
+					return null;
+				}
 				$statements = $item->getStatements()->getByPropertyId(
 						new Wikibase\DataModel\Entity\PropertyId(
 							$wpbBannerProperty
