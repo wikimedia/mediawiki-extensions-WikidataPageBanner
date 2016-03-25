@@ -6,7 +6,7 @@
 			height: 300
 		} );
 		this.$wpbBannerImage = $( '<img/>', {
-			'class': 'wpb-banner-image',
+			'class': 'wpb-banner-image wpb-banner-image-panorama',
 			width: 900,
 			height: 500
 		} );

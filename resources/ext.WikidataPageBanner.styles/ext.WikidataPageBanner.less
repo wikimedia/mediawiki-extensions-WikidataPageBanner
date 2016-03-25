@@ -23,6 +23,13 @@
 	// rule for banners whose height may be much due to a different aspect ratio other than
 	// Wikivoyage banners
 	max-height: 300px;
+
+	a {
+		position: relative;
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
 }
 
 .ext-wpb-pagebanner .wpb-topbanner .wpb-name {
@@ -73,6 +80,17 @@
 	}
 }
 
+.wpb-banner-image {
+	visibility: hidden;
+}
+
+.client-js .wpb-positioned-banner,
+.client-nojs {
+	.wpb-banner-image {
+		visibility: visible;
+	}
+}
+
 // banner enlargement and faking banner cropping for small screens
 @media screen and ( max-width: 400px ) {
 	.wpb-topbanner {
@@ -81,7 +99,6 @@
 			// can be increased in size for increasing the height accordingly. The overflowing
 			// banner is cropped by setting overflow hidden on containing element
 			max-width: none !important;
-			width: auto;
 			// Banners on mobile screens should be using the origin parameter and be at least 180px in height
 			min-height: 180px;
 			// centre the banner by default

@@ -76,13 +76,16 @@ class WikidataPageBannerFunctions {
 	public static function addFocus( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
 		// default centering would be 0, and -1 would represent extreme left and extreme top
 		// Allowed values for each coordinate is between 0 and 1
+		// If no value has been specified these are set to null
 		$paramsForBannerTemplate['data-pos-x'] = 0;
 		$paramsForBannerTemplate['data-pos-y'] = 0;
+		$paramsForBannerTemplate['hasPosition'] = false;
 
 		if ( isset( $argumentsFromParserFunction['origin'] ) ) {
 			// split the origin into x and y coordinates
 			$coords = explode( ',', $argumentsFromParserFunction['origin'] );
 			if ( count( $coords ) === 2 ) {
+				$paramsForBannerTemplate['hasPosition'] = true;
 				$positionx = $coords[0];
 				$positiony = $coords[1];
 				// TODO:Add a js module to use the data-pos values being set below to fine tune the
@@ -167,7 +170,10 @@ class WikidataPageBannerFunctions {
 			$options['banner'] = $bannerurl;
 			$options['srcset'] = $srcset;
 			$file = wfFindFile( $bannerfile );
-			$options['maxWidth'] = $file->getWidth();
+			$fileWidth = $file->getWidth();
+			$options['maxWidth'] = $fileWidth;
+			// Provide information to the logic-less template about whether it is a panorama or not.
+			$options['isPanorama'] = $fileWidth > ( $file->getHeight() * 2 );
 			$options['isHeadingOverrideEnabled'] = $config->get( 'WPBEnableHeadingOverride' );
 			$banner = $templateParser->processTemplate(
 				'banner',

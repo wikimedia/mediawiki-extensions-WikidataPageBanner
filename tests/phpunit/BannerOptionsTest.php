@@ -109,6 +109,8 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos-x must be set' );
 		$this->assertEquals( $bannerparams['data-pos-y'], 0.2,
 			'data-pos-x must be set' );
+		$this->assertEquals( $bannerparams['hasPosition'], true,
+			'when data-pos set this is true' );
 		$this->assertEquals( array(), $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
@@ -141,6 +143,8 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos must default to 0' );
 		$this->assertEquals( $bannerparams['data-pos-y'], 0,
 			'data-pos-x must default to 0' );
+		$this->assertEquals( $bannerparams['hasPosition'], false,
+			'when no data-pos-x or y specified this is false' );
 		$this->assertEquals( array(
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
 		), $pOut->getWarnings() );
