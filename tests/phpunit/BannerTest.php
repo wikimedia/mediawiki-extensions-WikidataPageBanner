@@ -8,7 +8,7 @@
  */
 class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 
-	public static function getBannerHtml( $bannername, $options = array() ) {
+	public static function getBannerHtml( $bannername, $options = [] ) {
 		if ( $bannername == 'NoBanner' ) {
 			return null;
 		}
@@ -16,7 +16,7 @@ class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 	}
 
 	public static function getPageImagesBanner( $title ) {
-		if ( in_array( $title, array( 'WikidataBanner', 'PageWithPageImageBanner' ) ) ) {
+		if ( in_array( $title, [ 'WikidataBanner', 'PageWithPageImageBanner' ] ) ) {
 			return "PageImagesBanner";
 		} else {
 			return null;
@@ -24,8 +24,8 @@ class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 	}
 
 	public static function getWikidataBanner( $title ) {
-		if ( in_array( $title, array( 'WikidataBanner', 'PageWithoutCustomBanner',
-			'PageWithCustomBanner', 'PageWithInvalidCustomBanner' ) ) ) {
+		if ( in_array( $title, [ 'WikidataBanner', 'PageWithoutCustomBanner',
+			'PageWithCustomBanner', 'PageWithInvalidCustomBanner' ] ) ) {
 			return "WikidataBanner";
 		} else {
 			return null;
@@ -50,15 +50,15 @@ class BannerTest extends MediaWikiTestCase {
 	 * array( 0 => TestPageName, 1 => Namespace, 2 => customBannerValue, 3 => expected articlebanner
 	 * property
 	 */
-	protected $testPagesForDefaultBanner = array(
-			array( 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ),
-			array( 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ),
-			array( 'PageInFileNamespace', NS_FILE, false, null ),
-			array( 'NoWikidataBanner', NS_MAIN, false, "DefaultBanner" ),
-			array( 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "WikidataBanner" ),
-			array( 'PageWithPageImageBanner', NS_MAIN, false, "PageImagesBanner" ),
-			array( 'PageWithPageImageBanner', NS_MAIN, "NoBanner", "PageImagesBanner" ),
-		);
+	protected $testPagesForDefaultBanner = [
+			[ 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ],
+			[ 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ],
+			[ 'PageInFileNamespace', NS_FILE, false, null ],
+			[ 'NoWikidataBanner', NS_MAIN, false, "DefaultBanner" ],
+			[ 'PageWithInvalidCustomBanner', NS_MAIN, "NoBanner", "WikidataBanner" ],
+			[ 'PageWithPageImageBanner', NS_MAIN, false, "PageImagesBanner" ],
+			[ 'PageWithPageImageBanner', NS_MAIN, "NoBanner", "PageImagesBanner" ],
+		];
 
 	/**
 	 * Add test pages to database
@@ -143,7 +143,7 @@ class BannerTest extends MediaWikiTestCase {
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
 		$this->assertEquals( $bannerparams['name'], 'Banner',
 			'banner parameters must be set on valid namespaces' );
-		$this->setMwGlobals( 'wgWPBNamespaces', array( 0 ) );
+		$this->setMwGlobals( 'wgWPBNamespaces', [ 0 ] );
 	}
 
 	/**
@@ -162,7 +162,7 @@ class BannerTest extends MediaWikiTestCase {
 		$out->setPageTitle( $title );
 		$out->setArticleFlag( true );
 		if ( $customBanner ) {
-			$out->setProperty( 'wpb-banner-options', array( 'name' => $customBanner ) );
+			$out->setProperty( 'wpb-banner-options', [ 'name' => $customBanner ] );
 		}
 		return $out;
 	}

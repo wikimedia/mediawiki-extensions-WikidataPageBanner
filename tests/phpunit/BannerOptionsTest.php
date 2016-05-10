@@ -9,7 +9,7 @@
  */
 class MockWikidataPageBannerOptions extends WikidataPageBannerFunctions {
 
-	public static function getBannerHtml( $bannername, $options = array() ) {
+	public static function getBannerHtml( $bannername, $options = [] ) {
 		return $options;
 	}
 
@@ -61,7 +61,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'pgname must be set to title' );
 		$this->assertEquals( $bannerparams['tooltip'], 'BannerWithOptions',
 			'tooltip must be set to title' );
-		$this->assertEquals( array(), $pOut->getWarnings() );
+		$this->assertEquals( [], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -71,7 +71,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'pgname must be set' );
 		$this->assertEquals( $bannerparams['tooltip'], 'Banner2',
 			'tooltip must be set to pgname' );
-		$this->assertEquals( array(), $pOut->getWarnings() );
+		$this->assertEquals( [], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -81,7 +81,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'pgname must be set' );
 		$this->assertEquals( $bannerparams['tooltip'], 'hovertext',
 			'pgname must be set' );
-		$this->assertEquals( array(), $pOut->getWarnings() );
+		$this->assertEquals( [], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -97,7 +97,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'star icon must be set' );
 		$this->assertContains( 'Main_Page', $bannerparams['icons'][1]['url'],
 			'iconurl must be a valid main page url' );
-		$this->assertEquals( array(), $pOut->getWarnings() );
+		$this->assertEquals( [], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -111,7 +111,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos-x must be set' );
 		$this->assertEquals( $bannerparams['hasPosition'], true,
 			'when data-pos set this is true' );
-		$this->assertEquals( array(), $pOut->getWarnings() );
+		$this->assertEquals( [], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -121,7 +121,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos must default to 0' );
 		$this->assertEquals( $bannerparams['data-pos-y'], 0,
 			'data-pos-x must default to 0' );
-		$this->assertEquals( array(), $pOut->getWarnings() );
+		$this->assertEquals( [], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -131,9 +131,9 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos must default to 0' );
 		$this->assertEquals( $bannerparams['data-pos-y'], 0,
 			'data-pos-x must default to 0' );
-		$this->assertEquals( array(
+		$this->assertEquals( [
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
-		), $pOut->getWarnings() );
+		], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -145,9 +145,9 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'data-pos-x must default to 0' );
 		$this->assertEquals( $bannerparams['hasPosition'], false,
 			'when no data-pos-x or y specified this is false' );
-		$this->assertEquals( array(
+		$this->assertEquals( [
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
-		), $pOut->getWarnings() );
+		], $pOut->getWarnings() );
 
 		$pOut->setExtensionData( 'wpb-banner-options', null );
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
@@ -155,9 +155,9 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
 		$this->assertEquals( $bannerparams['enable-toc'], true,
 			'toc must default to yes' );
-		$this->assertEquals( array(
+		$this->assertEquals( [
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
-		), $pOut->getWarnings() );
+		], $pOut->getWarnings() );
 	}
 
 	/**

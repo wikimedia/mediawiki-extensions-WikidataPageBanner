@@ -86,8 +86,8 @@ class BannerMFTest extends MediaWikiTestCase {
 	 * @param array $cookies
 	 * @return MobileContext
 	 */
-	private function makeContext( $url = '/', $cookies = array() ) {
-		$query = array();
+	private function makeContext( $url = '/', $cookies = [] ) {
+		$query = [];
 		if ( $url ) {
 			$params = wfParseUrl( wfExpandUrl( $url ) );
 			if ( isset( $params['query'] ) ) {
@@ -95,7 +95,7 @@ class BannerMFTest extends MediaWikiTestCase {
 			}
 		}
 
-		$request = new FauxRequest( array() );
+		$request = new FauxRequest( [] );
 		$request->setRequestURL( $url );
 		$request->setCookies( $cookies, '' );
 

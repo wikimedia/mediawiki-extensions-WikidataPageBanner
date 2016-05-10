@@ -10,7 +10,7 @@ class WikidataPageBannerFunctions {
 	 * @var string[] name of skins that do not implement 'prebodyhtml'
 	 *  banners for these skin will be prepended to body content
 	 */
-	protected static $blacklistSkins = array( 'monobook', 'modern', 'cologneblue' );
+	protected static $blacklistSkins = [ 'monobook', 'modern', 'cologneblue' ];
 
 	/**
 	 * Set bannertoc variable on parser output object
@@ -31,7 +31,7 @@ class WikidataPageBannerFunctions {
 	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
 	public static function addIcons( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
-		$iconsToAdd = array();
+		$iconsToAdd = [];
 
 		// check all parameters and look for one's starting with icon-
 		// The old format of icons=star,unesco would not generate any icons
@@ -47,7 +47,7 @@ class WikidataPageBannerFunctions {
 				$iconName = Sanitizer::escapeClass( $iconname );
 				$iconUrl = Title::newFromText( $value );
 				$iconTitleText = $iconName;
-				$finalIcon = array( 'url' => '#' );
+				$finalIcon = [ 'url' => '#' ];
 				// reference article for icons provided and is valid, then add its link
 				if ( $iconUrl ) {
 					$finalIcon['url'] = $iconUrl->getLocalUrl();
@@ -118,7 +118,7 @@ class WikidataPageBannerFunctions {
 	 * @return array $results
 	 */
 	public static function extractOptions( array $options ) {
-		$results = array();
+		$results = [];
 
 		foreach ( $options as $option ) {
 			$pair = explode( '=', $option, 2 );
@@ -140,12 +140,12 @@ class WikidataPageBannerFunctions {
 	 * @param array  $options additional parameters passed to template
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
-	public static function getBannerHtml( $bannername, $options = array() ) {
+	public static function getBannerHtml( $bannername, $options = [] ) {
 		$config = self::getWPBConfig();
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
 		/** @var String srcset attribute for <img> element of banner image */
-		$srcset = array();
+		$srcset = [];
 
 		// if a valid bannername given, set banner
 		if ( !empty( $urls ) ) {
@@ -198,15 +198,15 @@ class WikidataPageBannerFunctions {
 		// make title object from image name
 		$title = Title::makeTitleSafe( NS_IMAGE, $filename );
 		$file = wfFindFile( $title );
-		$options = array(
-			'options' => array( 'min_range' => 0, 'max_range' => 3000 )
-		);
+		$options = [
+			'options' => [ 'min_range' => 0, 'max_range' => 3000 ]
+		];
 		// if file not found, return null
 		if ( $file === false ) {
 			return null;
 		} elseif ( filter_var( $imagewidth, FILTER_VALIDATE_INT, $options ) !== false ) {
 			// validate $bannerwidth to be a width within 3000
-			$mto = $file->transform( array( 'width' => $imagewidth ) );
+			$mto = $file->transform( [ 'width' => $imagewidth ] );
 			$url = wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
 			return $url;
 		} else {
@@ -223,7 +223,7 @@ class WikidataPageBannerFunctions {
 	 * @return array
 	 */
 	public static function getStandardSizeUrls( $filename ) {
-		$urlSet = array();
+		$urlSet = [];
 
 		foreach ( self::getWPBConfig()->get( 'WPBStandardSizes' ) as $size ) {
 			$url = static::getImageUrl( $filename, $size );

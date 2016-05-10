@@ -15,7 +15,7 @@ class WikidataPageBanner {
 	/**
 	 * Holds an array of valid parameters for PAGEBANNER hook.
 	 */
-	private static $allowedParameters = array(
+	private static $allowedParameters = [
 		'pgname',
 		'tooltip',
 		'toc',
@@ -23,7 +23,7 @@ class WikidataPageBanner {
 		'origin',
 		'icon-*',
 		'extraClass'
-	);
+	];
 
 	/**
 	 * Expands icons for rendering via template
@@ -124,7 +124,7 @@ class WikidataPageBanner {
 				// first try to obtain bannername from Wikidata
 				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
 				// add title to template parameters
-				$paramsForBannerTemplate = array( 'title' => $title );
+				$paramsForBannerTemplate = [ 'title' => $title ];
 				$banner = $wpbFunctionsClass::
 					getBannerHtml( $bannername, $paramsForBannerTemplate );
 				// only add banner and styling if valid banner generated
@@ -185,7 +185,7 @@ class WikidataPageBanner {
 	public static function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
 		global $wgContLang;
 
-		$badParams = array();
+		$badParams = [];
 		$allowedParams = array_flip( self::$allowedParameters );
 		foreach ( $args as $param => $value ) {
 			// manually check for icons, they can have any name with the "icon-" prefix
@@ -220,7 +220,7 @@ class WikidataPageBanner {
 	 */
 	public static function addCustomBanner( Parser $parser, $bannername ) {
 		// @var array to hold parameters to be passed to banner template
-		$paramsForBannerTemplate = array();
+		$paramsForBannerTemplate = [];
 		// skip parser function name and bannername in arguments
 		$argumentsFromParserFunction = array_slice( func_get_args(), 2 );
 		// Convert $argumentsFromParserFunction into an associative array
@@ -336,18 +336,18 @@ class WikidataPageBanner {
 	 * @param ResourceLoader &$rl
 	 */
 	public static function onResourceLoaderTestModules( &$modules, &$rl ) {
-		$boilerplate = array(
+		$boilerplate = [
 			'localBasePath' => __DIR__ . '/../tests/qunit/',
 			'remoteExtPath' => 'WikidataPageBanner/tests/qunit',
-			'targets' => array( 'desktop', 'mobile' ),
-		);
+			'targets' => [ 'desktop', 'mobile' ],
+		];
 
-		$modules['qunit']['ext.WikidataPageBanner.positionBanner.test'] = $boilerplate + array(
-			'scripts' => array(
+		$modules['qunit']['ext.WikidataPageBanner.positionBanner.test'] = $boilerplate + [
+			'scripts' => [
 				'ext.WikidataPageBanner.positionBanner/test_ext.WikidataPageBanner.positionBanner.js',
-			),
-			'dependencies' => array( 'ext.WikidataPageBanner.positionBanner' ),
-		);
+			],
+			'dependencies' => [ 'ext.WikidataPageBanner.positionBanner' ],
+		];
 	}
 
 }

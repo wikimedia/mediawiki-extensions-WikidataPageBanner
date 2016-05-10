@@ -4,7 +4,7 @@
  * @var array $magicWords
  */
 
-$magicWords = array();
-$magicWords['en'] = array(
-	'PAGEBANNER' => array( 0, 'PAGEBANNER' ),
-);
+$magicWords = [];
+$magicWords['en'] = [
+	'PAGEBANNER' => [ 0, 'PAGEBANNER' ],
+];
