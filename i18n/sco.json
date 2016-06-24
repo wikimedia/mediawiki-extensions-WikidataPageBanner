@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"AmaryllisGardener"
+		]
+	},
+	"wikidatapagebanner-desc": "Render banners on specified pages o wiki at the beginnin o airticles",
+	"wikidatapagebanner-invalid-arguments": "Follaein arguments uised in PAGEBANNER are invalid or unkent: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner wi unkent parameters"
+}
