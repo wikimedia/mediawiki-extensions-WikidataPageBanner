@@ -307,27 +307,6 @@ class WikidataPageBanner {
 		return true;
 	}
 
-	/*
-	 * UnitTestsList hook handler
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/UnitTestsList
-	 *
-	 * @param array $files
-	 * @return bool
-	 */
-	public static function onUnitTestsList( &$files ) {
-		// traverse test/phpunit/ directory and add test files
-		$it = new RecursiveDirectoryIterator( __DIR__ . '/../tests/phpunit' );
-		$it = new RecursiveIteratorIterator( $it );
-
-		foreach ( $it as $path => $file ) {
-			if ( substr( $path, -8 ) === 'Test.php' ) {
-				$files[] = $path;
-			}
-		}
-
-		return true;
-	}
-
 	/**
 	 * Register QUnit tests.
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderTestModules

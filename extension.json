@@ -90,9 +90,6 @@
 		"SkinTemplateOutputPageBeforeExec": [
 			"WikidataPageBanner::onSkinTemplateOutputPageBeforeExec"
 		],
-		"UnitTestsList": [
-			"WikidataPageBanner::onUnitTestsList"
-		],
 		"ResourceLoaderTestModules": [
 			"WikidataPageBanner::onResourceLoaderTestModules"
 		]
