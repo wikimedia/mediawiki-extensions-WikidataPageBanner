@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Strainu"
+		]
+	},
+	"wikidatapagebanner-desc": "Prezintă bannere pe paginile specificate ale wikiului, la începutul articolelor",
+	"wikidatapagebanner-invalid-arguments": "Următoarele argumente folosite în apelul PAGEBANNER sunt greșite sau necunoscute: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner cu parametri necunoscuți"
+}
