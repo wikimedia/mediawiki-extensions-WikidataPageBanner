@@ -196,7 +196,7 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function getImageUrl( $filename, $imagewidth = null ) {
 		// make title object from image name
-		$title = Title::makeTitleSafe( NS_IMAGE, $filename );
+		$title = Title::makeTitleSafe( NS_FILE, $filename );
 		$file = wfFindFile( $title );
 		$options = [
 			'options' => [ 'min_range' => 0, 'max_range' => 3000 ]
