@@ -165,15 +165,20 @@ class WikidataPageBannerFunctions {
 			// use largest image url as src attribute
 			$bannerurl = $urls[count( $urls ) - 1];
 			$bannerfile = Title::newFromText( "File:$bannername" );
+			$file = wfFindFile( $bannerfile );
+			// don't auto generate banner if image is not landscape, see bug report T131424
+			$fileWidth = $file->getWidth();
+			$fileHeight = $file->getHeight();
+			if ( isset( $options['isAutomatic'] ) && $fileWidth < 1.5 * $fileHeight ) {
+				return null;
+			}
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
 			$options['bannerfile'] = $bannerfile->getLocalUrl();
 			$options['banner'] = $bannerurl;
 			$options['srcset'] = $srcset;
-			$file = wfFindFile( $bannerfile );
-			$fileWidth = $file->getWidth();
 			$options['maxWidth'] = $fileWidth;
 			// Provide information to the logic-less template about whether it is a panorama or not.
-			$options['isPanorama'] = $fileWidth > ( $file->getHeight() * 2 );
+			$options['isPanorama'] = $fileWidth > ( $fileHeight * 2 );
 			$options['isHeadingOverrideEnabled'] = $config->get( 'WPBEnableHeadingOverride' );
 			$banner = $templateParser->processTemplate(
 				'banner',

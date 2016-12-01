@@ -98,6 +98,7 @@ class WikidataPageBanner {
 			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
 			// attempt to get an automatic banner
 			if ( $banner === null ) {
+				$params['isAutomatic'] = true;
 				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
 				$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
 			}
@@ -123,8 +124,8 @@ class WikidataPageBanner {
 			if ( $wpbFunctionsClass::validateNamespace( $ns ) && !$title->isMainPage() ) {
 				// first try to obtain bannername from Wikidata
 				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
-				// add title to template parameters
-				$paramsForBannerTemplate = [ 'title' => $title ];
+				// add title and whether the banner is auto generated to template parameters
+				$paramsForBannerTemplate = [ 'title' => $title, 'isAutomatic' => true ];
 				$banner = $wpbFunctionsClass::
 					getBannerHtml( $bannername, $paramsForBannerTemplate );
 				// only add banner and styling if valid banner generated
