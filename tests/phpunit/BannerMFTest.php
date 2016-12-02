@@ -87,14 +87,6 @@ class BannerMFTest extends MediaWikiTestCase {
 	 * @return MobileContext
 	 */
 	private function makeContext( $url = '/', $cookies = [] ) {
-		$query = [];
-		if ( $url ) {
-			$params = wfParseUrl( wfExpandUrl( $url ) );
-			if ( isset( $params['query'] ) ) {
-				$query = wfCgiToArray( $params['query'] );
-			}
-		}
-
 		$request = new FauxRequest( [] );
 		$request->setRequestURL( $url );
 		$request->setCookies( $cookies, '' );

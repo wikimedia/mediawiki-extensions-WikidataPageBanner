@@ -124,7 +124,7 @@ class BannerTest extends MediaWikiTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertNull( $bannerparams, 'Banner',
+		$this->assertNull( $bannerparams,
 			'bannerparameters property should be null for not-allowed namespaces' );
 
 		$parser = $this->createParser( 'NoWikidataBanner', NS_TALK );
@@ -132,7 +132,7 @@ class BannerTest extends MediaWikiTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'NoBanner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertNull( $bannerparams, 'Banner',
+		$this->assertNull( $bannerparams,
 			'bannerparameters property should be null for invalid Wikidata banner' );
 
 		$this->setMwGlobals( 'wgWPBNamespaces', true );

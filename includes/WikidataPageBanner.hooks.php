@@ -8,7 +8,7 @@ class WikidataPageBanner {
 	 * functions
 	 * Note that this variable is also used by tests to store a mock classname of helper functions
 	 * in it externally
-	 * @var string Classname of WikidataPageBannerFunctions
+	 * @var WikidataPageBannerFunctions
 	 */
 	public static $wpbFunctionsClass = "WikidataPageBannerFunctions";
 
@@ -49,7 +49,7 @@ class WikidataPageBanner {
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateOutputPageBeforeExec
 	 *
 	 * @param Skin &$skin
-	 * @param SkinTemplate &$tpl
+	 * @param QuickTemplate &$tpl
 	 * @return bool
 	 */
 	public static function onSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
