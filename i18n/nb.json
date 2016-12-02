@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"wikidatapagebanner-desc": "Putter bannere øverst på siden i artikler",
+	"wikidatapagebanner-invalid-arguments": "Følgende argumenter som brukes i PAGEBANNER er ugyldige eller ukjente: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner med ukjente parametere"
+}
