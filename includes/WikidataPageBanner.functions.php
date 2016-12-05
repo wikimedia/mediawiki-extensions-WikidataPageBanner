@@ -1,5 +1,8 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+use Wikibase\DataModel\Entity\Item;
+
 /**
  * This class contains helper functions which are used by hooks in WikidataPageBanner
  * to render the banner
@@ -50,7 +53,7 @@ class WikidataPageBannerFunctions {
 				$finalIcon = [ 'url' => '#' ];
 				// reference article for icons provided and is valid, then add its link
 				if ( $iconUrl ) {
-					$finalIcon['url'] = $iconUrl->getLocalUrl();
+					$finalIcon['url'] = $iconUrl->getLocalURL();
 					// set icon title to title of referring article
 					$iconTitleText = $iconUrl->getText();
 				}
@@ -169,11 +172,11 @@ class WikidataPageBannerFunctions {
 			// don't auto generate banner if image is not landscape, see bug report T131424
 			$fileWidth = $file->getWidth();
 			$fileHeight = $file->getHeight();
-			if ( isset( $options['isAutomatic'] ) && $fileWidth < 1.5 * $fileHeight ) {
+			if ( !empty( $options['isAutomatic'] ) && $fileWidth < 1.5 * $fileHeight ) {
 				return null;
 			}
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
-			$options['bannerfile'] = $bannerfile->getLocalUrl();
+			$options['bannerfile'] = $bannerfile->getLocalURL();
 			$options['banner'] = $bannerurl;
 			$options['srcset'] = $srcset;
 			$options['maxWidth'] = $fileWidth;
@@ -308,7 +311,7 @@ class WikidataPageBannerFunctions {
 			->getEntityLookup();
 			if ( $itemId !== null ) {
 				$item = $entityLookup->getEntity( $itemId );
-				if ( !$item ) {
+				if ( !( $item instanceof Item ) ) {
 					// Sometimes EntityIdLookup is not consistent/ up to date with repo
 					return null;
 				}
@@ -343,7 +346,7 @@ class WikidataPageBannerFunctions {
 		$doNotShow = in_array( $skinName, $config->get( 'WPBSkinBlacklist' ) );
 
 		if ( !$doNotShow && in_array( $skinName, self::$blacklistSkins ) ) {
-			$out->prependHtml( $html );
+			$out->prependHTML( $html );
 		}
 
 		if ( $config->get( 'WPBEnableHeadingOverride' ) && !$doNotShow ) {
@@ -368,7 +371,7 @@ class WikidataPageBannerFunctions {
 	 * @return Config
 	 */
 	public static function getWPBConfig() {
-		return ConfigFactory::getDefaultInstance()
+		return MediaWikiServices::getInstance()->getConfigFactory()
 			->makeConfig( 'wikidatapagebanner' );
 	}
 
