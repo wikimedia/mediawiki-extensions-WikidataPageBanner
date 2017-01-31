@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mainframe98"
+		]
+	},
+	"wikidatapagebanner-invalid-arguments": "De volgende argumenten gebruikt in PAGEBANNER zijn ongeldig of onbekend: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner met onbekende parameters"
+}
