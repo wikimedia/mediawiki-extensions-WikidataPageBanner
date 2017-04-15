@@ -304,7 +304,9 @@ class WikidataPageBanner {
 	 * @return bool
 	 */
 	public static function onParserFirstCallInit( Parser $parser ) {
-		$parser->setFunctionHook( 'PAGEBANNER', 'WikidataPageBanner::addCustomBanner', SFH_NO_HASH );
+		$parser->setFunctionHook(
+			'PAGEBANNER', 'WikidataPageBanner::addCustomBanner', Parser::SFH_NO_HASH
+		);
 		return true;
 	}
 
