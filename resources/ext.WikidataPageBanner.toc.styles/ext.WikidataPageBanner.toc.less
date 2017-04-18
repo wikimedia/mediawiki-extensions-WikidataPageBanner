@@ -3,7 +3,7 @@
  * All style rules have been applied with a prefix of wrapping .banner-toc, so cloning the original
  * toc and styling the clone will have no side-effects
  */
-@import "mediawiki.mixins";
+@import 'mediawiki.mixins';
 // hide topbanner-toc by default
 .wpb-topbanner-toc {
 	display: none;
@@ -14,23 +14,23 @@
 	.wpb-topbanner-toc {
 		display: block;
 		position: absolute;
-		background: rgba(0, 0, 0, .5) none repeat scroll 0% 0%;
+		background: rgba( 0, 0, 0, 0.5 ) none repeat scroll 0% 0%;
 		bottom: 0;
 		left: 0;
 		z-index: 1;
 		width: 100%;
 		// FIXME: This corresponds to @content-font-size in Vector so if this value ever changes
 		// this could cause bugs. Unfortunately we cannot guarantee Vector is installed.
-		font-size: .875em;
+		font-size: 0.875em;
 	}
 
 	.wpb-banner-toc {
 		display: table;
-		color: white;
+		color: #fff;
 		background: none;
 		border: medium none;
 		line-height: 1.6em;
-		padding: .2em 2em;
+		padding: 0.2em 2em;
 		margin: 0;
 		width: auto;
 
@@ -39,44 +39,46 @@
 			display: none;
 		}
 
-		>div>ul {
+		> div > ul {
 			list-style: none;
 			margin: 0;
-			background: rgba(0, 0, 0, .6) none repeat scroll 0% 0%;
+			background: rgba( 0, 0, 0, 0.6 ) none repeat scroll 0% 0%;
 			z-index: 4;
 		}
 
-		a, a:visited, a:active {
+		a,
+		a:visited,
+		a:active {
 			display: block;
-			color: white;
-			font-size: .8em;
+			color: #fff;
+			font-size: 0.8em;
 			font-weight: bold;
 		}
 
 		a:hover {
-			color: #BDDDFD;
+			color: #bdddfd;
 		}
 
 		// these are actual toc items
 		li {
 			position: relative;
-			padding: 0 .4em;
+			padding: 0 0.4em;
 			margin: 0;
-			>ul {
+			> ul {
 				list-style: none;
 				margin: 0;
-				background: rgba(0, 0, 0, .6) none repeat scroll 0% 0%;
+				background: rgba( 0, 0, 0, 0.6 ) none repeat scroll 0% 0%;
 				z-index: 4;
 			}
 		}
 
 		// On hovering over a list item, show the list items which are immediate child of this item
 		li:hover {
-			&>ul>li {
+			& > ul > li {
 				display: block;
 			}
 			// make hovered element prominent
-			background: rgba(0, 0, 0, .8) none repeat scroll 0% 0%;
+			background: rgba( 0, 0, 0, 0.8 ) none repeat scroll 0% 0%;
 		}
 
 		// Prevent display of subheadings in horizontal ToC
@@ -87,13 +89,13 @@
 		.toclevel-6 {
 			display: none;
 			white-space: nowrap;
-			.transition( all .5s );
+			.transition( all 0.5s );
 		}
 
 		.toclevel-1 {
 			float: left;
 			// position immediate child list of level-1 items as vertical drop-downs
-			&>ul {
+			& > ul {
 				position: absolute;
 				top: 100%;
 				left: 0;
@@ -116,7 +118,8 @@
 	}
 
 	// hide original toc by default
-	.toc, #toc {
+	.toc,
+	#toc {
 		display: none;
 	}
 }
