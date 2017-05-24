@@ -166,7 +166,7 @@ class WikidataPageBanner {
 					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
 				}
 				// disable default TOC
-				$out->enableTOC( false );
+				$pOut->setTOCEnabled( false );
 			}
 
 			// set banner properties as an OutputPage property
