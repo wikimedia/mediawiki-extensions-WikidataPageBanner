@@ -9,9 +9,9 @@
 class BannerMFTest extends MediaWikiTestCase {
 	/**
 	 * Stores the original value for MobileContext
-	 * @var bool $oldDisableImages;
+	 * @var MobileContext|null
 	 */
-	private static $oldMobileContext = null;
+	private static $oldMobileContext;
 
 	/**
 	 * Add test pages to database
@@ -28,7 +28,8 @@ class BannerMFTest extends MediaWikiTestCase {
 
 	protected function setUp() {
 		parent::setUp();
-		if ( class_exists( 'MobileContext' ) ) {
+
+		if ( class_exists( MobileContext::class ) ) {
 			self::$oldMobileContext = MobileContext::singleton();
 			$mobileContext = $this->makeContext();
 			$mobileContext->setForceMobileView( true );
@@ -39,16 +40,18 @@ class BannerMFTest extends MediaWikiTestCase {
 			$reflectionProperty->setAccessible( true );
 			$reflectionProperty->setValue( $mobileContext, true );
 		}
+
 		$this->addDBData();
 		$this->setMwGlobals( 'wgWPBImage', "DefaultBanner" );
 		$this->setMwGlobals( 'wgWPBEnableDefaultBanner', true );
 	}
 
 	protected function tearDown() {
-		if ( class_exists( 'MobileContext' ) ) {
+		if ( class_exists( MobileContext::class ) ) {
 			// restore old mobile context class
 			MobileContext::setInstance( self::$oldMobileContext );
 		}
+
 		parent::tearDown();
 	}
 
@@ -56,8 +59,8 @@ class BannerMFTest extends MediaWikiTestCase {
 	 * Test banner addition on disabling images in MobileFrontend
 	 */
 	public function testMFBannerWithImageDisabled() {
-		if ( class_exists( 'MobileContext' ) ) {
-			$skin = $this->getMock( "Skin" );
+		if ( class_exists( MobileContext::class ) ) {
+			$skin = $this->getMock( Skin::class );
 			$out = $this->createPage( 'PageWithoutCustomBanner', NS_MAIN );
 			WikidataPageBanner::onBeforePageDisplay( $out, $skin );
 			$this->assertNull( $out->getProperty( 'articlebanner-name' ) );

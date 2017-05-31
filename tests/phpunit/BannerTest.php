@@ -97,7 +97,7 @@ class BannerTest extends MediaWikiTestCase {
 		// store a mock object in $wpbFunctionsClass static variable so that hooks call mock functions
 		// through this variable when performing tests
 		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
-		$skin = $this->getMock( "Skin" );
+		$skin = $this->getMock( Skin::class );
 		$skin->expects( $this->any() )->method( 'getSkinName' )
 			->will( $this->returnValue( "vector" ) );
 		WikidataPageBanner::onBeforePageDisplay( $out, $skin );
@@ -174,7 +174,7 @@ class BannerTest extends MediaWikiTestCase {
 	 * @return Parser Parser object associated with test pages
 	 */
 	protected function createParser( $title, $namespace ) {
-		$parser = $this->getMock( 'Parser' );
+		$parser = $this->getMock( Parser::class );
 
 		$parserOutput = new ParserOutput();
 		$parser->expects( $this->any() )->method( 'getOutput' )
