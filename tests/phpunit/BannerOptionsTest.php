@@ -167,7 +167,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 	 * @return Parser Parser object associated with test pages
 	 */
 	protected function createParser( $title, $namespace ) {
-		$parser = $this->getMock( 'Parser' );
+		$parser = $this->getMock( Parser::class );
 
 		$parserOutput = new ParserOutput();
 		$parser->expects( $this->any() )->method( 'getOutput' )

@@ -274,14 +274,14 @@ class WikidataPageBannerFunctions {
 	public static function getPageImagesBanner( $title ) {
 		$config = self::getWPBConfig();
 
-		// Ensure PageImages client is installed
-		if ( class_exists( 'PageImages' ) && $config->get( 'WPBEnablePageImagesBanners' ) ) {
+		if ( class_exists( PageImages::class ) && $config->get( 'WPBEnablePageImagesBanners' ) ) {
 			$pi = PageImages::getPageImage( $title );
 			// getPageImage returns false if no page image.
 			if ( $pi ) {
 				return $pi->getTitle()->getDBkey();
 			}
 		}
+
 		return null;
 	}
 
@@ -299,8 +299,7 @@ class WikidataPageBannerFunctions {
 			return null;
 		}
 
-		// Ensure Wikibase client is installed
-		if ( class_exists( 'Wikibase\Client\WikibaseClient' ) ) {
+		if ( class_exists( Wikibase\Client\WikibaseClient::class ) ) {
 			$entityIdLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
 			->getStore()
 			->getEntityIdLookup();
