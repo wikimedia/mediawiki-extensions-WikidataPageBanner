@@ -140,7 +140,7 @@ class WikidataPageBannerFunctions {
 	 * Returns the html code for the pagebanner
 	 *
 	 * @param string $bannername FileName of banner image
-	 * @param array  $options additional parameters passed to template
+	 * @param array $options additional parameters passed to template
 	 * @return string|null Html code of the banner or null if invalid bannername
 	 */
 	public static function getBannerHtml( $bannername, $options = [] ) {

@@ -73,7 +73,6 @@ class BannerTest extends MediaWikiTestCase {
 			}
 		} catch ( Exception $e ) {
 		}
-
 	}
 
 	protected function setUp() {
