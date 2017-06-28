@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hamilton Abreu"
+		]
+	},
+	"wikidatapagebanner-desc": "Coloca faixas (''banners'') em páginas específicas da wiki no início dos artigos",
+	"wikidatapagebanner-invalid-arguments": "Os seguintes argumentos usados em PAGEBANNER são inválidos ou desconhecidos: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner com parâmetros desconhecidos"
+}
