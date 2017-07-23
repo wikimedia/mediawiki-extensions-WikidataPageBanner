@@ -339,7 +339,7 @@ class WikidataPageBannerFunctions {
 	 * @param string $html of banner to insert
 	 */
 	public static function insertBannerIntoOutputPage( $out, $html ) {
-		$config = WikidataPageBannerFunctions::getWPBConfig();
+		$config = self::getWPBConfig();
 
 		$skinName = $out->getSkin()->getSkinName();
 		$doNotShow = in_array( $skinName, $config->get( 'WPBSkinBlacklist' ) );

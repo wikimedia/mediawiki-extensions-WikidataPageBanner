@@ -119,8 +119,7 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
 				// add title and whether the banner is auto generated to template parameters
 				$paramsForBannerTemplate = [ 'title' => $title, 'isAutomatic' => true ];
-				$banner = $wpbFunctionsClass::
-					getBannerHtml( $bannername, $paramsForBannerTemplate );
+				$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $paramsForBannerTemplate );
 				// only add banner and styling if valid banner generated
 				if ( $banner !== null ) {
 					$wpbFunctionsClass::insertBannerIntoOutputPage( $out, $banner );
@@ -219,8 +218,7 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 		$argumentsFromParserFunction = array_slice( func_get_args(), 2 );
 		// Convert $argumentsFromParserFunction into an associative array
 		$wpbFunctionsClass = self::$wpbFunctionsClass;
-		$argumentsFromParserFunction = $wpbFunctionsClass::
-			extractOptions( $argumentsFromParserFunction );
+		$argumentsFromParserFunction = $wpbFunctionsClass::extractOptions( $argumentsFromParserFunction );
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
