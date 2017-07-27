@@ -5,5 +5,7 @@
 		]
 	},
 	"wikidatapagebanner-extensionname": "UicchidataPageBanner",
-	"wikidatapagebanner-desc": "Disegne le banner sus a pàggene specificate d'a uicchi quanne le vôsce accumenzane"
+	"wikidatapagebanner-desc": "Disegne le banner sus a pàggene specificate d'a uicchi quanne le vôsce accumenzane",
+	"wikidatapagebanner-invalid-arguments": "Le argominde seguende ausate jndr'à PAGEBANNER non ge sò valide o sò scanusciute: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner cu parametre scanusciute"
 }
