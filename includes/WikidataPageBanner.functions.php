@@ -58,7 +58,7 @@ class WikidataPageBannerFunctions {
 					$iconTitleText = $iconUrl->getText();
 				}
 				$finalIcon['icon'] = $iconName;
-				$finalIcon['title'] =  $iconTitleText;
+				$finalIcon['title'] = $iconTitleText;
 				$iconsToAdd[] = $finalIcon;
 			}
 		}
