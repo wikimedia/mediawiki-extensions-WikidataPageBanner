@@ -13,20 +13,22 @@ module.exports = function ( grunt ) {
 		eslint: {
 			all: [
 				'!node_modules/**',
+				'!vendor/**',
 				'resources/**/*.js'
 			]
 		},
 		jsonlint: {
 			all: [
 				'**/*.json',
-				'.stylelintrc',
-				'!node_modules/**'
+				'!node_modules/**',
+				'!vendor/**'
 			]
 		},
 		stylelint: {
 			all: [
 				'**/*.less',
-				'!node_modules/**'
+				'!node_modules/**',
+				'!vendor/**'
 			]
 		}
 	} );
