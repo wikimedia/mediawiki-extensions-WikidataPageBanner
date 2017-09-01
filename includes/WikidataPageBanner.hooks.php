@@ -72,7 +72,7 @@ class WikidataPageBanner {
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin Skin object being rendered
-	 * @return  bool
+	 * @return bool
 	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		$config = WikidataPageBannerFunctions::getWPBConfig();
@@ -138,8 +138,8 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 	 * WikidataPageBanner::onOutputPageParserOutput add banner parameters from ParserOutput to
 	 * Output page
 	 *
-	 * @param  OutputPage $out
-	 * @param  ParserOutput $pOut
+	 * @param OutputPage $out
+	 * @param ParserOutput $pOut
 	 */
 	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ) {
 		if ( $pOut->getExtensionData( 'wpb-banner-options' ) !== null ) {
