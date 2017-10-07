@@ -86,10 +86,10 @@ class BannerTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider provideTestDefaultBanner
 	 * @covers addDefaultBanner(...)
-	 * @param {String} $title of page banner being generated on
-	 * @param {Number} $ns namespace of title
-	 * @param {String} $customBanner parameter given to PAGEBANNER magic word
-	 * @param {String} $expected the name of the banner we output.
+	 * @param string $title of page banner being generated on
+	 * @param number $ns namespace of title
+	 * @param string $customBanner parameter given to PAGEBANNER magic word
+	 * @param string $expected the name of the banner we output.
 	 */
 	public function testDefaultBanner( $title, $ns, $customBanner, $expected ) {
 		$out = $this->createPage( $title, $ns, $customBanner );

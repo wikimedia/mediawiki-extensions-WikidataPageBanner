@@ -18,7 +18,7 @@ class WikidataPageBannerFunctions {
 	/**
 	 * Set bannertoc variable on parser output object
 	 *
-	 * @param array $paramsForBannerTemplate banner parameters array
+	 * @param array &$paramsForBannerTemplate banner parameters array
 	 * @param array $options options from parser function
 	 */
 	public static function addToc( &$paramsForBannerTemplate, $options ) {
@@ -30,7 +30,7 @@ class WikidataPageBannerFunctions {
 	/**
 	 * Render icons using OOJS-UI for icons which are set in arguments
 	 *
-	 * @param array $paramsForBannerTemplate Parameters defined for banner template
+	 * @param array &$paramsForBannerTemplate Parameters defined for banner template
 	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
 	public static function addIcons( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
@@ -73,7 +73,7 @@ class WikidataPageBannerFunctions {
 	/**
 	 * Sets focus parameter on banner templates to shift focus on banner when cropped
 	 *
-	 * @param array $paramsForBannerTemplate Parameters defined for banner template
+	 * @param array &$paramsForBannerTemplate Parameters defined for banner template
 	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
 	public static function addFocus( &$paramsForBannerTemplate, $argumentsFromParserFunction ) {
@@ -377,7 +377,7 @@ class WikidataPageBannerFunctions {
 	/**
 	 * Adds banner custom CSS classes according to extraClass parameter
 	 *
-	 * @param array $paramsForBannerTemplate Parameters defined for banner template
+	 * @param array &$paramsForBannerTemplate Parameters defined for banner template
 	 * @param array $argumentsFromParserFunction Arguments passed to {{PAGEBANNER}} function
 	 */
 	public static function addCssClasses( &$paramsForBannerTemplate,
