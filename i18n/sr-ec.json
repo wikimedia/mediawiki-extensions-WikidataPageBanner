@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Obsuser"
+		]
+	},
+	"wikidatapagebanner-desc": "Рендеровање банера на специфичним страницама вики на почетку чланака",
+	"wikidatapagebanner-invalid-arguments": "Следећи аргументи коришћени у PAGEBANNER су невалидни или непознати: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner са непознатим параметрима"
+}
