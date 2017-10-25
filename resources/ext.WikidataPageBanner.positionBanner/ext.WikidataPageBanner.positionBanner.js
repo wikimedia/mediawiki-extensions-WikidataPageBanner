@@ -81,11 +81,11 @@
 		} );
 	}
 	$( window ).on( 'resize', $.debounce(
-			100,
-			function () {
-				positionBanner( $wpbBannerImageContainer );
-			}
-		) );
+		100,
+		function () {
+			positionBanner( $wpbBannerImageContainer );
+		}
+	) );
 	// set focus after image has loaded
 	$img.load( function () {
 		positionBanner( $wpbBannerImageContainer );
