@@ -157,8 +157,12 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 				if ( strpos( $options['toc'], 'class="toc"' ) !== false ) {
 					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
 				}
-				// disable default TOC
-				$pOut->setTOCEnabled( false );
+				// Remove default TOC
+				$pOut->setRawText( preg_replace(
+					'#' . preg_quote( Parser::TOC_START, '#' ) . '.*?' . preg_quote( Parser::TOC_END, '#' ) . '#s',
+					'',
+					$pOut->getRawText()
+				) );
 			}
 
 			// set banner properties as an OutputPage property
