@@ -158,7 +158,7 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
 				}
 				// Remove default TOC
-				$pOut->setRawText( preg_replace(
+				$pOut->setText( preg_replace(
 					'#' . preg_quote( Parser::TOC_START, '#' ) . '.*?' . preg_quote( Parser::TOC_END, '#' ) . '#s',
 					'',
 					$pOut->getRawText()
