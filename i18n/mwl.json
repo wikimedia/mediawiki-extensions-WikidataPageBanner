@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"MokaAkashiyaPT"
+		]
+	},
+	"wikidatapagebanner-desc": "Pon faxas an páiginas specíficas de la biqui (wiki) ne l ampeço de ls artigos",
+	"wikidatapagebanner-invalid-arguments": "Ls seguintes argumientos outelizados an PAGEBANNER son ambálidos ó çcoincidos: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner cun parámetros çcoincidos"
+}
