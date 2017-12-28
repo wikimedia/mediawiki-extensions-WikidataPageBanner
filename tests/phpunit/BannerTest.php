@@ -85,7 +85,7 @@ class BannerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideTestDefaultBanner
-	 * @covers addDefaultBanner(...)
+	 * @covers WikidataPageBanner::onBeforePageDisplay
 	 * @param string $title of page banner being generated on
 	 * @param number $ns namespace of title
 	 * @param string $customBanner parameter given to PAGEBANNER magic word
@@ -105,7 +105,7 @@ class BannerTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @covers addCustomBanner(...)
+	 * @covers WikidataPageBanner::addCustomBanner
 	 */
 	public function testCustomBanner() {
 		$parser = $this->createParser( 'PageWithCustomBanner', NS_MAIN );

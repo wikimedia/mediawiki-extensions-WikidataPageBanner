@@ -46,7 +46,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 
 	/**
 	 * Test for covering parameters passed to {{PAGEBANNER}} function
-	 * @covers addCustomBanner(...)
+	 * @covers WikidataPageBanner::addCustomBanner
 	 */
 	public function testBannerOptions() {
 		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock
