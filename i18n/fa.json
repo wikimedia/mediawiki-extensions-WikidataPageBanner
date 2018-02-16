@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ladsgroup"
+		]
+	},
+	"wikidatapagebanner-desc": "بنرهای صفحه‌های خاص در شروع مقاله‌ها را رندر می‌کند",
+	"wikidatapagebanner-invalid-arguments": "آرگومان استفاده شده برای PAGEBANNER ناشناخته یا نامعتبر است: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "بنرهای‌ویکی‌داده با پارامتر ناشناخته"
+}
