@@ -6,7 +6,7 @@
 		"WikidataPageBanner"
 	],
 	"type": "mediawiki-extension",
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"require": {
 		"php": ">=5.5.9"
 	},

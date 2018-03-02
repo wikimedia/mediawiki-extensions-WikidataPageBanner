@@ -5,7 +5,7 @@
  *
  * @group WikidataPageBanner
  *
- * @license GPL-2.0
+ * @license GPL-2.0-only
  * @author Sébastien Santoro <dereckson@espace-win.org>
  */
 class WikidataPageBannerFunctionsTest extends PHPUnit\Framework\TestCase {
