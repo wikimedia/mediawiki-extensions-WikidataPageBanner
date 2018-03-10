@@ -1,7 +1,4 @@
 <?php
-/**
- * @group WikidataPageBanner
- */
 
 /**
  * Test for validating options passed to {{PAGEBANNER}} function
@@ -23,6 +20,9 @@ class MockWikidataPageBannerOptions extends WikidataPageBannerFunctions {
 
 }
 
+/**
+ * @group WikidataPageBanner
+ */
 class BannerOptionsTest extends MediaWikiTestCase {
 
 	public function addDBData() {
