@@ -1,7 +1,4 @@
 <?php
-/**
- * @group WikidataPageBanner
- */
 
 /**
  * Mock class for WikidataPageBanner
@@ -42,6 +39,9 @@ class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 
 }
 
+/**
+ * @group WikidataPageBanner
+ */
 class BannerTest extends MediaWikiTestCase {
 
 	/**
