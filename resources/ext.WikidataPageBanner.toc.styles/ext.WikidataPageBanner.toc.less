@@ -35,7 +35,9 @@
 		width: auto;
 
 		// Suppress numbering of items in TOC
-		.tocnumber {
+		.tocnumber,
+		// Hide TOC title
+		.toctitle {
 			display: none;
 		}
 
@@ -110,16 +112,10 @@
 				top: 0;
 			}
 		}
-
-		// Hide TOC title
-		#toctitle {
-			display: none;
-		}
 	}
 
-	// hide original toc by default
-	.toc,
-	#toc {
+	// Hide original TOC by default
+	.toc {
 		display: none;
 	}
 }
