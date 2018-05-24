@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aftabuzzaman"
+		]
+	},
+	"wikidatapagebanner-desc": "নিবন্ধের প্রারম্ভে উইকির নির্দিষ্ট পৃষ্ঠাগুলির উপর ব্যানার প্রদান করে",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER এ ব্যবহৃত নিম্নলিখিত আর্গুমেন্টগুলি অবৈধ বা অজানা: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "অজানা প্যারামিটারসহ WikidataPageBanner"
+}
