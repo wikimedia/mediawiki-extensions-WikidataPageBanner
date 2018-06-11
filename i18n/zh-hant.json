@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"wikidatapagebanner-desc": "在 wiki 上特定頁面裡，頁面開頭的所呈現橫幅",
+	"wikidatapagebanner-invalid-arguments": "以下使用在 PAGEBANNER 的參數為無效或未知：$1",
+	"wikidatapagebanner-invalid-arguments-cat": "帶未知參數的 WikidataPageBanner"
+}
