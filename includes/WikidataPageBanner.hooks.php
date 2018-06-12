@@ -55,8 +55,15 @@ class WikidataPageBanner {
 	public static function onSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
 		$config = WikidataPageBannerFunctions::getWPBConfig();
 		$blacklist = $config->get( 'WPBSkinBlacklist' );
+		$skins = $config->get( 'WPBDisplaySubtitleAfterBannerSkins' );
 
+		$subtitle = $tpl->get( 'subtitle', '' );
 		$banner = $skin->getOutput()->getProperty( 'articlebanner' );
+		if ( array_search( $skin->getSkinName(), $skins ) === false ) {
+			$banner = Html::openElement( 'div', [ 'class' => 'ext-wpb-pagebanner-subtitle' ] ) .
+				$subtitle . Html::closeElement( 'div' ) . $banner;
+			$tpl->set( 'subtitle', '' );
+		}
 		if ( !in_array( $skin->getSkinName(), $blacklist ) ) {
 			$tpl->set( 'prebodyhtml', $banner . $tpl->get( 'prebodyhtml', '' ) );
 		}

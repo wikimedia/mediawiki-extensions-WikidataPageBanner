@@ -94,6 +94,7 @@
 		"@doc": "https://www.mediawiki.org/wiki/Extension:WikidataPageBanner#Configuration_parameters_for_the_extension",
 		"WPBEnablePageImagesBanners": false,
 		"WPBEnableHeadingOverride": true,
+		"WPBDisplaySubtitleAfterBannerSkins": [ "minerva" ],
 		"WPBEnableDefaultBanner": false,
 		"WPBImage": "",
 		"WPBNamespaces": [
