@@ -46,6 +46,8 @@ class WikidataPageBanner {
 	 * Modifies the template to add the banner html for rendering by the skin. Note not
 	 * all skins render the prebodyhtml template variable so in some skins this will have no impact
 	 * whatsoever.
+	 * If a banner exists and the skin is configured via WPBDisplaySubtitleAfterBannerSkins;
+	 * Any existing subtitle is made part of the banner and the subtitle is reset
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateOutputPageBeforeExec
 	 *
 	 * @param Skin &$skin
@@ -56,15 +58,22 @@ class WikidataPageBanner {
 		$config = WikidataPageBannerFunctions::getWPBConfig();
 		$blacklist = $config->get( 'WPBSkinBlacklist' );
 		$skins = $config->get( 'WPBDisplaySubtitleAfterBannerSkins' );
+		$currentSkin = $skin->getSkinName();
+		$isBannerDisplayedInSkin = !in_array( $currentSkin, $blacklist );
+		$isSubtitleBeforeBanner = array_search( $currentSkin, $skins ) === false;
 
 		$subtitle = $tpl->get( 'subtitle', '' );
 		$banner = $skin->getOutput()->getProperty( 'articlebanner' );
-		if ( array_search( $skin->getSkinName(), $skins ) === false ) {
-			$banner = Html::openElement( 'div', [ 'class' => 'ext-wpb-pagebanner-subtitle' ] ) .
-				$subtitle . Html::closeElement( 'div' ) . $banner;
-			$tpl->set( 'subtitle', '' );
-		}
-		if ( !in_array( $skin->getSkinName(), $blacklist ) ) {
+		if ( $banner && $isBannerDisplayedInSkin ) {
+			// if the banner is configured to display before the banner, the subtitle will be inserted before
+			// the banner to retain order.
+			if ( $isSubtitleBeforeBanner ) {
+				$banner = Html::openElement( 'div', [ 'class' => 'ext-wpb-pagebanner-subtitle' ] ) .
+					$subtitle . Html::closeElement( 'div' ) . $banner;
+				// existing subtitle is reset now it is in its new place
+				$tpl->set( 'subtitle', '' );
+			}
+			// Banner is inserted into skins which render `prebodyhtml`
 			$tpl->set( 'prebodyhtml', $banner . $tpl->get( 'prebodyhtml', '' ) );
 		}
 
