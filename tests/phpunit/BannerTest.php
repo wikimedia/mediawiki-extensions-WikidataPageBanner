@@ -41,6 +41,7 @@ class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
 
 /**
  * @group WikidataPageBanner
+ * @group Database
  */
 class BannerTest extends MediaWikiTestCase {
 

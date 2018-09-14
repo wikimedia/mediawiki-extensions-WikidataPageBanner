@@ -22,6 +22,7 @@ class MockWikidataPageBannerOptions extends WikidataPageBannerFunctions {
 
 /**
  * @group WikidataPageBanner
+ * @group Database
  */
 class BannerOptionsTest extends MediaWikiTestCase {
 
