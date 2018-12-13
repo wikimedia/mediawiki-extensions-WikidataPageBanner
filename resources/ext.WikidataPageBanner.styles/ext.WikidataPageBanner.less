@@ -19,6 +19,10 @@
 	font-size: 0.875em;
 }
 
+.wpb-banner-image {
+	visibility: hidden;
+}
+
 .wpb-topbanner {
 	position: relative;
 	max-width: 1800px;
@@ -84,12 +88,8 @@
 	}
 }
 
-.wpb-banner-image {
-	visibility: hidden;
-}
-
-.client-js .wpb-positioned-banner,
-.client-nojs {
+.client-nojs,
+.client-js .wpb-positioned-banner {
 	.wpb-banner-image {
 		visibility: visible;
 	}
@@ -114,12 +114,11 @@
 		 * The rules below define custom positioning for banner in case the cropped banner needs to be
 		 * shifted to allow focus to a different area
 		 */
-
-		.wpb-left{
+		.wpb-left {
 			.transform ( translateX( -25% ) );
 		}
 
-		.wpb-right{
+		.wpb-right {
 			.transform ( translateX( -75% ) );
 		}
 	}

@@ -11,13 +11,14 @@
 	background-color: @colorGray15;
 	border-bottom: 1px solid rgba( 0, 0, 0, 0.2 );
 
-	&.wpb-banner-image-panorama {
-
-		.wpb-banner-image {
-			width: auto;
-			height: 100%;
-		}
+	&.wpb-banner-image-panorama .wpb-banner-image {
+		width: auto;
+		height: 100%;
 	}
+}
+
+.ext-wpb-pagebanner {
+	clear: both;
 }
 
 // mobile 62.5 corresponds to @wgMFDeviceWidthDesktop in MobileFrontend
@@ -26,8 +27,4 @@
 	.ext-wpb-pagebanner.pre-content {
 		margin: 0;
 	}
-}
-
-.ext-wpb-pagebanner {
-	clear: both;
 }
