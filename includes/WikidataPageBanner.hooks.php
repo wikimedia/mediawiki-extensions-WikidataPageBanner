@@ -192,8 +192,6 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 	 *
 	 * @param array $args Array of parameters to check
 	 * @param Parser $parser ParserOutput object to add the warning message
-	 * @return Status A Status object, if there are invalid/unknown parameters,
-	 * 	they will be added as warnings.
 	 */
 	public static function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
 		global $wgContLang;
