@@ -8,7 +8,7 @@ class WikidataPageBanner {
 	 * functions
 	 * Note that this variable is also used by tests to store a mock classname of helper functions
 	 * in it externally
-	 * @var WikidataPageBannerFunctions
+	 * @var string
 	 */
 	public static $wpbFunctionsClass = "WikidataPageBannerFunctions";
 
