@@ -228,15 +228,14 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 	 *
 	 * @param Parser $parser
 	 * @param string $bannername Name of custom banner
+	 * @param string ...$args
 	 */
-	public static function addCustomBanner( Parser $parser, $bannername ) {
+	public static function addCustomBanner( Parser $parser, $bannername, ...$args ) {
 		// @var array to hold parameters to be passed to banner template
 		$paramsForBannerTemplate = [];
-		// skip parser function name and bannername in arguments
-		$argumentsFromParserFunction = array_slice( func_get_args(), 2 );
 		// Convert $argumentsFromParserFunction into an associative array
 		$wpbFunctionsClass = self::$wpbFunctionsClass;
-		$argumentsFromParserFunction = $wpbFunctionsClass::extractOptions( $argumentsFromParserFunction );
+		$argumentsFromParserFunction = $wpbFunctionsClass::extractOptions( $args );
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
