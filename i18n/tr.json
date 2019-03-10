@@ -4,5 +4,7 @@
 			"Hedda"
 		]
 	},
-	"wikidatapagebanner-desc": "Maddelerin başında viki'nin belirtilen sayfalarında afişleri göster"
+	"wikidatapagebanner-desc": "Maddelerin başında viki'nin belirtilen sayfalarında afişleri göster",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER içinde kullanılan şu argümanlar geçersiz veya bilinmiyor: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner bilinmeyen parametrelere sahip"
 }
