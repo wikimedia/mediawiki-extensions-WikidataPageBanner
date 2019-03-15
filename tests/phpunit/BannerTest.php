@@ -183,9 +183,9 @@ class BannerTest extends MediaWikiTestCase {
 		$curTitle = Title::newFromText( $title, $namespace );
 		$parser->expects( $this->any() )->method( 'getTitle' )
 			->will( $this->returnValue( $curTitle ) );
-		$langConverter = Language::factory( 'en' );
-		$parser->expects( $this->any() )->method( 'getConverterLanguage' )
-			->will( $this->returnValue( $langConverter ) );
+		$language = Language::factory( 'en' );
+		$parser->expects( $this->any() )->method( 'getTargetLanguage' )
+			->will( $this->returnValue( $language ) );
 
 		return $parser;
 	}
