@@ -18,8 +18,8 @@
 		"WikidataPageBannerMagic": "WikidataPageBanner.i18n.magic.php"
 	},
 	"AutoloadClasses": {
-		"WikidataPageBanner": "includes/WikidataPageBanner.hooks.php",
-		"WikidataPageBannerFunctions": "includes/WikidataPageBanner.functions.php"
+		"WikidataPageBanner": "includes/WikidataPageBanner.php",
+		"WikidataPageBannerFunctions": "includes/WikidataPageBannerFunctions.php"
 	},
 	"ResourceModules": {
 		"ext.WikidataPageBanner": {
