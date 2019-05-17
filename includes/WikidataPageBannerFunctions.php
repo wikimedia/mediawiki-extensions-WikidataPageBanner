@@ -117,17 +117,21 @@ class WikidataPageBannerFunctions {
 	 * Converts an array of values in form [0] => "name=value" into a real
 	 * associative array in form [name] => value
 	 *
+	 * @param Parser $parser
 	 * @param string[] $options
 	 * @return array $results
 	 */
-	public static function extractOptions( array $options ) {
+	public static function extractOptions( Parser $parser, array $options ) {
 		$results = [];
 
 		foreach ( $options as $option ) {
 			$pair = explode( '=', $option, 2 );
 			if ( count( $pair ) == 2 ) {
 				$name = trim( $pair[0] );
-				$value = trim( $pair[1] );
+				// convert value to preferred language variant as
+				// done in core Parser.php
+				$value = $parser->getTargetLanguage()
+					->convert( trim( $pair[1] ) );
 				$results[$name] = $value;
 			}
 		}

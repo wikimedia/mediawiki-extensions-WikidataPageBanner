@@ -235,7 +235,7 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 		$paramsForBannerTemplate = [];
 		// Convert $argumentsFromParserFunction into an associative array
 		$wpbFunctionsClass = self::$wpbFunctionsClass;
-		$argumentsFromParserFunction = $wpbFunctionsClass::extractOptions( $args );
+		$argumentsFromParserFunction = $wpbFunctionsClass::extractOptions( $parser, $args );
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 		$ns = $title->getNamespace();
