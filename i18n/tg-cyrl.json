@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"ToJack"
+		]
+	},
+	"wikidatapagebanner-desc": "Илова акси баннер дар аввали саҳифа",
+	"wikidatapagebanner-invalid-arguments": "Аргументҳои дар PAGEBANNER истифодашаванда ё нодурустанд ё нашинохтанӣ: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner бо параметрҳои хато"
+}
