@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class WikidataPageBanner {
 
 	/**
@@ -194,8 +196,6 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 	 * @param Parser $parser ParserOutput object to add the warning message
 	 */
 	public static function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
-		global $wgContLang;
-
 		$badParams = [];
 		$allowedParams = array_flip( self::$allowedParameters );
 		foreach ( $args as $param => $value ) {
@@ -206,13 +206,14 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 		}
 
 		if ( $badParams ) {
+			$contLang = MediaWikiServices::getInstance()->getContentLanguage();
 			// if there are unknown parameters, add a tracking category
 			$parser->addTrackingCategory( 'wikidatapagebanner-invalid-arguments-cat' );
 
 			// this message will be visible when the page preview button is used, but not when the page is
 			// saved. It contains a list of unknown parameters.
 			$parser->getOutput()->addWarning(
-				wfMessage( 'wikidatapagebanner-invalid-arguments', $wgContLang->commaList( $badParams ) )
+				wfMessage( 'wikidatapagebanner-invalid-arguments', $contLang->commaList( $badParams ) )
 					->title( $parser->getTitle() )
 					->inContentLanguage()
 					->text()
