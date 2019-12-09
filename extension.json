@@ -22,7 +22,9 @@
 	},
 	"AutoloadClasses": {
 		"WikidataPageBanner": "includes/WikidataPageBanner.php",
-		"WikidataPageBannerFunctions": "includes/WikidataPageBannerFunctions.php"
+		"WikidataPageBannerFunctions": "includes/WikidataPageBannerFunctions.php",
+		"MockWikidataPageBannerFunctions": "tests/phpunit/MockWikidataPageBannerFunctions.php",
+		"MockWikidataPageBannerOptions": "tests/phpunit/MockWikidataPageBannerOptions.php"
 	},
 	"ResourceModules": {
 		"ext.WikidataPageBanner": {

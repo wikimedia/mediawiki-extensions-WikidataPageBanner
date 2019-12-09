@@ -1,26 +1,6 @@
 <?php
 
 /**
- * Test for validating options passed to {{PAGEBANNER}} function
- * Mock class for WikidataPageBannerOptions
- */
-class MockWikidataPageBannerOptions extends WikidataPageBannerFunctions {
-
-	public static function getBannerHtml( $bannername, $options = [] ) {
-		return $options;
-	}
-
-	public static function getImageUrl( $filename, $imagewidth = null ) {
-		if ( $filename == 'NoWikidataBanner' || $filename == 'NoBanner' || $filename === null ) {
-			return null;
-		}
-
-		return "BannerUrl";
-	}
-
-}
-
-/**
  * @group WikidataPageBanner
  * @group Database
  */
@@ -52,7 +32,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 	public function testBannerOptions() {
 		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock
 		// functions through this variable when performing tests
-		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerOptions";
+		WikidataPageBanner::$wpbFunctionsClass = MockWikidataPageBannerOptions::class;
 		$parser = $this->createParser( 'BannerWithOptions', NS_MAIN );
 
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1' );
