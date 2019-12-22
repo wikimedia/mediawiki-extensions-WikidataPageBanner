@@ -298,8 +298,10 @@ $params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 				$parser->fetchFileAndTitle( $bannerTitle );
 				$parser->getOutput()->setProperty( 'wpb_banner', $bannerTitle->getText() );
 				$parser->getOutput()->setProperty( 'wpb_banner_focus_x',
+						// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 						$paramsForBannerTemplate['data-pos-x'] );
 				$parser->getOutput()->setProperty( 'wpb_banner_focus_y',
+						// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 						$paramsForBannerTemplate['data-pos-y'] );
 			}
 		}
