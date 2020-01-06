@@ -98,26 +98,47 @@
 		]
 	},
 	"config": {
-		"@doc": "https://www.mediawiki.org/wiki/Extension:WikidataPageBanner#Configuration_parameters_for_the_extension",
-		"WPBEnablePageImagesBanners": false,
-		"WPBEnableHeadingOverride": true,
-		"WPBDisplaySubtitleAfterBannerSkins": [ "minerva" ],
-		"WPBEnableDefaultBanner": false,
-		"WPBImage": "",
-		"WPBNamespaces": [
-			0
-		],
-		"WPBDisabledNamespaces": [],
-		"WPBStandardSizes": [
-			640,
-			1280,
-			2560
-		],
-		"WPBBannerProperty": "",
-		"WPBSkinBlacklist": []
+		"WPBEnablePageImagesBanners": {
+			"value": false
+		},
+		"WPBEnableHeadingOverride": {
+			"value": true
+		},
+		"WPBDisplaySubtitleAfterBannerSkins": {
+			"value": [
+				"minerva"
+			]
+		},
+		"WPBEnableDefaultBanner": {
+			"value": false
+		},
+		"WPBImage": {
+			"value": ""
+		},
+		"WPBNamespaces": {
+			"value": [
+				0
+			]
+		},
+		"WPBDisabledNamespaces": {
+			"value": []
+		},
+		"WPBStandardSizes": {
+			"value": [
+				640,
+				1280,
+				2560
+			]
+		},
+		"WPBBannerProperty": {
+			"value": ""
+		},
+		"WPBSkinBlacklist": {
+			"value": []
+		}
 	},
 	"ConfigRegistry": {
 		"wikidatapagebanner": "GlobalVarConfig::newInstance"
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }
