@@ -7,7 +7,7 @@
 			height: 300
 		} );
 		this.$wpbBannerImage = $( '<img/>', {
-			'class': 'wpb-banner-image wpb-banner-image-panorama',
+			class: 'wpb-banner-image wpb-banner-image-panorama',
 			width: 900,
 			height: 500
 		} );
@@ -45,7 +45,7 @@
 			height: 300
 		} );
 		this.$wpbBannerImage = $( '<img/>', {
-			'class': 'wpb-banner-image',
+			class: 'wpb-banner-image',
 			width: 1900,
 			height: 400
 		} );
@@ -72,4 +72,4 @@
 			'Banner top should not leave positive margin for focus' );
 
 	} );
-} )( mediaWiki, jQuery );
+}( mediaWiki, jQuery ) );
