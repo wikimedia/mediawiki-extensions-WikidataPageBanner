@@ -43,7 +43,7 @@ class WikidataPageBannerFunctions {
 			if ( substr( $key, 0, 5 ) === 'icon-' ) {
 				// extract iconname after 'icon-' til the end of key
 				$iconname = substr( $key, 5 );
-				if ( !isset( $iconname, $value ) ) {
+				if ( !isset( $iconname ) || !isset( $value ) ) {
 					continue;
 				}
 
