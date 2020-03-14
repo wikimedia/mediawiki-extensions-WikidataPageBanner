@@ -172,7 +172,7 @@ class WikidataPageBannerFunctions {
 			// use largest image url as src attribute
 			$bannerurl = $urls[count( $urls ) - 1];
 			$bannerfile = Title::newFromText( "File:$bannername" );
-			$file = wfFindFile( $bannerfile );
+			$file = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $bannerfile );
 			// don't auto generate banner if image is not landscape, see bug report T131424
 			$fileWidth = $file->getWidth();
 			$fileHeight = $file->getHeight();
@@ -209,7 +209,7 @@ class WikidataPageBannerFunctions {
 	public static function getImageUrl( $filename, $imagewidth = null ) {
 		// make title object from image name
 		$title = Title::makeTitleSafe( NS_FILE, $filename );
-		$file = wfFindFile( $title );
+		$file = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
 		$options = [
 			'options' => [ 'min_range' => 0, 'max_range' => 3000 ]
 		];
