@@ -151,7 +151,7 @@ class WikidataPageBannerFunctions {
 		$config = self::getWPBConfig();
 		$urls = static::getStandardSizeUrls( $bannername );
 		$banner = null;
-		/** @var String srcset attribute for <img> element of banner image */
+		/** @var string srcset attribute for <img> element of banner image */
 		$srcset = [];
 
 		// if a valid bannername given, set banner
@@ -231,7 +231,7 @@ class WikidataPageBannerFunctions {
 	 * WikidataPageBanner::getStandardSizeUrls
 	 * returns an array of urls of standard image sizes defined by $wgWPBStandardSizes
 	 *
-	 * @param String $filename Name of Image file
+	 * @param string $filename Name of Image file
 	 * @return array
 	 */
 	public static function getStandardSizeUrls( $filename ) {
@@ -252,7 +252,7 @@ class WikidataPageBannerFunctions {
 	 * Fetches a banner for a given title when none has been specified by an editor
 	 *
 	 * @param Title $title Title of the page
-	 * @return String|null file name of a suitable automatic banner or null if none found
+	 * @return string|null file name of a suitable automatic banner or null if none found
 	 */
 	public static function getAutomaticBanner( $title ) {
 		$config = self::getWPBConfig();
@@ -272,7 +272,7 @@ class WikidataPageBannerFunctions {
 	 * Fetches banner from PageImages
 	 *
 	 * @param Title $title Title of the page
-	 * @return String|null file name of the banner found via page images
+	 * @return string|null file name of the banner found via page images
 	 * or null if none found
 	 */
 	public static function getPageImagesBanner( $title ) {
@@ -293,7 +293,7 @@ class WikidataPageBannerFunctions {
 	 * WikidataPageBanner::getWikidataBanner Fetches banner from wikidata for the specified page
 	 *
 	 * @param Title $title Title of the page
-	 * @return String|null file name of the banner from wikidata
+	 * @return string|null file name of the banner from wikidata
 	 * or null if none found
 	 */
 	public static function getWikidataBanner( $title ) {
