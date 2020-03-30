@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Sujiniku",
-			"Afaz"
+			"Afaz",
+			"Shirayuki"
 		]
 	},
 	"wikidatapagebanner-desc": "ウィキの特定のページの記事の先頭にバナーを表示",
 	"wikidatapagebanner-invalid-arguments": "PAGEBANNERで用いられている以下の引数が、無効または不明です: $1",
-	"wikidatapagebanner-invalid-arguments-cat": "不明なパラメータのウィキデータ・ページバナー"
+	"wikidatapagebanner-invalid-arguments-cat": "不明なパラメーターのウィキデータ・ページバナー"
 }
