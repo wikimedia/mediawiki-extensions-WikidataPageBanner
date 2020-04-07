@@ -1,9 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Sujiniku",
 			"Afaz",
-			"Shirayuki"
+			"Shirayuki",
+			"Sujiniku"
 		]
 	},
 	"wikidatapagebanner-desc": "ウィキの特定のページの記事の先頭にバナーを表示",

@@ -1,5 +1,7 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": []
+	},
 	"wikidatapagebanner-extensionname": "{{name}}",
 	"wikidatapagebanner-desc": "{{desc|name=WikidataPageBanner|url=https://www.mediawiki.org/wiki/Extension:WikidataPageBanner}}",
 	"wikidatapagebanner-invalid-arguments": "Message shown, if the user added the PAGEBANNER parser hook, but used unknown or invalid parameters.\n\n* $1 - comma-seperated list of invalid or unknown parameters",
