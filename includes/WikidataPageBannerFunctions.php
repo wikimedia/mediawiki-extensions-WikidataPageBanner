@@ -278,7 +278,10 @@ class WikidataPageBannerFunctions {
 	public static function getPageImagesBanner( $title ) {
 		$config = self::getWPBConfig();
 
-		if ( class_exists( PageImages::class ) && $config->get( 'WPBEnablePageImagesBanners' ) ) {
+		if (
+			ExtensionRegistry::getInstance()->isLoaded( 'PageImages' )
+			&& $config->get( 'WPBEnablePageImagesBanners' )
+		) {
 			$pi = PageImages::getPageImage( $title );
 			// getPageImage returns false if no page image.
 			if ( $pi ) {
