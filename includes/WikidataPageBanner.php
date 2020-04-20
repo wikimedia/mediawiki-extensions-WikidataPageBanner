@@ -104,7 +104,7 @@ class WikidataPageBanner {
 			$bannername = $params['name'];
 			if ( isset( $params['icons'] ) ) {
 				$out->enableOOUI();
-$params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
+				$params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
 			}
 			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
 			// attempt to get an automatic banner
