@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use PageImages\PageImages;
 use Wikibase\DataModel\Entity\Item;
 
 /**
@@ -279,8 +280,8 @@ class WikidataPageBannerFunctions {
 		$config = self::getWPBConfig();
 
 		if (
+			$config->get( 'WPBEnablePageImagesBanners' ) &&
 			ExtensionRegistry::getInstance()->isLoaded( 'PageImages' )
-			&& $config->get( 'WPBEnablePageImagesBanners' )
 		) {
 			$pi = PageImages::getPageImage( $title );
 			// getPageImage returns false if no page image.
