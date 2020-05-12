@@ -319,26 +319,4 @@ class WikidataPageBanner {
 		return true;
 	}
 
-	/**
-	 * Register QUnit tests.
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderTestModules
-	 *
-	 * @param array[] &$modules
-	 * @param ResourceLoader &$rl
-	 */
-	public static function onResourceLoaderTestModules( &$modules, &$rl ) {
-		$boilerplate = [
-			'localBasePath' => __DIR__ . '/../tests/qunit/',
-			'remoteExtPath' => 'WikidataPageBanner/tests/qunit',
-			'targets' => [ 'desktop', 'mobile' ],
-		];
-
-		$modules['qunit']['ext.WikidataPageBanner.positionBanner.test'] = $boilerplate + [
-			'scripts' => [
-				'ext.WikidataPageBanner.positionBanner/test_ext.WikidataPageBanner.positionBanner.js',
-			],
-			'dependencies' => [ 'ext.WikidataPageBanner.positionBanner' ],
-		];
-	}
-
 }

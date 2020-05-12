@@ -80,6 +80,16 @@
 		"localBasePath": "resources",
 		"remoteExtPath": "WikidataPageBanner/resources"
 	},
+	"QUnitTestModule": {
+		"localBasePath": "tests/qunit",
+		"remoteExtPath": "WikidataPageBanner/tests/qunit",
+		"scripts": [
+			"ext.WikidataPageBanner.positionBanner/test_ext.WikidataPageBanner.positionBanner.js"
+		],
+		"dependencies": [
+			"ext.WikidataPageBanner.positionBanner"
+		]
+	},
 	"Hooks": {
 		"BeforePageDisplay": [
 			"WikidataPageBanner::onBeforePageDisplay"
@@ -92,9 +102,6 @@
 		],
 		"SkinTemplateOutputPageBeforeExec": [
 			"WikidataPageBanner::onSkinTemplateOutputPageBeforeExec"
-		],
-		"ResourceLoaderTestModules": [
-			"WikidataPageBanner::onResourceLoaderTestModules"
 		]
 	},
 	"config": {
