@@ -34,6 +34,8 @@
 				"ext.WikidataPageBanner.styles/ext.WikidataPageBanner.less"
 			],
 			"skinStyles": {
+				"default": "ext.WikidataPageBanner.styles/ext.WikidataPageBanner.default.less",
+				"modern": "ext.WikidataPageBanner.styles/ext.WikidataPageBanner.modern.less",
 				"minerva": "ext.WikidataPageBanner.styles/ext.WikidataPageBanner.minerva.less"
 			},
 			"targets": [
@@ -97,11 +99,11 @@
 		"OutputPageParserOutput": [
 			"WikidataPageBanner::onOutputPageParserOutput"
 		],
+		"SiteNoticeAfter": [
+			"WikidataPageBanner::onSiteNoticeAfter"
+		],
 		"ParserFirstCallInit": [
 			"WikidataPageBanner::onParserFirstCallInit"
-		],
-		"SkinTemplateOutputPageBeforeExec": [
-			"WikidataPageBanner::onSkinTemplateOutputPageBeforeExec"
 		]
 	},
 	"config": {

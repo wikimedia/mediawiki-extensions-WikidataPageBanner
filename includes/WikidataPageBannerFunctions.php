@@ -9,13 +9,6 @@ use Wikibase\DataModel\Entity\Item;
  * to render the banner
  */
 class WikidataPageBannerFunctions {
-
-	/**
-	 * @var string[] name of skins that do not implement 'prebodyhtml'
-	 *  banners for these skin will be prepended to body content
-	 */
-	protected static $blacklistSkins = [ 'monobook', 'modern', 'cologneblue' ];
-
 	/**
 	 * Set bannertoc variable on parser output object
 	 *
@@ -341,20 +334,25 @@ class WikidataPageBannerFunctions {
 	}
 
 	/**
-	 * Insert banner HTML into the page
+	 * @param Skin $skin
+	 * @return bool
+	 */
+	public static function isSkinBlacklisted( $skin ) {
+		$skinName = $skin->getSkinName();
+		$config = $skin->getConfig();
+		return in_array( $skinName, $config->get( 'WPBSkinBlacklist' ) );
+	}
+
+	/**
+	 * Insert banner HTML into the page as a page property.
+	 * Suppress primary page title if configured.
 	 *
 	 * @param OutputPage $out to inject banner into
 	 * @param string $html of banner to insert
 	 */
-	public static function insertBannerIntoOutputPage( $out, $html ) {
+	public static function setOutputPageProperties( $out, $html ) {
 		$config = self::getWPBConfig();
-
-		$skinName = $out->getSkin()->getSkinName();
-		$doNotShow = in_array( $skinName, $config->get( 'WPBSkinBlacklist' ) );
-
-		if ( !$doNotShow && in_array( $skinName, self::$blacklistSkins ) ) {
-			$out->prependHTML( $html );
-		}
+		$doNotShow = self::isSkinBlacklisted( $out->getSkin() );
 
 		if ( $config->get( 'WPBEnableHeadingOverride' ) && !$doNotShow ) {
 			$htmlTitle = $out->getHTMLTitle();

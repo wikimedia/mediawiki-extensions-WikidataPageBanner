@@ -1,0 +1,16 @@
+/**
+ * Correct the margin-start for site subtitle margin.
+ */
+#contentSub {
+	padding-left: 0 !important;
+
+	// Move the margin to child elements
+	> div {
+		padding-left: 2em;
+	}
+
+	// WikidataPageBanner should not be subject to a margin.
+	> .ext-wpb-pagebanner {
+		padding-left: 0;
+	}
+}

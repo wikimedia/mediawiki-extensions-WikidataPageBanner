@@ -44,42 +44,62 @@ class WikidataPageBanner {
 	}
 
 	/**
-	 * GetSkinTemplateOutputPageBeforeExec
-	 * Modifies the template to add the banner html for rendering by the skin. Note not
-	 * all skins render the prebodyhtml template variable so in some skins this will have no impact
-	 * whatsoever.
-	 * If a banner exists and the skin is configured via WPBDisplaySubtitleAfterBannerSkins;
-	 * Any existing subtitle is made part of the banner and the subtitle is reset
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateOutputPageBeforeExec
-	 *
-	 * @param Skin &$skin
-	 * @param QuickTemplate &$tpl
+	 * Checks if the skin should output the wikidata banner before the
+	 * site subtitle, in which case it should use the sitenotice container.
+	 * @param Skin $skin
 	 * @return bool
 	 */
-	public static function onSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
-		$config = WikidataPageBannerFunctions::getWPBConfig();
-		$blacklist = $config->get( 'WPBSkinBlacklist' );
-		$skins = $config->get( 'WPBDisplaySubtitleAfterBannerSkins' );
+	private static function isSiteNoticeSkin( $skin ) {
 		$currentSkin = $skin->getSkinName();
-		$isBannerDisplayedInSkin = !in_array( $currentSkin, $blacklist );
-		$isSubtitleBeforeBanner = array_search( $currentSkin, $skins ) === false;
+		$skins = $skin->getConfig()->get( 'WPBDisplaySubtitleAfterBannerSkins' );
+		return array_search( $currentSkin, $skins ) !== false;
+	}
 
-		$subtitle = $tpl->get( 'subtitle', '' );
-		$banner = $skin->getOutput()->getProperty( 'articlebanner' );
-		if ( $banner && $isBannerDisplayedInSkin ) {
-			// if the banner is configured to display before the banner, the subtitle will be inserted before
-			// the banner to retain order.
-			if ( $isSubtitleBeforeBanner ) {
-				$banner = Html::openElement( 'div', [ 'class' => 'ext-wpb-pagebanner-subtitle' ] ) .
-					$subtitle . Html::closeElement( 'div' ) . $banner;
-				// existing subtitle is reset now it is in its new place
-				$tpl->set( 'subtitle', '' );
-			}
-			// Banner is inserted into skins which render `prebodyhtml`
-			$tpl->set( 'prebodyhtml', $banner . $tpl->get( 'prebodyhtml', '' ) );
+	/**
+	 * Modifies the template to add the banner html for rendering by the skin to the subtitle
+	 * if a banner exists and the skin is configured via WPBDisplaySubtitleAfterBannerSkins;
+	 * Any existing subtitle is made part of the banner and the subtitle is reset.
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageBeforeHTML
+	 *
+	 * @param OutputPage $out
+	 * @return bool inidicating whether it was added or not
+	 */
+	public static function addBannerToSkinOutput( $out ) {
+		$skin = $out->getSkin();
+		$isSkinBlacklisted = self::$wpbFunctionsClass::isSkinBlacklisted( $skin );
+
+		// If the skin is using SiteNoticeAfter abort.
+		if ( $isSkinBlacklisted || self::isSiteNoticeSkin( $skin ) ) {
+			return false;
+		}
+		$banner = $out->getProperty( 'articlebanner' );
+		if ( $banner ) {
+			// Insert banner
+			$out->addSubtitle( $banner );
 		}
 
 		return true;
+	}
+
+	/**
+	 * Add banner to skins which output banners into the site notice area.
+	 * @param string|bool &$siteNotice of the page.
+	 * @param Skin $skin being used.
+	 */
+	public static function onSiteNoticeAfter( &$siteNotice, Skin $skin ) {
+		if ( !self::$wpbFunctionsClass::isSkinBlacklisted( $skin ) &&
+			self::isSiteNoticeSkin( $skin )
+		) {
+			$out = $skin->getOutput();
+			$banner = $out->getProperty( 'articlebanner' );
+
+			if ( $siteNotice ) {
+				$siteNotice .= $banner;
+			} else {
+				$siteNotice = $banner;
+			}
+			return;
+		}
 	}
 
 	/**
@@ -118,7 +138,7 @@ class WikidataPageBanner {
 				if ( isset( $params['toc'] ) ) {
 					$out->addModuleStyles( 'ext.WikidataPageBanner.toc.styles' );
 				}
-				$wpbFunctionsClass::insertBannerIntoOutputPage( $out, $banner );
+				$wpbFunctionsClass::setOutputPageProperties( $out, $banner );
 
 				// FIXME: This is currently only needed to support testing
 				$out->setProperty( 'articlebanner-name', $bannername );
@@ -140,7 +160,7 @@ class WikidataPageBanner {
 				$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $paramsForBannerTemplate );
 				// only add banner and styling if valid banner generated
 				if ( $banner !== null ) {
-					$wpbFunctionsClass::insertBannerIntoOutputPage( $out, $banner );
+					$wpbFunctionsClass::setOutputPageProperties( $out, $banner );
 
 					// set articlebanner property on OutputPage
 					// FIXME: This is currently only needed to support testing
@@ -148,6 +168,7 @@ class WikidataPageBanner {
 				}
 			}
 		}
+		self::addBannerToSkinOutput( $out );
 
 		return true;
 	}

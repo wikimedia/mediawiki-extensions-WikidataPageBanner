@@ -76,7 +76,7 @@ class BannerOptionsTest extends MediaWikiTestCase {
 			'iconurl must be a default #' );
 		$this->assertEquals( $bannerparams['icons'][1]['title'], 'Main Page',
 			'star icon must be set' );
-		$this->assertContains( 'Main_Page', $bannerparams['icons'][1]['url'],
+		$this->assertStringContainsString( 'Main_Page', $bannerparams['icons'][1]['url'],
 			'iconurl must be a valid main page url' );
 		$this->assertEquals( [], $pOut->getWarnings() );
 
