@@ -21,10 +21,6 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		$this->setMwGlobals( 'wgWPBEnablePageImagesBanners', false );
 	}
 
-	protected function tearDown() : void {
-		parent::tearDown();
-	}
-
 	/**
 	 * Test for covering parameters passed to {{PAGEBANNER}} function
 	 * @covers WikidataPageBanner::addCustomBanner
