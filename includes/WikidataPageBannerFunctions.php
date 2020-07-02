@@ -337,10 +337,11 @@ class WikidataPageBannerFunctions {
 	 * @param Skin $skin
 	 * @return bool
 	 */
-	public static function isSkinBlacklisted( $skin ) {
+	public static function isSkinDisabled( $skin ) {
 		$skinName = $skin->getSkinName();
 		$config = $skin->getConfig();
-		return in_array( $skinName, $config->get( 'WPBSkinBlacklist' ) );
+		$skinDisabled = (array)$config->get( 'WPBSkinDisabled' );
+		return in_array( $skinName, $skinDisabled );
 	}
 
 	/**
@@ -352,9 +353,9 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function setOutputPageProperties( $out, $html ) {
 		$config = self::getWPBConfig();
-		$doNotShow = self::isSkinBlacklisted( $out->getSkin() );
 
-		if ( $config->get( 'WPBEnableHeadingOverride' ) && !$doNotShow ) {
+		if ( $config->get( 'WPBEnableHeadingOverride' )
+			&& !self::isSkinDisabled( $out->getSkin() ) ) {
 			$htmlTitle = $out->getHTMLTitle();
 			// hide primary title
 			$out->setPageTitle( '' );

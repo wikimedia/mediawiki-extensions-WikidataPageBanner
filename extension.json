@@ -142,7 +142,7 @@
 		"WPBBannerProperty": {
 			"value": ""
 		},
-		"WPBSkinBlacklist": {
+		"WPBSkinDisabled": {
 			"value": []
 		}
 	},
