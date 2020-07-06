@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fierodelveneto"
+		]
+	},
+	"wikidatapagebanner-desc": "El fa in manjiera de mostrar bàner so voxe spesìfeghe de łe Wiki inte el scumìsio de łe voxe",
+	"wikidatapagebanner-invalid-arguments": "I argomenti seventi doparai in PAGEBANNER i xe sconosesti o mija justi: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner co paràmatri sconosesti"
+}
