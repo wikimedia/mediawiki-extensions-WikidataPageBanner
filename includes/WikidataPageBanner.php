@@ -66,10 +66,10 @@ class WikidataPageBanner {
 	 */
 	public static function addBannerToSkinOutput( $out ) {
 		$skin = $out->getSkin();
-		$isSkinBlacklisted = self::$wpbFunctionsClass::isSkinBlacklisted( $skin );
+		$isSkinDisabled = self::$wpbFunctionsClass::isSkinDisabled( $skin );
 
 		// If the skin is using SiteNoticeAfter abort.
-		if ( $isSkinBlacklisted || self::isSiteNoticeSkin( $skin ) ) {
+		if ( $isSkinDisabled || self::isSiteNoticeSkin( $skin ) ) {
 			return false;
 		}
 		$banner = $out->getProperty( 'articlebanner' );
@@ -87,7 +87,7 @@ class WikidataPageBanner {
 	 * @param Skin $skin being used.
 	 */
 	public static function onSiteNoticeAfter( &$siteNotice, Skin $skin ) {
-		if ( !self::$wpbFunctionsClass::isSkinBlacklisted( $skin ) &&
+		if ( !self::$wpbFunctionsClass::isSkinDisabled( $skin ) &&
 			self::isSiteNoticeSkin( $skin )
 		) {
 			$out = $skin->getOutput();
