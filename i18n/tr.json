@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"BaRaN6161 TURK",
 			"Hedda"
 		]
 	},
-	"wikidatapagebanner-desc": "Maddelerin başında viki'nin belirtilen sayfalarında afişleri göster",
+	"wikidatapagebanner-desc": "Maddelerin başında belirtilen viki sayfalarında bannerlar oluşturun",
 	"wikidatapagebanner-invalid-arguments": "PAGEBANNER içinde kullanılan şu argümanlar geçersiz veya bilinmiyor: $1",
-	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner bilinmeyen parametrelere sahip"
+	"wikidatapagebanner-invalid-arguments-cat": "Bilinmeyen parametreleri olan WikidataPageBanner"
 }
