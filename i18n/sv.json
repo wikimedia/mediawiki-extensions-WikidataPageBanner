@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sabelöga"
+		]
+	},
+	"wikidatapagebanner-desc": "Renderar baner i början på angivna artiklar på wikin",
+	"wikidatapagebanner-invalid-arguments": "Följande argument som används i PAGEBANNER är ogiltiga eller okända: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner med okända parametrar"
+}
