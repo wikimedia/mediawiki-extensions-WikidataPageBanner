@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tofeiku"
+		]
+	},
+	"wikidatapagebanner-desc": "Kemas gabung sepanduk di laman tertentu wiki di permulaan rencana",
+	"wikidatapagebanner-invalid-arguments": "Argumen berikut yang digunakan dalam PAGEBANNER adalah tidak sah atau tidak diketahui: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner dengan parameter tidak diketahui"
+}
