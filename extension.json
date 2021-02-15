@@ -75,7 +75,7 @@
 				"desktop",
 				"mobile"
 			],
-			"dependencies": "jquery.throttle-debounce"
+			"dependencies": "mediawiki.util"
 		}
 	},
 	"ResourceFileModulePaths": {

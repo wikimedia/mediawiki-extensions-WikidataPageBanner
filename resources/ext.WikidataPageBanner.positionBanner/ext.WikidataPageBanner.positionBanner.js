@@ -80,7 +80,7 @@
 			'margin-left': -totalOffsetX
 		} );
 	}
-	$( window ).on( 'resize', $.debounce(
+	$( window ).on( 'resize', mw.util.debounce(
 		100,
 		function () {
 			positionBanner( $wpbBannerImageContainer );
