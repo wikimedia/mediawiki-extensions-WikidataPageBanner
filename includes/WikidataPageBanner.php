@@ -268,10 +268,10 @@ class WikidataPageBanner {
 
 			// set title and tooltip attribute to default title
 			// convert title to preferred language variant as done in core Parser.php
-			$paramsForBannerTemplate['tooltip'] = $parser->getTargetLanguage()
-				->convert( $title->getText() );
-			$paramsForBannerTemplate['title'] = $parser->getTargetLanguage()
-				->convert( $title->getText() );
+			$langConv = MediaWikiServices::getInstance()->getLanguageConverterFactory()
+				->getLanguageConverter( $parser->getTargetLanguage() );
+			$paramsForBannerTemplate['tooltip'] = $langConv->convert( $title->getText() );
+			$paramsForBannerTemplate['title'] = $langConv->convert( $title->getText() );
 			if ( isset( $argumentsFromParserFunction['pgname'] ) ) {
 				// set tooltip attribute to  parameter 'pgname', if set
 				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['pgname'];

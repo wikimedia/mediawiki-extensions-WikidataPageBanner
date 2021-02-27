@@ -117,6 +117,8 @@ class WikidataPageBannerFunctions {
 	 */
 	public static function extractOptions( Parser $parser, array $options ) {
 		$results = [];
+		$langConv = MediaWikiServices::getInstance()->getLanguageConverterFactory()
+			->getLanguageConverter( $parser->getTargetLanguage() );
 
 		foreach ( $options as $option ) {
 			$pair = explode( '=', $option, 2 );
@@ -124,8 +126,7 @@ class WikidataPageBannerFunctions {
 				$name = trim( $pair[0] );
 				// convert value to preferred language variant as
 				// done in core Parser.php
-				$value = $parser->getTargetLanguage()
-					->convert( trim( $pair[1] ) );
+				$value = $langConv->convert( trim( $pair[1] ) );
 				$results[$name] = $value;
 			}
 		}
