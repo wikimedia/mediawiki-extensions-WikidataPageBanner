@@ -2,6 +2,7 @@
 
 use MediaWiki\MediaWikiServices;
 use PageImages\PageImages;
+use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\Item;
 
 /**
@@ -301,12 +302,11 @@ class WikidataPageBannerFunctions {
 			return null;
 		}
 
-		if ( class_exists( Wikibase\Client\WikibaseClient::class ) ) {
-			$entityIdLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
-			->getEntityIdLookup();
+		if ( class_exists( WikibaseClient::class ) ) {
+			$entityIdLookup = WikibaseClient::getEntityIdLookup();
 			$itemId = $entityIdLookup->getEntityIdForTitle( $title );
 			// check if this page has an associated item page
-			$entityLookup = Wikibase\Client\WikibaseClient::getDefaultInstance()
+			$entityLookup = WikibaseClient::getDefaultInstance()
 			->getStore()
 			->getEntityLookup();
 			if ( $itemId !== null ) {
