@@ -306,8 +306,8 @@ class WikidataPageBannerFunctions {
 			$entityIdLookup = WikibaseClient::getEntityIdLookup();
 			$itemId = $entityIdLookup->getEntityIdForTitle( $title );
 			// check if this page has an associated item page
-			$entityLookup = WikibaseClient::getStore()->getEntityLookup();
 			if ( $itemId !== null ) {
+				$entityLookup = WikibaseClient::getEntityLookup();
 				$item = $entityLookup->getEntity( $itemId );
 				if ( !( $item instanceof Item ) ) {
 					// Sometimes EntityIdLookup is not consistent/ up to date with repo
