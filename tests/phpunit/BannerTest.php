@@ -105,6 +105,20 @@ class BannerTest extends MediaWikiTestCase {
 		$this->assertEquals( $bannerparams['name'], 'Banner',
 			'banner parameters must be set on valid namespaces' );
 		$this->setMwGlobals( 'wgWPBNamespaces', [ 0 ] );
+
+		// Test $wgWPBEnableMainPage.
+		$parser = $this->createParser( 'Main_Page', NS_MAIN );
+		WikidataPageBanner::$wpbFunctionsClass = MockWikidataPageBannerFunctions::class;
+		// Not enabled.
+		$this->setMwGlobals( 'wgWPBEnableMainPage', false );
+		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		$bannerparams = $parser->getOutput()->getExtensionData( 'wpb-banner-options' );
+		$this->assertNull( $bannerparams, 'bannerparams must not be set on the Main Page' );
+		// Enabled.
+		$this->setMwGlobals( 'wgWPBEnableMainPage', true );
+		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
+		$bannerparams = $parser->getOutput()->getExtensionData( 'wpb-banner-options' );
+		$this->assertIsArray( $bannerparams, 'bannerparams is set on the Main Page' );
 	}
 
 	/**
