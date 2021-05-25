@@ -56,6 +56,18 @@ class WikidataPageBanner {
 	}
 
 	/**
+	 * Determine whether a banner should be shown on the given page.
+	 * @param Title $title
+	 * @return bool
+	 */
+	private static function isBannerPermitted( Title $title ) {
+		$config = WikidataPageBannerFunctions::getWPBConfig();
+		$ns = $title->getNamespace();
+		$enabledMainPage = $title->isMainPage() ? $config->get( 'WPBEnableMainPage' ) : true;
+		return self::$wpbFunctionsClass::validateNamespace( $ns ) && $enabledMainPage;
+	}
+
+	/**
 	 * Modifies the template to add the banner html for rendering by the skin to the subtitle
 	 * if a banner exists and the skin is configured via WPBDisplaySubtitleAfterBannerSkins;
 	 * Any existing subtitle is made part of the banner and the subtitle is reset.
@@ -146,26 +158,23 @@ class WikidataPageBanner {
 		} elseif (
 			$title->isKnown() &&
 			$out->isArticle() &&
+			self::isBannerPermitted( $title ) &&
 			$config->get( 'WPBEnableDefaultBanner' ) &&
 			!$isDiff
 		) {
 			// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
-			$ns = $title->getNamespace();
-			// banner only on specified namespaces (but all if true), and not Main Page of wiki
-			if ( $wpbFunctionsClass::validateNamespace( $ns ) && !$title->isMainPage() ) {
-				// first try to obtain bannername from Wikidata
-				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
-				// add title and whether the banner is auto generated to template parameters
-				$paramsForBannerTemplate = [ 'title' => $title, 'isAutomatic' => true ];
-				$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $paramsForBannerTemplate );
-				// only add banner and styling if valid banner generated
-				if ( $banner !== null ) {
-					$wpbFunctionsClass::setOutputPageProperties( $out, $banner );
+			// first try to obtain bannername from Wikidata
+			$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
+			// add title and whether the banner is auto generated to template parameters
+			$paramsForBannerTemplate = [ 'title' => $title, 'isAutomatic' => true ];
+			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $paramsForBannerTemplate );
+			// only add banner and styling if valid banner generated
+			if ( $banner !== null ) {
+				$wpbFunctionsClass::setOutputPageProperties( $out, $banner );
 
-					// set articlebanner property on OutputPage
-					// FIXME: This is currently only needed to support testing
-					$out->setProperty( 'articlebanner-name', $bannername );
-				}
+				// set articlebanner property on OutputPage
+				// FIXME: This is currently only needed to support testing
+				$out->setProperty( 'articlebanner-name', $bannername );
 			}
 		}
 		self::addBannerToSkinOutput( $out );
@@ -260,9 +269,8 @@ class WikidataPageBanner {
 		$argumentsFromParserFunction = $wpbFunctionsClass::extractOptions( $parser, $args );
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
-		$ns = $title->getNamespace();
 
-		if ( $wpbFunctionsClass::validateNamespace( $ns ) && !$title->isMainPage() ) {
+		if ( self::isBannerPermitted( $title ) ) {
 			// check for unknown parameters used in the parser hook and add a warning if there is any
 			self::addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
 
