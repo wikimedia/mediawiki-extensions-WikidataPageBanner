@@ -132,6 +132,9 @@
 		"WPBDisabledNamespaces": {
 			"value": []
 		},
+		"WPBEnableMainPage": {
+			"value": false
+		},
 		"WPBStandardSizes": {
 			"value": [
 				640,
