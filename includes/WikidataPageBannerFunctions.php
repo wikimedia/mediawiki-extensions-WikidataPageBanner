@@ -301,29 +301,30 @@ class WikidataPageBannerFunctions {
 		if ( empty( $wpbBannerProperty ) ) {
 			return null;
 		}
+		if ( !ExtensionRegistry::getInstance()->isLoaded( 'WikibaseClient' ) ) {
+			return null;
+		}
 
-		if ( class_exists( WikibaseClient::class ) ) {
-			$entityIdLookup = WikibaseClient::getEntityIdLookup();
-			$itemId = $entityIdLookup->getEntityIdForTitle( $title );
-			// check if this page has an associated item page
-			if ( $itemId !== null ) {
-				$entityLookup = WikibaseClient::getEntityLookup();
-				$item = $entityLookup->getEntity( $itemId );
-				if ( !( $item instanceof Item ) ) {
-					// Sometimes EntityIdLookup is not consistent/ up to date with repo
-					return null;
-				}
-				$statements = $item->getStatements()->getByPropertyId(
-						new Wikibase\DataModel\Entity\PropertyId(
-							$wpbBannerProperty
-						)
-					)->getBestStatements();
-				if ( !$statements->isEmpty() ) {
-					$statements = $statements->toArray();
-					$snak = $statements[0]->getMainSnak();
-					if ( $snak instanceof Wikibase\DataModel\Snak\PropertyValueSnak ) {
-						$banner = $snak->getDataValue()->getValue();
-					}
+		$entityIdLookup = WikibaseClient::getEntityIdLookup();
+		$itemId = $entityIdLookup->getEntityIdForTitle( $title );
+		// check if this page has an associated item page
+		if ( $itemId !== null ) {
+			$entityLookup = WikibaseClient::getEntityLookup();
+			$item = $entityLookup->getEntity( $itemId );
+			if ( !( $item instanceof Item ) ) {
+				// Sometimes EntityIdLookup is not consistent/ up to date with repo
+				return null;
+			}
+			$statements = $item->getStatements()->getByPropertyId(
+					new Wikibase\DataModel\Entity\PropertyId(
+						$wpbBannerProperty
+					)
+				)->getBestStatements();
+			if ( !$statements->isEmpty() ) {
+				$statements = $statements->toArray();
+				$snak = $statements[0]->getMainSnak();
+				if ( $snak instanceof Wikibase\DataModel\Snak\PropertyValueSnak ) {
+					$banner = $snak->getDataValue()->getValue();
 				}
 			}
 		}
