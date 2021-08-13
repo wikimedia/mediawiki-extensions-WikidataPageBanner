@@ -175,8 +175,14 @@ class WikidataPageBannerFunctions {
 			if ( !empty( $options['isAutomatic'] ) && $fileWidth < 1.5 * $fileHeight ) {
 				return null;
 			}
+			// Get the URL of the link. Can be an internal or external link, or none. Defaults to the image's page.
+			if ( isset( $options['link'] ) ) {
+				$href = $options['link'] === '' ? false : Skin::makeInternalOrExternalUrl( $options['link'] );
+			} else {
+				$href = $bannerfile->getLocalURL();
+			}
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
-			$options['bannerfile'] = $bannerfile->getLocalURL();
+			$options['href'] = $href;
 			$options['banner'] = $bannerurl;
 			$options['srcset'] = $srcset;
 			$options['maxWidth'] = $fileWidth;
