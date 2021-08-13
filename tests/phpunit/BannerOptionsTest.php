@@ -135,6 +135,12 @@ class BannerOptionsTest extends MediaWikiTestCase {
 		$this->assertEquals( [
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
 		], $pOut->getWarnings() );
+
+		$pOut->setExtensionData( 'wpb-banner-options', null );
+		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
+			'pgname=Banner2', 'link=' );
+		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
+		$this->assertEquals( $bannerparams['link'], '', 'Empty link is possible.' );
 	}
 
 	/**
