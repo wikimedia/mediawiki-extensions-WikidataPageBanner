@@ -87,7 +87,7 @@
 		}
 	) );
 	// set focus after image has loaded
-	$img.load( function () {
+	$img.on( 'load', function () {
 		positionBanner( $wpbBannerImageContainer );
 		$wpbBannerImageContainer.addClass( 'wpb-positioned-banner' );
 	} );
