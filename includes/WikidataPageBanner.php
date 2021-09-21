@@ -24,7 +24,8 @@ class WikidataPageBanner {
 		'bottomtoc',
 		'origin',
 		'icon-*',
-		'extraClass'
+		'extraClass',
+		'link',
 	];
 
 	/**
@@ -292,6 +293,10 @@ class WikidataPageBanner {
 			// set tooltip attribute to  parameter 'tooltip', if set, which takes highest preference
 			if ( isset( $argumentsFromParserFunction['tooltip'] ) ) {
 				$paramsForBannerTemplate['tooltip'] = $argumentsFromParserFunction['tooltip'];
+			}
+			// Add link attribute, to change the target of the banner link.
+			if ( isset( $argumentsFromParserFunction['link'] ) ) {
+				$paramsForBannerTemplate['link'] = $argumentsFromParserFunction['link'];
 			}
 			// set 'bottomtoc' parameter to allow TOC completely below the banner
 			if ( isset( $argumentsFromParserFunction['bottomtoc'] ) &&
