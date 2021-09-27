@@ -12,7 +12,8 @@
 			height: 500
 		} );
 		this.$wpbBannerImageContainer.append( this.$wpbBannerImage );
-		// set test focus points
+
+		// Origin = 0,0
 		this.$wpbBannerImage.data( 'pos-x', 0 );
 		this.$wpbBannerImage.data( 'pos-y', 0 );
 		mw.wpb.positionBanner( this.$wpbBannerImageContainer );
@@ -21,24 +22,23 @@
 		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '-100px',
 			'Banner top should shift -100px for focus' );
 
-		// set test focus points
-		// this case tests the case where origin is ignored because a positive margin would appear
+		// Origin = -1,-1
 		this.$wpbBannerImage.data( 'pos-x', -1 );
 		this.$wpbBannerImage.data( 'pos-y', -1 );
 		mw.wpb.positionBanner( this.$wpbBannerImageContainer );
 		assert.equal( this.$wpbBannerImage.css( 'margin-left' ), '0px',
-			'Banner left should not leave positive margin for focus' );
-		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '0px',
-			'Banner top should not leave positive margin for focus' );
+			'Banner left should not have a margin for origin -1,-1' );
+		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '-200px',
+			'Banner top should be 200px down for origin -1,-1' );
 
-		// set test focus points
+		// Origin = 0.5, undefined
 		this.$wpbBannerImage.data( 'pos-x', 0.5 );
-		this.$wpbBannerImage.data( 'pos-y', undefined );
+		this.$wpbBannerImage.removeData( 'pos-y' );
 		mw.wpb.positionBanner( this.$wpbBannerImageContainer );
 		assert.equal( this.$wpbBannerImage.css( 'margin-left' ), '-300px',
 			'Banner left should shift -300px for focus' );
 		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '0px',
-			'Banner top should not leave positive margin for focus' );
+			'Banner top should default to 0px if no Y offset provided' );
 
 		this.$wpbBannerImageContainer = $( '<div/>', {
 			width: 1500,
@@ -50,26 +50,24 @@
 			height: 400
 		} );
 		this.$wpbBannerImageContainer.append( this.$wpbBannerImage );
-		// set test focus points
-		// position in vertical direction is ignored after a limit because of too much negative
-		// margin
+
+		// Origin = 0,1
 		this.$wpbBannerImage.data( 'pos-x', 0 );
 		this.$wpbBannerImage.data( 'pos-y', 1 );
 		mw.wpb.positionBanner( this.$wpbBannerImageContainer );
 		assert.equal( this.$wpbBannerImage.css( 'margin-left' ), '-200px',
-			'Banner left should shift -390px for focus' );
-		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '-100px',
-			'Banner top should shift -100px only for to not leave too much negative margin' );
+			'Banner left should shift -200px with origin 0,1' );
+		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '0px',
+			'Banner top should shift 0px with origin 0,1' );
 
-		// set test focus points
-		// Position in vertical direction is ignored because of positive margin
+		// Origin = 0.2,-1
 		this.$wpbBannerImage.data( 'pos-x', 0.2 );
 		this.$wpbBannerImage.data( 'pos-y', -1 );
 		mw.wpb.positionBanner( this.$wpbBannerImageContainer );
 		assert.equal( this.$wpbBannerImage.css( 'margin-left' ), '-390px',
-			'Banner left should shift -240px for focus' );
-		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '0px',
-			'Banner top should not leave positive margin for focus' );
+			'Banner left should shift -390px with origin 0.2,-1' );
+		assert.equal( this.$wpbBannerImage.css( 'margin-top' ), '-100px',
+			'Banner top should shift -100px with origin 0.2,-1' );
 
 	} );
 }( mediaWiki, jQuery ) );

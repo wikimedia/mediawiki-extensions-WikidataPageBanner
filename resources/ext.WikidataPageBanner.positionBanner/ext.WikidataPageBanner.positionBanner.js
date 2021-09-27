@@ -2,15 +2,45 @@
 	var $wpbBannerImageContainer = $( '.wpb-topbanner' ),
 		$img = $( 'img.wpb-banner-image' );
 
+	/**
+	 * Calculate the required container margin for a given image and offset.
+	 * This is a generalized function for both left and top margins, but becuase
+	 * in the vertical direction the values are inverted,
+	 * it's necessary to know which is being caculated (i.e. with isVert).
+	 *
+	 * @param {boolean} isVert Whether the margin being calculated is left (false) or top (true).
+	 * @param {number} image The image dimension.
+	 * @param {number} container The container dimension.
+	 * @param {number} offset The offset, between -1 and 1.
+	 * @return {number} The calculated left or top margin.
+	 */
+	function getMargin( isVert, image, container, offset ) {
+		// The max that the image can be moved without leaving blank space.
+		var max = image - container;
+		// Move the origin to the top or left of the space,
+		// and turn it into a value between 0 and 1 (instead of between 1 and -1).
+		var offsetRatio = ( ( isVert ? 1 : -1 ) * offset + 1 ) / 2;
+		// Calculate the offset to the origin center of the image.
+		var offsetToCenter = image * offsetRatio;
+		// Subtract half the container dimension to get the offset to edge of banner.
+		var margin = offsetToCenter - ( container / 2 );
+		// Constrain the offset to be within the allowed bounds.
+		var finalMargin = margin;
+		if ( margin > max ) {
+			finalMargin = max;
+		} else if ( margin < 0 ) {
+			// The minimum margin is 0px.
+			finalMargin = 0;
+		}
+		return finalMargin;
+	}
+
 	function positionBanner( $container ) {
 		/**
 		 * Javascript to fine tune position of banner according to position coordinates.
 		 */
 		// extract position parameters
-		var maxOffsetTop, offsetTop, maxOffsetLeft, offsetLeft,
-			minOffsetTop = 0,
-			minOffsetLeft = 0,
-			$wpbBannerImage = $container.find( '.wpb-banner-image' ),
+		var $wpbBannerImage = $container.find( '.wpb-banner-image' ),
 			totalOffsetX = 0,
 			totalOffsetY = 0,
 			containerWidth = $container.width(),
@@ -28,20 +58,9 @@
 		} );
 		// Adjust vertical focus
 		if ( $wpbBannerImage.height() > $container.height() && centerY !== undefined ) {
-			// this is the max shift up that can be achieved without leaving blank space below
-			maxOffsetTop = $wpbBannerImage.height() -
-				$container.height();
-			// offset beyond center 0
-			offsetTop = centerY * $wpbBannerImage.height() / 2;
-			// offset for default center is maxOffsetTop/2
-			// total offset = offset for center + manual offset
-			totalOffsetY = maxOffsetTop / 2 + offsetTop;
-			// shift the banner no more than maxOffsets on either side
-			if ( totalOffsetY > maxOffsetTop ) {
-				totalOffsetY = maxOffsetTop;
-			} else if ( totalOffsetY < minOffsetTop ) {
-				totalOffsetY = minOffsetTop;
-			}
+			totalOffsetY = getMargin(
+				false, $wpbBannerImage.height(), $container.height(), centerY
+			);
 		}
 
 		// Adjust horizontal focus
@@ -54,22 +73,11 @@
 
 			// Handle editor specified coordinates
 			if ( centerX !== undefined ) {
-				// this is the max shift that can be achieved without leaving blank space
-				maxOffsetLeft = $wpbBannerImage.width() -
-					$container.width();
-				// offset beyond center 0
-				offsetLeft = centerX * $wpbBannerImage.width() / 2;
-				// offset for default center is maxOffsetLeft/2
-				// total offset = offset for center + manual offset
-				totalOffsetX = maxOffsetLeft / 2 + offsetLeft;
-				// shift the banner no more than maxOffsets on either side
-				if ( totalOffsetX > maxOffsetLeft ) {
-					totalOffsetX = maxOffsetLeft;
-				} else if ( totalOffsetX < minOffsetLeft ) {
-					totalOffsetX = minOffsetLeft;
-				}
+				totalOffsetX = getMargin(
+					true, $wpbBannerImage.width(), $container.width(), centerX
+				);
 			}
-		} else if ( $wpbBannerImage.height() > $container.height() && centerY !== undefined ) {
+		} else if ( $wpbBannerImage.height() > $container.height() && centerY === undefined ) {
 			// We are likely to be using a stretched portait photo
 			// so if none defined default to -10%
 			totalOffsetY = containerWidth / 10;
