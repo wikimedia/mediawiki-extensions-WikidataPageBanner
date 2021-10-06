@@ -322,7 +322,7 @@ class WikidataPageBannerFunctions {
 				return null;
 			}
 			$statements = $item->getStatements()->getByPropertyId(
-					new Wikibase\DataModel\Entity\PropertyId(
+					new Wikibase\DataModel\Entity\NumericPropertyId(
 						$wpbBannerProperty
 					)
 				)->getBestStatements();
