@@ -4,7 +4,7 @@
  * @group WikidataPageBanner
  * @group Database
  */
-class BannerOptionsTest extends MediaWikiTestCase {
+class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 
 	public function addDBData() {
 		try {

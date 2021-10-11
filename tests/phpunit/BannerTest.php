@@ -4,7 +4,7 @@
  * @group WikidataPageBanner
  * @group Database
  */
-class BannerTest extends MediaWikiTestCase {
+class BannerTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * Set of pages.
@@ -24,7 +24,7 @@ class BannerTest extends MediaWikiTestCase {
 
 	/**
 	 * Add test pages to database
-	 * @see MediaWikiTestCase::addDBData()
+	 * @see MediaWikiIntegrationTestCase::addDBData()
 	 */
 	public function addDBData() {
 		try {
