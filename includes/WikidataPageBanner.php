@@ -330,10 +330,10 @@ class WikidataPageBanner {
 			if ( $bannerTitle !== null ) {
 				$parser->getOutput()->setExtensionData( 'wpb-banner-options', $paramsForBannerTemplate );
 				$parser->fetchFileAndTitle( $bannerTitle );
-				$parser->getOutput()->setProperty( 'wpb_banner', $bannerTitle->getText() );
-				$parser->getOutput()->setProperty( 'wpb_banner_focus_x',
+				$parser->getOutput()->setPageProperty( 'wpb_banner', $bannerTitle->getText() );
+				$parser->getOutput()->setPageProperty( 'wpb_banner_focus_x',
 						$paramsForBannerTemplate['data-pos-x'] );
-				$parser->getOutput()->setProperty( 'wpb_banner_focus_y',
+				$parser->getOutput()->setPageProperty( 'wpb_banner_focus_y',
 						$paramsForBannerTemplate['data-pos-y'] );
 			}
 		}
