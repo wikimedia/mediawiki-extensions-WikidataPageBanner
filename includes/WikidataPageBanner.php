@@ -243,11 +243,9 @@ class WikidataPageBanner {
 
 			// this message will be visible when the page preview button is used, but not when the page is
 			// saved. It contains a list of unknown parameters.
-			$parser->getOutput()->addWarning(
-				wfMessage( 'wikidatapagebanner-invalid-arguments', $contLang->commaList( $badParams ) )
-					->title( $parser->getTitle() )
-					->inContentLanguage()
-					->text()
+			$parser->getOutput()->addWarningMsg(
+				'wikidatapagebanner-invalid-arguments',
+				Message::listParam( $badParams, 'comma' )
 			);
 		}
 	}
