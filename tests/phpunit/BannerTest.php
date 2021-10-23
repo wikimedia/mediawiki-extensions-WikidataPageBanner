@@ -77,7 +77,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['name'], 'Banner',
+		$this->assertEquals( 'Banner', $bannerparams['name'],
 			'banner parameters must be set on valid namespaces' );
 
 		$parser = $this->createParser( 'PageInTalkNamespace', NS_TALK );
@@ -102,7 +102,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['name'], 'Banner',
+		$this->assertEquals( 'Banner', $bannerparams['name'],
 			'banner parameters must be set on valid namespaces' );
 		$this->setMwGlobals( 'wgWPBNamespaces', [ 0 ] );
 

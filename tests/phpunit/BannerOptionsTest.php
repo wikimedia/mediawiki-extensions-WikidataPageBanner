@@ -34,9 +34,9 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['title'], 'BannerWithOptions',
+		$this->assertEquals( 'BannerWithOptions', $bannerparams['title'],
 			'pgname must be set to title' );
-		$this->assertEquals( $bannerparams['tooltip'], 'BannerWithOptions',
+		$this->assertEquals( 'BannerWithOptions', $bannerparams['tooltip'],
 			'tooltip must be set to title' );
 		$this->assertEquals( [], $pOut->getWarnings() );
 
@@ -44,9 +44,9 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['title'], 'Banner2',
+		$this->assertEquals( 'Banner2', $bannerparams['title'],
 			'pgname must be set' );
-		$this->assertEquals( $bannerparams['tooltip'], 'Banner2',
+		$this->assertEquals( 'Banner2', $bannerparams['tooltip'],
 			'tooltip must be set to pgname' );
 		$this->assertEquals( [], $pOut->getWarnings() );
 
@@ -54,9 +54,9 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'tooltip=hovertext' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['title'], 'Banner2',
+		$this->assertEquals( 'Banner2', $bannerparams['title'],
 			'pgname must be set' );
-		$this->assertEquals( $bannerparams['tooltip'], 'hovertext',
+		$this->assertEquals( 'hovertext', $bannerparams['tooltip'],
 			'pgname must be set' );
 		$this->assertEquals( [], $pOut->getWarnings() );
 
@@ -64,13 +64,13 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'icon-unesco=', 'icon-star=Main Page' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['title'], 'Banner2',
+		$this->assertEquals( 'Banner2', $bannerparams['title'],
 			'pgname must be set' );
-		$this->assertEquals( $bannerparams['icons'][0]['title'], 'unesco',
+		$this->assertEquals( 'unesco', $bannerparams['icons'][0]['title'],
 			'unesco icon must be set' );
 		$this->assertEquals( '#', $bannerparams['icons'][0]['url'],
 			'iconurl must be a default #' );
-		$this->assertEquals( $bannerparams['icons'][1]['title'], 'Main Page',
+		$this->assertEquals( 'Main Page', $bannerparams['icons'][1]['title'],
 			'star icon must be set' );
 		$this->assertStringContainsString( 'Main_Page', $bannerparams['icons'][1]['url'],
 			'iconurl must be a valid main page url' );
@@ -80,13 +80,13 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'origin=0.3,0.2' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['originx'], 'wpb-right',
+		$this->assertEquals( 'wpb-right', $bannerparams['originx'],
 			'classname for position must be set' );
-		$this->assertEquals( $bannerparams['data-pos-x'], 0.3,
+		$this->assertEquals( 0.3, $bannerparams['data-pos-x'],
 			'data-pos-x must be set' );
-		$this->assertEquals( $bannerparams['data-pos-y'], 0.2,
+		$this->assertEquals( 0.2, $bannerparams['data-pos-y'],
 			'data-pos-x must be set' );
-		$this->assertEquals( $bannerparams['hasPosition'], true,
+		$this->assertTrue( $bannerparams['hasPosition'],
 			'when data-pos set this is true' );
 		$this->assertEquals( [], $pOut->getWarnings() );
 
@@ -94,9 +94,9 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'origin=0.3' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['data-pos-x'], 0,
+		$this->assertSame( 0, $bannerparams['data-pos-x'],
 			'data-pos must default to 0' );
-		$this->assertEquals( $bannerparams['data-pos-y'], 0,
+		$this->assertSame( 0, $bannerparams['data-pos-y'],
 			'data-pos-x must default to 0' );
 		$this->assertEquals( [], $pOut->getWarnings() );
 
@@ -104,9 +104,9 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'origin=0.3', 'test=testparam' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['data-pos-x'], 0,
+		$this->assertSame( 0, $bannerparams['data-pos-x'],
 			'data-pos must default to 0' );
-		$this->assertEquals( $bannerparams['data-pos-y'], 0,
+		$this->assertSame( 0, $bannerparams['data-pos-y'],
 			'data-pos-x must default to 0' );
 		$this->assertEquals( [
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
@@ -116,11 +116,11 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'origin=0.3', 'test=testparam', 'test2' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['data-pos-x'], 0,
+		$this->assertSame( 0, $bannerparams['data-pos-x'],
 			'data-pos must default to 0' );
-		$this->assertEquals( $bannerparams['data-pos-y'], 0,
+		$this->assertSame( 0, $bannerparams['data-pos-y'],
 			'data-pos-x must default to 0' );
-		$this->assertEquals( $bannerparams['hasPosition'], false,
+		$this->assertFalse( $bannerparams['hasPosition'],
 			'when no data-pos-x or y specified this is false' );
 		$this->assertEquals( [
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
@@ -130,7 +130,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'toc=yes', 'test=testparam', 'test2' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['enable-toc'], true,
+		$this->assertTrue( $bannerparams['enable-toc'],
 			'toc must default to yes' );
 		$this->assertEquals( [
 			'Following arguments used in PAGEBANNER are invalid or unknown: test'
@@ -140,7 +140,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		WikidataPageBanner::addCustomBanner( $parser, 'Banner1',
 			'pgname=Banner2', 'link=' );
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
-		$this->assertEquals( $bannerparams['link'], '', 'Empty link is possible.' );
+		$this->assertSame( '', $bannerparams['link'], 'Empty link is possible.' );
 	}
 
 	/**
