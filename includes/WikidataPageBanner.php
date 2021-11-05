@@ -206,12 +206,13 @@ class WikidataPageBanner {
 				if ( strpos( $options['toc'], 'class="toc"' ) !== false ) {
 					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
 				}
-				// Remove default TOC
-				$pOut->setText( preg_replace(
-					'#' . preg_quote( Parser::TOC_START, '#' ) . '.*?' . preg_quote( Parser::TOC_END, '#' ) . '#s',
-					'',
-					$pOut->getRawText()
-				) );
+				// Replace the table of contents marker with an empty string.
+				$pOut->setText(
+					Parser::replaceTableOfContentsMarker(
+						$pOut->getRawText(),
+						''
+					)
+				);
 			}
 
 			// set banner properties as an OutputPage property
