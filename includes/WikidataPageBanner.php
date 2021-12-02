@@ -184,6 +184,33 @@ class WikidataPageBanner {
 	}
 
 	/**
+	 * @param ParserOutput $pOut
+	 * @return array|null
+	 */
+	private static function getBannerOptions( $pOut ) {
+		$options = $pOut->getExtensionData( 'wpb-banner-options' );
+		if ( $options !== null ) {
+			return $options;
+		}
+		return null;
+	}
+
+	/**
+	 * Disables the primary table of contents in the article.
+	 * @param ParserOutput $pOut
+	 * @param string $text
+	 * @param array &$options
+	 */
+	public static function onParserOutputPostCacheTransform( $pOut, $text, &$options ) {
+		// Disable table of contents in article.
+		$bannerOptions = self::getBannerOptions( $pOut );
+		if ( $bannerOptions !== null ) {
+			$enableTocInBanner = $bannerOptions['enable-toc'];
+			$options['injectTOC'] = !$enableTocInBanner;
+		}
+	}
+
+	/**
 	 * WikidataPageBanner::onOutputPageParserOutput add banner parameters from ParserOutput to
 	 * Output page
 	 *
@@ -191,9 +218,8 @@ class WikidataPageBanner {
 	 * @param ParserOutput $pOut
 	 */
 	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ) {
-		if ( $pOut->getExtensionData( 'wpb-banner-options' ) !== null ) {
-			$options = $pOut->getExtensionData( 'wpb-banner-options' );
-
+		$options = self::getBannerOptions( $pOut );
+		if ( $options !== null ) {
 			// if toc parameter set, then remove original classes and add banner class
 			if ( isset( $options['enable-toc'] ) ) {
 				$options['toc'] = $pOut->getTOCHTML();
@@ -206,13 +232,6 @@ class WikidataPageBanner {
 				if ( strpos( $options['toc'], 'class="toc"' ) !== false ) {
 					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
 				}
-				// Replace the table of contents marker with an empty string.
-				$pOut->setText(
-					Parser::replaceTableOfContentsMarker(
-						$pOut->getRawText(),
-						''
-					)
-				);
 			}
 
 			// set banner properties as an OutputPage property

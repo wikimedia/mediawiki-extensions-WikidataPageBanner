@@ -96,6 +96,9 @@
 		"BeforePageDisplay": [
 			"WikidataPageBanner::onBeforePageDisplay"
 		],
+		"ParserOutputPostCacheTransform": [
+			"WikidataPageBanner::onParserOutputPostCacheTransform"
+		],
 		"OutputPageParserOutput": [
 			"WikidataPageBanner::onOutputPageParserOutput"
 		],
