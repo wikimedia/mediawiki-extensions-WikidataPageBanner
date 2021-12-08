@@ -204,7 +204,7 @@ class WikidataPageBanner {
 	public static function onParserOutputPostCacheTransform( $pOut, $text, &$options ) {
 		// Disable table of contents in article.
 		$bannerOptions = self::getBannerOptions( $pOut );
-		if ( $bannerOptions !== null ) {
+		if ( $bannerOptions !== null && isset( $bannerOptions['enable-toc'] ) ) {
 			$enableTocInBanner = $bannerOptions['enable-toc'];
 			$options['injectTOC'] = !$enableTocInBanner;
 		}
