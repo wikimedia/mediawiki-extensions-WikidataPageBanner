@@ -2,9 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Base",
-			"Piramidion"
+			"Piramidion",
+			"DDPAT"
 		]
 	},
+	"wikidatapagebanner-extensionname": "Банер сторінки Вікіданих",
 	"wikidatapagebanner-desc": "Показувати банери на вказаних сторінках вікі на початку статей",
 	"wikidatapagebanner-invalid-arguments": "Такі аргументи, використані в PAGEBANNER, недійсні або невідомі: $1",
 	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner з невідомими параметрами"

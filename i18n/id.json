@@ -1,8 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mirws"
+			"Mirws",
+			"Daud I.F. Argana"
 		]
 	},
-	"wikidatapagebanner-extensionname": "WikidataPageBanner"
+	"wikidatapagebanner-extensionname": "WikidataPageBanner",
+	"wikidatapagebanner-desc": "Menampilkan spanduk di halaman wiki tertentu di awal artikel",
+	"wikidatapagebanner-invalid-arguments": "Argumen berikut yang digunakan dalam PAGEBANNER tidak sah atau tidak diketahui: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner dengan parameter yang tidak diketahui"
 }

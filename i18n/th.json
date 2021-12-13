@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Patsagorn Y."
+		]
+	},
+	"wikidatapagebanner-invalid-arguments": "อาร์กิวเมนต์ต่อไปนี้ที่ถูกใช้ใน PAGEBANNER ผิดพลาดหรือไม่รู้จัก $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner ที่มีพารามิเตอร์ที่ไม่รู้จัก"
+}
