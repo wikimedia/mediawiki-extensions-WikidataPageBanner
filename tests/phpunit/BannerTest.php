@@ -153,14 +153,14 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 
 		$parserOutput = new ParserOutput();
 		$parser->expects( $this->any() )->method( 'getOutput' )
-			->will( $this->returnValue( $parserOutput ) );
+			->willReturn( $parserOutput );
 
 		$curTitle = Title::newFromText( $title, $namespace );
 		$parser->expects( $this->any() )->method( 'getTitle' )
-			->will( $this->returnValue( $curTitle ) );
+			->willReturn( $curTitle );
 		$language = Language::factory( 'en' );
 		$parser->expects( $this->any() )->method( 'getTargetLanguage' )
-			->will( $this->returnValue( $language ) );
+			->willReturn( $language );
 
 		return $parser;
 	}
