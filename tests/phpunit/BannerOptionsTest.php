@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner;
+
 /**
  * @group WikidataPageBanner
  * @group Database
@@ -23,7 +25,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * Test for covering parameters passed to {{PAGEBANNER}} function
-	 * @covers WikidataPageBanner::addCustomBanner
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner::addCustomBanner
 	 */
 	public function testBannerOptions() {
 		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock

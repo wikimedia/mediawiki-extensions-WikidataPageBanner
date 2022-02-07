@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions;
+
 /**
  * Test for validating options passed to {{PAGEBANNER}} function
  * Mock class for WikidataPageBannerOptions

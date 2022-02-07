@@ -1,9 +1,21 @@
 <?php
 
+namespace MediaWiki\Extension\WikidataPageBanner;
+
+use Config;
+use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
+use OutputPage;
 use PageImages\PageImages;
+use Parser;
+use Sanitizer;
+use Skin;
+use TemplateParser;
+use Title;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\Item;
+use Wikibase\DataModel\Entity\NumericPropertyId;
+use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 /**
  * This class contains helper functions which are used by hooks in WikidataPageBanner
@@ -221,8 +233,7 @@ class WikidataPageBannerFunctions {
 		} elseif ( filter_var( $imagewidth, FILTER_VALIDATE_INT, $options ) !== false ) {
 			// validate $bannerwidth to be a width within 3000
 			$mto = $file->transform( [ 'width' => $imagewidth ] );
-			$url = wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
-			return $url;
+			return wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
 		} else {
 			// return image without transforming, if width not valid
 			return $file->getFullUrl();
@@ -322,14 +333,12 @@ class WikidataPageBannerFunctions {
 				return null;
 			}
 			$statements = $item->getStatements()->getByPropertyId(
-					new Wikibase\DataModel\Entity\NumericPropertyId(
-						$wpbBannerProperty
-					)
-				)->getBestStatements();
+				new NumericPropertyId( $wpbBannerProperty )
+			)->getBestStatements();
 			if ( !$statements->isEmpty() ) {
 				$statements = $statements->toArray();
 				$snak = $statements[0]->getMainSnak();
-				if ( $snak instanceof Wikibase\DataModel\Snak\PropertyValueSnak ) {
+				if ( $snak instanceof PropertyValueSnak ) {
 					$banner = $snak->getDataValue()->getValue();
 				}
 			}

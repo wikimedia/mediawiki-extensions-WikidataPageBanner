@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner;
+
 /**
  * @group WikidataPageBanner
  * @group Database
@@ -47,7 +49,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @dataProvider provideTestDefaultBanner
-	 * @covers WikidataPageBanner::onBeforePageDisplay
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner::onBeforePageDisplay
 	 * @param string $title of page banner being generated on
 	 * @param number $ns namespace of title
 	 * @param string $customBanner parameter given to PAGEBANNER magic word
@@ -67,7 +69,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * @covers WikidataPageBanner::addCustomBanner
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner::addCustomBanner
 	 */
 	public function testCustomBanner() {
 		$parser = $this->createParser( 'PageWithCustomBanner', NS_MAIN );

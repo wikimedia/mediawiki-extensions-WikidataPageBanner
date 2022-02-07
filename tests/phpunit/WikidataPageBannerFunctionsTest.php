@@ -1,9 +1,10 @@
 <?php
 
+use MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions;
 use MediaWiki\MediaWikiServices;
 
 /**
- * @covers WikidataPageBannerFunctions
+ * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions
  *
  * @group WikidataPageBanner
  *
@@ -13,14 +14,14 @@ use MediaWiki\MediaWikiServices;
 class WikidataPageBannerFunctionsTest extends PHPUnit\Framework\TestCase {
 
 	/**
-	 * @covers WikidataPageBannerFunctions::getImageUrl
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions::getImageUrl
 	 */
 	public function testGetImageUrl() {
 		$this->assertNull( WikidataPageBannerFunctions::getImageUrl( "not-existing-image-file.jpg" ) );
 	}
 
 	/**
-	 * @covers WikidataPageBannerFunctions::getBannerHtml()
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions::getBannerHtml()
 	 * @dataProvider provideGetBannerHtml()
 	 * @param string $bannerFilename
 	 * @param bool $fileNeeded

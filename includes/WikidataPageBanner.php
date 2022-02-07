@@ -1,6 +1,15 @@
 <?php
 
+namespace MediaWiki\Extension\WikidataPageBanner;
+
 use MediaWiki\MediaWikiServices;
+use Message;
+use OOUI\IconWidget;
+use OutputPage;
+use Parser;
+use ParserOutput;
+use Skin;
+use Title;
 
 class WikidataPageBanner {
 
@@ -12,7 +21,7 @@ class WikidataPageBanner {
 	 * in it externally
 	 * @var string
 	 */
-	public static $wpbFunctionsClass = "WikidataPageBannerFunctions";
+	public static $wpbFunctionsClass = WikidataPageBannerFunctions::class;
 
 	/**
 	 * Holds an array of valid parameters for PAGEBANNER hook.
@@ -36,7 +45,7 @@ class WikidataPageBanner {
 	 */
 	protected static function expandIconTemplateOptions( array $icons ) {
 		foreach ( $icons as $key => $iconData ) {
-			$widget = new OOUI\IconWidget( $iconData );
+			$widget = new IconWidget( $iconData );
 			$iconData['html'] = $widget->toString();
 			$icons[$key] = $iconData;
 		}
@@ -75,7 +84,7 @@ class WikidataPageBanner {
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageBeforeHTML
 	 *
 	 * @param OutputPage $out
-	 * @return bool inidicating whether it was added or not
+	 * @return bool indicating whether it was added or not
 	 */
 	public static function addBannerToSkinOutput( $out ) {
 		$skin = $out->getSkin();
@@ -257,7 +266,6 @@ class WikidataPageBanner {
 		}
 
 		if ( $badParams ) {
-			$contLang = MediaWikiServices::getInstance()->getContentLanguage();
 			// if there are unknown parameters, add a tracking category
 			$parser->addTrackingCategory( 'wikidatapagebanner-invalid-arguments-cat' );
 
@@ -366,7 +374,7 @@ class WikidataPageBanner {
 	 */
 	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setFunctionHook(
-			'PAGEBANNER', 'WikidataPageBanner::addCustomBanner', Parser::SFH_NO_HASH
+			'PAGEBANNER', [ self::class, 'addCustomBanner' ], Parser::SFH_NO_HASH
 		);
 		return true;
 	}

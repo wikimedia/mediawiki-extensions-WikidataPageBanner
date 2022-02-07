@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions;
+
 /**
  * Mock class for WikidataPageBanner
  */

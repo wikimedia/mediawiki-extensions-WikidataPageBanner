@@ -20,9 +20,8 @@
 	"ExtensionMessagesFiles": {
 		"WikidataPageBannerMagic": "WikidataPageBanner.i18n.magic.php"
 	},
-	"AutoloadClasses": {
-		"WikidataPageBanner": "includes/WikidataPageBanner.php",
-		"WikidataPageBannerFunctions": "includes/WikidataPageBannerFunctions.php"
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\WikidataPageBanner\\": "includes/"
 	},
 	"TestAutoloadClasses": {
 		"MockWikidataPageBannerFunctions": "tests/phpunit/MockWikidataPageBannerFunctions.php",
@@ -94,19 +93,19 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": [
-			"WikidataPageBanner::onBeforePageDisplay"
+			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onBeforePageDisplay"
 		],
 		"ParserOutputPostCacheTransform": [
-			"WikidataPageBanner::onParserOutputPostCacheTransform"
+			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onParserOutputPostCacheTransform"
 		],
 		"OutputPageParserOutput": [
-			"WikidataPageBanner::onOutputPageParserOutput"
+			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onOutputPageParserOutput"
 		],
 		"SiteNoticeAfter": [
-			"WikidataPageBanner::onSiteNoticeAfter"
+			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onSiteNoticeAfter"
 		],
 		"ParserFirstCallInit": [
-			"WikidataPageBanner::onParserFirstCallInit"
+			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onParserFirstCallInit"
 		]
 	},
 	"config": {
