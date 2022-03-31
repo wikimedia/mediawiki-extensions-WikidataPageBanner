@@ -358,9 +358,9 @@ class WikidataPageBanner {
 				$parser->fetchFileAndTitle( $bannerTitle );
 				$parser->getOutput()->setPageProperty( 'wpb_banner', $bannerTitle->getText() );
 				$parser->getOutput()->setPageProperty( 'wpb_banner_focus_x',
-						$paramsForBannerTemplate['data-pos-x'] );
+						(string)$paramsForBannerTemplate['data-pos-x'] );
 				$parser->getOutput()->setPageProperty( 'wpb_banner_focus_y',
-						$paramsForBannerTemplate['data-pos-y'] );
+						(string)$paramsForBannerTemplate['data-pos-y'] );
 			}
 		}
 	}
