@@ -1,4 +1,5 @@
 {
+	"name": "WikidataPageBanner",
 	"private": true,
 	"repository": {
 		"type": "git",
