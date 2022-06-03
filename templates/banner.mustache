@@ -1,5 +1,11 @@
 <div class="ext-wpb-pagebanner">
-	<div class="{{#isPanorama}}wpb-banner-image-panorama {{/isPanorama}}wpb-topbanner{{extraClass}}">
+	{{!
+		T306744: Apply the core heading id (#firstHeading) to the banner
+		to ensure Vector's sticky header still works
+		https://gerrit.wikimedia.org/g/mediawiki/skins/Vector/+/556b32f326dd88fa17943201aa36ffcf78bdd651/resources/skins.vector.es6/main.js#111
+		https://gerrit.wikimedia.org/g/mediawiki/core/+/249a2cffd8ac3f82833597520dc945cbd20b3b75/includes/skins/Skin.php#161
+	}}
+	<div id="firstHeading" class="{{#isPanorama}}wpb-banner-image-panorama {{/isPanorama}}wpb-topbanner{{extraClass}}">
 		{{#isHeadingOverrideEnabled}}<h1 class="wpb-name">{{title}}</h1>{{/isHeadingOverrideEnabled}}
 		<a class="image" dir="ltr" title="{{tooltip}}"{{#href}} href="{{.}}"{{/href}}>
 			<img src="{{banner}}" srcset="{{srcset}}" class="wpb-banner-image"{{#hasPosition}} data-pos-x="{{data-pos-x}}" data-pos-y="{{data-pos-y}}"{{/hasPosition}}>
