@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saurmandal"
+		]
+	},
+	"wikidatapagebanner-desc": "लेखों के शीर्ष पर विकि के निर्दिष्ट पृष्ठों पर बैनर रेंडर करता है",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER में उपयुक्त ये तर्क अमान्य या अज्ञात हैं: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "अज्ञात पैरामीटर्स वाला WikidataPageBanner"
+}
