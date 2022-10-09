@@ -7,9 +7,6 @@
 	],
 	"type": "mediawiki-extension",
 	"license": "GPL-2.0-only",
-	"require": {
-		"php": ">=5.5.9"
-	},
 	"require-dev": {
 		"mediawiki/mediawiki-codesniffer": "38.0.0",
 		"mediawiki/mediawiki-phan-config": "0.11.1",
