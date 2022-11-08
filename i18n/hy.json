@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Սերգեյ Սաֆարյան"
+		]
+	},
+	"wikidatapagebanner-desc": "Ցուցապաստառի ցուցադրություն հոդվածների սկզբում նշված վիքի էջերում",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER-ում օգտագործված հետևյալ փաստարկներն անվավեր են կամ անհայտ՝ $1",
+	"wikidatapagebanner-invalid-arguments-cat": "Անհայտ հարաչափերով WikidataPageBanner"
+}
