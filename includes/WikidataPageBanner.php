@@ -358,8 +358,10 @@ class WikidataPageBanner {
 				$parser->fetchFileAndTitle( $bannerTitle );
 				$parser->getOutput()->setPageProperty( 'wpb_banner', $bannerTitle->getText() );
 				$parser->getOutput()->setPageProperty( 'wpb_banner_focus_x',
+						// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 						(string)$paramsForBannerTemplate['data-pos-x'] );
 				$parser->getOutput()->setPageProperty( 'wpb_banner_focus_y',
+						// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 						(string)$paramsForBannerTemplate['data-pos-y'] );
 			}
 		}
