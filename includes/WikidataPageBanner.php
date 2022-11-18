@@ -81,7 +81,7 @@ class WikidataPageBanner {
 	 * Modifies the template to add the banner html for rendering by the skin to the subtitle
 	 * if a banner exists and the skin is configured via WPBDisplaySubtitleAfterBannerSkins;
 	 * Any existing subtitle is made part of the banner and the subtitle is reset.
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageBeforeHTML
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BeforePageDisplay
 	 *
 	 * @param OutputPage $out
 	 * @return bool indicating whether it was added or not
