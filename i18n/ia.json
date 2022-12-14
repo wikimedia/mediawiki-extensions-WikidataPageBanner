@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"wikidatapagebanner-desc": "Monstrar bandieras sur paginas specificate del wiki al initio de articulos",
+	"wikidatapagebanner-invalid-arguments": "Le sequente argumentos usate in PAGEBANNER es invalide o incognite: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner con parametros incognite"
+}
