@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"wikidatapagebanner-desc": "Renderovanje banera na specifičnim stranicama viki na početku članaka",
+	"wikidatapagebanner-invalid-arguments": "Sledeći argumenti korišćeni u PAGEBANNER su nevalidni ili nepoznati: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner sa nepoznatim parametrima"
+}
