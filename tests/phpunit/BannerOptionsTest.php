@@ -161,7 +161,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		$curTitle = Title::newFromText( $title, $namespace );
 		$parser->expects( $this->any() )->method( 'getTitle' )
 			->willReturn( $curTitle );
-		$language = Language::factory( 'en' );
+		$language = $this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' );
 		$parser->expects( $this->any() )->method( 'getTargetLanguage' )
 			->willReturn( $language );
 
