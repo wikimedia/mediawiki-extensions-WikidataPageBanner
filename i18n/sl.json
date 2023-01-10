@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"wikidatapagebanner-desc": "Upodobi pasice na izbranih straneh vikija na začetku člankov",
+	"wikidatapagebanner-invalid-arguments": "Naslednji argumenti, uporabljeni v PAGEBANNER, so neveljavni ali neznani: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner z neznanimi parametri"
+}
