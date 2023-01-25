@@ -2,12 +2,6 @@
  * Stylesheet for page-wide Banner in WikidataPageBanner extension.
  */
 @import 'mediawiki.mixins';
-.transform ( ... ) {
-	-webkit-transform: @arguments;
-	-moz-transform: @arguments;
-	-o-transform: @arguments;
-	transform: @arguments;
-}
 
 // Hide original heading from core
 .firstHeading:empty {
@@ -112,7 +106,7 @@
 			min-height: 180px;
 			// centre the banner by default
 			margin-left: 50%;
-			.transform ( translateX( -50% ) );
+			transform: translateX( -50% );
 		}
 
 		/**
@@ -120,11 +114,11 @@
 		 * shifted to allow focus to a different area
 		 */
 		.wpb-left {
-			.transform ( translateX( -25% ) );
+			transform: translateX( -25% );
 		}
 
 		.wpb-right {
-			.transform ( translateX( -75% ) );
+			transform: translateX( -75% );
 		}
 	}
 }
