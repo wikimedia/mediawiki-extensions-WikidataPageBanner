@@ -250,12 +250,27 @@ class WikidataPageBanner {
 	}
 
 	/**
-	 * @param array $tocData
+	 * @param OutputPage $out
 	 * @return array
 	 */
-	private static function getRecursiveTocData( array $tocData ) {
+	private static function getRecursiveTocData( OutputPage $out ) {
+		$tocData = $out->getTOCData();
+		$sections = self::getSectionsDataInternal(
+			$tocData ? $tocData->getSections() : []
+		);
+		// Since the banner is outside of #mw-content-text, it
+		// will be in the 'user language' (set on the root <html>
+		// tag) not the 'content language'.  Record the proper
+		// page language so that we can reset lang/dir in HTML.
+		$title = $out->getTitle();
+		// Note that OutputPage::getLanguage() returns user language
+		// *not* the page/content language -- but title should always be
+		// set for pages we're interested in.
+		$lang = $title ? $title->getPageLanguage() : $out->getLanguage();
 		return [
-			'array-sections' => self::getSectionsDataInternal( $tocData, 1 ),
+			'array-sections' => $sections,
+			'lang' => $lang->getHtmlCode(),
+			'dir' => $lang->getDir(),
 		];
 	}
 
@@ -273,7 +288,7 @@ class WikidataPageBanner {
 			if ( isset( $options['enable-toc'] ) ) {
 				$tocData = $out->getTOCData();
 				if ( $tocData ) {
-					$options['data-toc'] = self::getRecursiveTocData( $tocData->getSections() );
+					$options['data-toc'] = self::getRecursiveTocData( $out );
 				}
 				$options['msg-toc'] = $out->msg( 'toc' )->text();
 			}
