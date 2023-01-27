@@ -1,0 +1,8 @@
+<li class="toclevel-{{toclevel}} tocsection-{{number}}">
+	<a href="#{{linkAnchor}}{{^linkAnchor}}{{anchor}}{{/linkAnchor}}">
+		<span class="tocnumber">{{number}}</span> <span class="toctext">{{{line}}}</span>
+	</a>
+	<ul>
+		{{#array-sections}}{{>TableOfContents__line}}{{/array-sections}}
+	</ul>
+</li>

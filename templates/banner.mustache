@@ -18,5 +18,20 @@
 		</div>
 		{{/hasIcons}}
 	</div>
-	<div class="wpb-topbanner-toc {{#bottomtoc}}wpb-bottomtoc{{/bottomtoc}}"><div class="wpb-banner-toc">{{#enable-toc}}{{{toc}}}{{/enable-toc}}</div></div>
+	<div class="wpb-topbanner-toc{{#bottomtoc}} wpb-bottomtoc{{/bottomtoc}}">
+		<div class="wpb-banner-toc">
+		{{#enable-toc}}
+		<div role="navigation" aria-labelledby="mw-toc-heading">
+			<input type="checkbox" role="button" id="toctogglecheckbox"
+				class="toctogglecheckbox webfonts-changed" style="display:none">
+			<div class="toctitle"><h2 id="mw-toc-heading">{{msg-toc}}</h2>
+			<span class="toctogglespan">
+				<label class="toctogglelabel" for="toctogglecheckbox"></label>
+			</span>
+			</div>
+			{{#data-toc}}{{>TableOfContents__list}}{{/data-toc}}
+		</div>
+		{{/enable-toc}}
+		</div>
+	</div>
 </div>

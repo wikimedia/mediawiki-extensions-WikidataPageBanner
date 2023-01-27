@@ -194,6 +194,7 @@ class WikidataPageBannerFunctions {
 				$href = $bannerfile->getLocalURL();
 			}
 			$templateParser = new TemplateParser( __DIR__ . '/../templates' );
+			$templateParser->enableRecursivePartials( true );
 			$options['href'] = $href;
 			$options['banner'] = $bannerurl;
 			$options['srcset'] = $srcset;

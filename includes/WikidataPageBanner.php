@@ -157,7 +157,7 @@ class WikidataPageBanner {
 			}
 			// only add banner and styling if valid banner generated
 			if ( $banner !== null ) {
-				if ( isset( $params['toc'] ) ) {
+				if ( isset( $params['data-toc'] ) ) {
 					$out->addModuleStyles( 'ext.WikidataPageBanner.toc.styles' );
 				}
 				$wpbFunctionsClass::setOutputPageProperties( $out, $banner );
@@ -220,6 +220,46 @@ class WikidataPageBanner {
 	}
 
 	/**
+	 * Nests child sections within their parent sections.
+	 * Based on code in SkinComponentTableOfContents.
+	 *
+	 * @param array $sections
+	 * @param int $toclevel
+	 * @return array
+	 */
+	private static function getSectionsDataInternal( array $sections, int $toclevel = 1 ): array {
+		$data = [];
+		foreach ( $sections as $i => $section ) {
+			// Child section belongs to a higher parent.
+			if ( $section->tocLevel < $toclevel ) {
+				return $data;
+			}
+
+			// Set all the parent sections at the current top level.
+			if ( $section->tocLevel === $toclevel ) {
+				$childSections = self::getSectionsDataInternal(
+					array_slice( $sections, $i + 1 ),
+					$toclevel + 1
+				);
+				$data[] = $section->toLegacy() + [
+					'array-sections' => $childSections,
+				];
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * @param array $tocData
+	 * @return array
+	 */
+	private static function getRecursiveTocData( array $tocData ) {
+		return [
+			'array-sections' => self::getSectionsDataInternal( $tocData, 1 ),
+		];
+	}
+
+	/**
 	 * WikidataPageBanner::onOutputPageParserOutput add banner parameters from ParserOutput to
 	 * Output page
 	 *
@@ -231,16 +271,11 @@ class WikidataPageBanner {
 		if ( $options !== null ) {
 			// if toc parameter set, then remove original classes and add banner class
 			if ( isset( $options['enable-toc'] ) ) {
-				$options['toc'] = $pOut->getTOCHTML();
-				// replace id and class of toc with blank
-				// FIXME! This code is hacky, until core has better handling of toc contents
-				// See https://phabricator.wikimedia.org/T105520
-				if ( strpos( $options['toc'], 'id="toc"' ) !== false ) {
-					$options['toc'] = str_replace( 'id="toc"', '', $options['toc'] );
+				$tocData = $out->getTOCData();
+				if ( $tocData ) {
+					$options['data-toc'] = self::getRecursiveTocData( $tocData->getSections() );
 				}
-				if ( strpos( $options['toc'], 'class="toc"' ) !== false ) {
-					$options['toc'] = str_replace( 'class="toc"', '', $options['toc'] );
-				}
+				$options['msg-toc'] = $out->msg( 'toc' )->text();
 			}
 
 			// set banner properties as an OutputPage property
