@@ -10,7 +10,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.38.0"
+		"MediaWiki": ">= 1.40.0"
 	},
 	"MessagesDirs": {
 		"WikidataPageBanner": [
@@ -36,11 +36,7 @@
 				"default": "ext.WikidataPageBanner.styles/ext.WikidataPageBanner.default.less",
 				"modern": "ext.WikidataPageBanner.styles/ext.WikidataPageBanner.modern.less",
 				"minerva": "ext.WikidataPageBanner.styles/ext.WikidataPageBanner.minerva.less"
-			},
-			"targets": [
-				"desktop",
-				"mobile"
-			]
+			}
 		},
 		"ext.WikidataPageBanner.toc.styles": {
 			"styles": [
@@ -49,30 +45,18 @@
 			],
 			"skinStyles": {
 				"minerva": "ext.WikidataPageBanner.toc.styles/ext.WikidataPageBanner.toc.minerva.less"
-			},
-			"targets": [
-				"desktop",
-				"mobile"
-			]
+			}
 		},
 		"ext.WikidataPageBanner.print.styles": {
 			"styles": {
 				"ext.WikidataPageBanner.print.styles/ext.WikidataPageBanner.print.less": {
 					"media": "print"
 				}
-			},
-			"targets": [
-				"desktop",
-				"mobile"
-			]
+			}
 		},
 		"ext.WikidataPageBanner.positionBanner": {
 			"scripts": [
 				"ext.WikidataPageBanner.positionBanner/ext.WikidataPageBanner.positionBanner.js"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			],
 			"dependencies": "mediawiki.util"
 		}
