@@ -1,7 +1,8 @@
 /**
  * Stylesheet for page-wide Banner in WikidataPageBanner extension.
  */
-@import 'mediawiki.mixins';
+@import 'mediawiki.skin.variables.less';
+@import 'mediawiki.mixins.less';
 
 // Hide original heading from core
 .firstHeading:empty {
@@ -49,7 +50,7 @@
 	font-weight: bold;
 	background: none repeat scroll 0% 0% rgba( 0, 0, 0, 0.3 );
 	border-radius: 4px;
-	color: #fff;
+	color: @color-inverted;
 	white-space: nowrap;
 	line-height: 0.9em;
 	// hide text exceeding the line
