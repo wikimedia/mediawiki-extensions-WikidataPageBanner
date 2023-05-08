@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mehtab ahmed"
+		]
+	},
+	"wikidatapagebanner-desc": "مضمونن جي شروعات ۾ وڪيءَ جي مخصوص صفحن تي بينر ڏيو",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER ۾ استعمال ٿيل ھيٺيون دليل غلط يا نامعلوم آھن: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner اڻڄاتل پيرا ميٽرن سان"
+}
