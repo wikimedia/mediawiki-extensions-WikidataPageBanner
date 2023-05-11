@@ -44,8 +44,16 @@
 			totalOffsetX = 0,
 			totalOffsetY = 0,
 			containerWidth = $container.width(),
+			containerHeight = $container.height(),
 			centerX = $wpbBannerImage.data( 'pos-x' ),
 			centerY = $wpbBannerImage.data( 'pos-y' );
+
+		// Safari has a bug where when you use width: 100%; height:auto,
+		// it may return a fractional size for the image.
+		// While this doesn't overflow the container,
+		// it does mess up the bannerImgHeight > containerHeight comparison below, so floor()
+		var bannerImgHeight = Math.floor( $wpbBannerImage.height() );
+		var bannerImgWidth = Math.floor( $wpbBannerImage.width() );
 
 		// reset translations applied by css
 		$wpbBannerImage.css( {
@@ -56,15 +64,16 @@
 			'margin-left': 0,
 			'margin-top': 0
 		} );
+
 		// Adjust vertical focus
-		if ( $wpbBannerImage.height() > $container.height() && centerY !== undefined ) {
+		if ( bannerImgHeight > containerHeight && centerY !== undefined ) {
 			totalOffsetY = getMargin(
-				false, $wpbBannerImage.height(), $container.height(), centerY
+				false, bannerImgHeight, containerHeight, centerY
 			);
 		}
 
 		// Adjust horizontal focus
-		if ( $wpbBannerImage.width() > containerWidth ) {
+		if ( bannerImgWidth > containerWidth ) {
 			if ( centerX === undefined && $container.hasClass( 'wpb-banner-image-panorama' ) ) {
 				// adjust panoramas
 				centerX = -0.25;
@@ -74,10 +83,10 @@
 			// Handle editor specified coordinates
 			if ( centerX !== undefined ) {
 				totalOffsetX = getMargin(
-					true, $wpbBannerImage.width(), $container.width(), centerX
+					true, bannerImgWidth, containerWidth, centerX
 				);
 			}
-		} else if ( $wpbBannerImage.height() > $container.height() && centerY === undefined ) {
+		} else if ( bannerImgHeight > containerHeight && centerY === undefined ) {
 			// We are likely to be using a stretched portait photo
 			// so if none defined default to -10%
 			totalOffsetY = containerWidth / 10;
