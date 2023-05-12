@@ -2,6 +2,11 @@
 
 namespace MediaWiki\Extension\WikidataPageBanner;
 
+use MediaWiki\Hook\BeforePageDisplayHook;
+use MediaWiki\Hook\OutputPageParserOutputHook;
+use MediaWiki\Hook\ParserFirstCallInitHook;
+use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
+use MediaWiki\Hook\SiteNoticeAfterHook;
 use MediaWiki\MediaWikiServices;
 use Message;
 use OOUI\IconWidget;
@@ -11,7 +16,13 @@ use ParserOutput;
 use Skin;
 use Title;
 
-class WikidataPageBanner {
+class WikidataPageBanner implements
+	BeforePageDisplayHook,
+	OutputPageParserOutputHook,
+	ParserFirstCallInitHook,
+	ParserOutputPostCacheTransformHook,
+	SiteNoticeAfterHook
+{
 
 	/**
 	 * Singleton instance for helper class functions
@@ -37,13 +48,16 @@ class WikidataPageBanner {
 		'link',
 	];
 
+	public function __construct() {
+	}
+
 	/**
 	 * Expands icons for rendering via template
 	 *
 	 * @param array[] $icons of options for IconWidget
 	 * @return array[]
 	 */
-	protected static function expandIconTemplateOptions( array $icons ) {
+	protected function expandIconTemplateOptions( array $icons ) {
 		foreach ( $icons as $key => $iconData ) {
 			$widget = new IconWidget( $iconData );
 			$iconData['html'] = $widget->toString();
@@ -59,10 +73,10 @@ class WikidataPageBanner {
 	 * @param Skin $skin
 	 * @return bool
 	 */
-	private static function isSiteNoticeSkin( $skin ) {
+	private function isSiteNoticeSkin( Skin $skin ) {
 		$currentSkin = $skin->getSkinName();
 		$skins = $skin->getConfig()->get( 'WPBDisplaySubtitleAfterBannerSkins' );
-		return array_search( $currentSkin, $skins ) !== false;
+		return in_array( $currentSkin, $skins );
 	}
 
 	/**
@@ -70,7 +84,7 @@ class WikidataPageBanner {
 	 * @param Title $title
 	 * @return bool
 	 */
-	private static function isBannerPermitted( Title $title ) {
+	private function isBannerPermitted( Title $title ) {
 		$config = WikidataPageBannerFunctions::getWPBConfig();
 		$ns = $title->getNamespace();
 		$enabledMainPage = $title->isMainPage() ? $config->get( 'WPBEnableMainPage' ) : true;
@@ -86,12 +100,12 @@ class WikidataPageBanner {
 	 * @param OutputPage $out
 	 * @return bool indicating whether it was added or not
 	 */
-	public static function addBannerToSkinOutput( $out ) {
+	public function addBannerToSkinOutput( OutputPage $out ) {
 		$skin = $out->getSkin();
 		$isSkinDisabled = self::$wpbFunctionsClass::isSkinDisabled( $skin );
 
 		// If the skin is using SiteNoticeAfter abort.
-		if ( $isSkinDisabled || self::isSiteNoticeSkin( $skin ) ) {
+		if ( $isSkinDisabled || $this->isSiteNoticeSkin( $skin ) ) {
 			return false;
 		}
 		$banner = $out->getProperty( 'articlebanner' );
@@ -108,9 +122,9 @@ class WikidataPageBanner {
 	 * @param string|bool &$siteNotice of the page.
 	 * @param Skin $skin being used.
 	 */
-	public static function onSiteNoticeAfter( &$siteNotice, Skin $skin ) {
+	public function onSiteNoticeAfter( &$siteNotice, $skin ) {
 		if ( !self::$wpbFunctionsClass::isSkinDisabled( $skin ) &&
-			self::isSiteNoticeSkin( $skin )
+			$this->isSiteNoticeSkin( $skin )
 		) {
 			$out = $skin->getOutput();
 			$banner = $out->getProperty( 'articlebanner' );
@@ -120,7 +134,6 @@ class WikidataPageBanner {
 			} else {
 				$siteNotice = $banner;
 			}
-			return;
 		}
 	}
 
@@ -132,9 +145,8 @@ class WikidataPageBanner {
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin Skin object being rendered
-	 * @return bool
 	 */
-	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+	public function onBeforePageDisplay( $out, $skin ): void {
 		$config = WikidataPageBannerFunctions::getWPBConfig();
 		$title = $out->getTitle();
 		$isDiff = $out->getRequest()->getCheck( 'diff' );
@@ -146,7 +158,7 @@ class WikidataPageBanner {
 			$bannername = $params['name'];
 			if ( isset( $params['icons'] ) ) {
 				$out->enableOOUI();
-				$params['icons'] = self::expandIconTemplateOptions( $params['icons'] );
+				$params['icons'] = $this->expandIconTemplateOptions( $params['icons'] );
 			}
 			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
 			// attempt to get an automatic banner
@@ -168,7 +180,7 @@ class WikidataPageBanner {
 		} elseif (
 			$title->isKnown() &&
 			$out->isArticle() &&
-			self::isBannerPermitted( $title ) &&
+			$this->isBannerPermitted( $title ) &&
 			$config->get( 'WPBEnableDefaultBanner' ) &&
 			!$isDiff
 		) {
@@ -187,32 +199,26 @@ class WikidataPageBanner {
 				$out->setProperty( 'articlebanner-name', $bannername );
 			}
 		}
-		self::addBannerToSkinOutput( $out );
-
-		return true;
+		$this->addBannerToSkinOutput( $out );
 	}
 
 	/**
-	 * @param ParserOutput $pOut
+	 * @param ParserOutput $parserOutput
 	 * @return array|null
 	 */
-	private static function getBannerOptions( $pOut ) {
-		$options = $pOut->getExtensionData( 'wpb-banner-options' );
-		if ( $options !== null ) {
-			return $options;
-		}
-		return null;
+	private function getBannerOptions( ParserOutput $parserOutput ) {
+		return $parserOutput->getExtensionData( 'wpb-banner-options' );
 	}
 
 	/**
 	 * Disables the primary table of contents in the article.
-	 * @param ParserOutput $pOut
-	 * @param string $text
+	 * @param ParserOutput $parserOutput
+	 * @param string &$text
 	 * @param array &$options
 	 */
-	public static function onParserOutputPostCacheTransform( $pOut, $text, &$options ) {
+	public function onParserOutputPostCacheTransform( $parserOutput, &$text, &$options ): void {
 		// Disable table of contents in article.
-		$bannerOptions = self::getBannerOptions( $pOut );
+		$bannerOptions = $this->getBannerOptions( $parserOutput );
 		if ( $bannerOptions !== null && isset( $bannerOptions['enable-toc'] ) ) {
 			$enableTocInBanner = $bannerOptions['enable-toc'];
 			$options['injectTOC'] = !$enableTocInBanner;
@@ -227,7 +233,7 @@ class WikidataPageBanner {
 	 * @param int $toclevel
 	 * @return array
 	 */
-	private static function getSectionsDataInternal( array $sections, int $toclevel = 1 ): array {
+	private function getSectionsDataInternal( array $sections, int $toclevel = 1 ): array {
 		$data = [];
 		foreach ( $sections as $i => $section ) {
 			// Child section belongs to a higher parent.
@@ -237,7 +243,7 @@ class WikidataPageBanner {
 
 			// Set all the parent sections at the current top level.
 			if ( $section->tocLevel === $toclevel ) {
-				$childSections = self::getSectionsDataInternal(
+				$childSections = $this->getSectionsDataInternal(
 					array_slice( $sections, $i + 1 ),
 					$toclevel + 1
 				);
@@ -253,9 +259,9 @@ class WikidataPageBanner {
 	 * @param OutputPage $out
 	 * @return array
 	 */
-	private static function getRecursiveTocData( OutputPage $out ) {
+	private function getRecursiveTocData( OutputPage $out ) {
 		$tocData = $out->getTOCData();
-		$sections = self::getSectionsDataInternal(
+		$sections = $this->getSectionsDataInternal(
 			$tocData ? $tocData->getSections() : []
 		);
 		// Since the banner is outside of #mw-content-text, it
@@ -278,23 +284,23 @@ class WikidataPageBanner {
 	 * WikidataPageBanner::onOutputPageParserOutput add banner parameters from ParserOutput to
 	 * Output page
 	 *
-	 * @param OutputPage $out
-	 * @param ParserOutput $pOut
+	 * @param OutputPage $outputPage
+	 * @param ParserOutput $parserOutput
 	 */
-	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ) {
-		$options = self::getBannerOptions( $pOut );
+	public function onOutputPageParserOutput( $outputPage, $parserOutput ): void {
+		$options = $this->getBannerOptions( $parserOutput );
 		if ( $options !== null ) {
 			// if toc parameter set, then remove original classes and add banner class
 			if ( isset( $options['enable-toc'] ) ) {
-				$tocData = $out->getTOCData();
+				$tocData = $outputPage->getTOCData();
 				if ( $tocData ) {
-					$options['data-toc'] = self::getRecursiveTocData( $out );
+					$options['data-toc'] = $this->getRecursiveTocData( $outputPage );
 				}
-				$options['msg-toc'] = $out->msg( 'toc' )->text();
+				$options['msg-toc'] = $outputPage->msg( 'toc' )->text();
 			}
 
 			// set banner properties as an OutputPage property
-			$out->setProperty( 'wpb-banner-options', $options );
+			$outputPage->setProperty( 'wpb-banner-options', $options );
 		}
 	}
 
@@ -305,7 +311,7 @@ class WikidataPageBanner {
 	 * @param array $args Array of parameters to check
 	 * @param Parser $parser ParserOutput object to add the warning message
 	 */
-	public static function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
+	public function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
 		$badParams = [];
 		$allowedParams = array_flip( self::$allowedParameters );
 		foreach ( $args as $param => $value ) {
@@ -338,7 +344,7 @@ class WikidataPageBanner {
 	 * @param string $bannername Name of custom banner
 	 * @param string ...$args
 	 */
-	public static function addCustomBanner( Parser $parser, $bannername, ...$args ) {
+	public function addCustomBanner( Parser $parser, $bannername, ...$args ) {
 		// @var array to hold parameters to be passed to banner template
 		$paramsForBannerTemplate = [];
 		// Convert $argumentsFromParserFunction into an associative array
@@ -347,9 +353,9 @@ class WikidataPageBanner {
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
 
-		if ( self::isBannerPermitted( $title ) ) {
+		if ( $this->isBannerPermitted( $title ) ) {
 			// check for unknown parameters used in the parser hook and add a warning if there is any
-			self::addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
+			$this->addBadParserFunctionArgsWarning( $argumentsFromParserFunction, $parser );
 
 			// set title and tooltip attribute to default title
 			// convert title to preferred language variant as done in core Parser.php
@@ -424,9 +430,9 @@ class WikidataPageBanner {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	public static function onParserFirstCallInit( Parser $parser ) {
+	public function onParserFirstCallInit( $parser ) {
 		$parser->setFunctionHook(
-			'PAGEBANNER', [ self::class, 'addCustomBanner' ], Parser::SFH_NO_HASH
+			'PAGEBANNER', [ $this, 'addCustomBanner' ], Parser::SFH_NO_HASH
 		);
 		return true;
 	}

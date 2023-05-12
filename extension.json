@@ -76,21 +76,17 @@
 		]
 	},
 	"Hooks": {
-		"BeforePageDisplay": [
-			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onBeforePageDisplay"
-		],
-		"ParserOutputPostCacheTransform": [
-			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onParserOutputPostCacheTransform"
-		],
-		"OutputPageParserOutput": [
-			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onOutputPageParserOutput"
-		],
-		"SiteNoticeAfter": [
-			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onSiteNoticeAfter"
-		],
-		"ParserFirstCallInit": [
-			"MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner::onParserFirstCallInit"
-		]
+		"BeforePageDisplay": "WikidataPageBannerHooks",
+		"ParserOutputPostCacheTransform": "WikidataPageBannerHooks",
+		"OutputPageParserOutput": "WikidataPageBannerHooks",
+		"SiteNoticeAfter": "WikidataPageBannerHooks",
+		"ParserFirstCallInit": "WikidataPageBannerHooks"
+	},
+	"HookHandlers": {
+		"WikidataPageBannerHooks": {
+			"class": "MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner",
+			"services": []
+		}
 	},
 	"config": {
 		"WPBEnablePageImagesBanners": {
