@@ -1,12 +1,12 @@
 <?php
 
-use MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions;
+use MediaWiki\Extension\WikidataPageBanner\Banner;
 
 /**
  * Test for validating options passed to {{PAGEBANNER}} function
  * Mock class for WikidataPageBannerOptions
  */
-class MockWikidataPageBannerOptions extends WikidataPageBannerFunctions {
+class MockBannerOptions extends Banner {
 
 	/**
 	 * @param string $bannername

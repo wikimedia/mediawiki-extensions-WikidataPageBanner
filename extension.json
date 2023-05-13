@@ -24,8 +24,8 @@
 		"MediaWiki\\Extension\\WikidataPageBanner\\": "includes/"
 	},
 	"TestAutoloadClasses": {
-		"MockWikidataPageBannerFunctions": "tests/phpunit/MockWikidataPageBannerFunctions.php",
-		"MockWikidataPageBannerOptions": "tests/phpunit/MockWikidataPageBannerOptions.php"
+		"MockBanner": "tests/phpunit/MockBanner.php",
+		"MockBannerOptions": "tests/phpunit/MockBannerOptions.php"
 	},
 	"ResourceModules": {
 		"ext.WikidataPageBanner": {
@@ -84,7 +84,7 @@
 	},
 	"HookHandlers": {
 		"WikidataPageBannerHooks": {
-			"class": "MediaWiki\\Extension\\WikidataPageBanner\\WikidataPageBanner",
+			"class": "MediaWiki\\Extension\\WikidataPageBanner\\Hooks",
 			"services": []
 		}
 	},

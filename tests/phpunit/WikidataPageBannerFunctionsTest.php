@@ -1,10 +1,10 @@
 <?php
 
-use MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions;
+use MediaWiki\Extension\WikidataPageBanner\Banner;
 use MediaWiki\MediaWikiServices;
 
 /**
- * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions
+ * @covers \MediaWiki\Extension\WikidataPageBanner\Banner
  *
  * @group WikidataPageBanner
  *
@@ -14,14 +14,14 @@ use MediaWiki\MediaWikiServices;
 class WikidataPageBannerFunctionsTest extends PHPUnit\Framework\TestCase {
 
 	/**
-	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions::getImageUrl
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\Banner::getImageUrl
 	 */
 	public function testGetImageUrl() {
-		$this->assertNull( WikidataPageBannerFunctions::getImageUrl( "not-existing-image-file.jpg" ) );
+		$this->assertNull( Banner::getImageUrl( "not-existing-image-file.jpg" ) );
 	}
 
 	/**
-	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions::getBannerHtml()
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\Banner::getBannerHtml()
 	 * @dataProvider provideGetBannerHtml
 	 * @param string $bannerFilename
 	 * @param bool $fileNeeded
@@ -33,7 +33,7 @@ class WikidataPageBannerFunctionsTest extends PHPUnit\Framework\TestCase {
 		if ( $fileNeeded && !MediaWikiServices::getInstance()->getRepoGroup()->findFile( $bannerFilename ) ) {
 			$this->markTestSkipped( '"' . $bannerFilename . '" not found? Instant commons disabled?' );
 		}
-		$bannerHtml = WikidataPageBannerFunctions::getBannerHtml( $bannerFilename, $options );
+		$bannerHtml = Banner::getBannerHtml( $bannerFilename, $options );
 		if ( $bannerHtml === null ) {
 			$this->assertSame( $expectedHtml, $bannerHtml );
 		} else {

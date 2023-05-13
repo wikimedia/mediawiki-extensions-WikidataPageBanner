@@ -1,11 +1,11 @@
 <?php
 
-use MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions;
+use MediaWiki\Extension\WikidataPageBanner\Banner;
 
 /**
  * Mock class for WikidataPageBanner
  */
-class MockWikidataPageBannerFunctions extends WikidataPageBannerFunctions {
+class MockBanner extends Banner {
 
 	/**
 	 * @param string $bannername

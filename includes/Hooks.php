@@ -16,7 +16,13 @@ use ParserOutput;
 use Skin;
 use Title;
 
-class WikidataPageBanner implements
+/**
+ * This class implements the hookhandlers for WikidataPageBanner
+ *
+ * TODO: It also currently handles a lot of the actual construction of the Banner.
+ * and this should be moved into Banner, WikidataBanner, BannerFactory classes
+ */
+class Hooks implements
 	BeforePageDisplayHook,
 	OutputPageParserOutputHook,
 	ParserFirstCallInitHook,
@@ -32,7 +38,7 @@ class WikidataPageBanner implements
 	 * in it externally
 	 * @var string
 	 */
-	public static $wpbFunctionsClass = WikidataPageBannerFunctions::class;
+	public static $wpbBannerClass = Banner::class;
 
 	/**
 	 * Holds an array of valid parameters for PAGEBANNER hook.
@@ -85,10 +91,10 @@ class WikidataPageBanner implements
 	 * @return bool
 	 */
 	private function isBannerPermitted( Title $title ) {
-		$config = WikidataPageBannerFunctions::getWPBConfig();
+		$config = Banner::getWPBConfig();
 		$ns = $title->getNamespace();
 		$enabledMainPage = $title->isMainPage() ? $config->get( 'WPBEnableMainPage' ) : true;
-		return self::$wpbFunctionsClass::validateNamespace( $ns ) && $enabledMainPage;
+		return self::$wpbBannerClass::validateNamespace( $ns ) && $enabledMainPage;
 	}
 
 	/**
@@ -102,7 +108,7 @@ class WikidataPageBanner implements
 	 */
 	public function addBannerToSkinOutput( OutputPage $out ) {
 		$skin = $out->getSkin();
-		$isSkinDisabled = self::$wpbFunctionsClass::isSkinDisabled( $skin );
+		$isSkinDisabled = self::$wpbBannerClass::isSkinDisabled( $skin );
 
 		// If the skin is using SiteNoticeAfter abort.
 		if ( $isSkinDisabled || $this->isSiteNoticeSkin( $skin ) ) {
@@ -123,7 +129,7 @@ class WikidataPageBanner implements
 	 * @param Skin $skin being used.
 	 */
 	public function onSiteNoticeAfter( &$siteNotice, $skin ) {
-		if ( !self::$wpbFunctionsClass::isSkinDisabled( $skin ) &&
+		if ( !self::$wpbBannerClass::isSkinDisabled( $skin ) &&
 			$this->isSiteNoticeSkin( $skin )
 		) {
 			$out = $skin->getOutput();
@@ -138,7 +144,7 @@ class WikidataPageBanner implements
 	}
 
 	/**
-	 * WikidataPageBanner::addBanner Generates banner from given options and adds it and its styles
+	 * Hooks::addBanner Generates banner from given options and adds it and its styles
 	 * to Output Page. If no options defined through {{PAGEBANNER}}, tries to add a wikidata banner
 	 * or an image as defined by the PageImages extension or a default one
 	 * dependent on how extension is configured.
@@ -147,10 +153,10 @@ class WikidataPageBanner implements
 	 * @param Skin $skin Skin object being rendered
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
-		$config = WikidataPageBannerFunctions::getWPBConfig();
+		$config = Banner::getWPBConfig();
 		$title = $out->getTitle();
 		$isDiff = $out->getRequest()->getCheck( 'diff' );
-		$wpbFunctionsClass = self::$wpbFunctionsClass;
+		$wpbBannerClass = self::$wpbBannerClass;
 
 		// if banner-options are set and not a diff page, add banner anyway
 		if ( $out->getProperty( 'wpb-banner-options' ) !== null && !$isDiff ) {
@@ -160,19 +166,19 @@ class WikidataPageBanner implements
 				$out->enableOOUI();
 				$params['icons'] = $this->expandIconTemplateOptions( $params['icons'] );
 			}
-			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
+			$banner = $wpbBannerClass::getBannerHtml( $bannername, $params );
 			// attempt to get an automatic banner
 			if ( $banner === null ) {
 				$params['isAutomatic'] = true;
-				$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
-				$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $params );
+				$bannername = $wpbBannerClass::getAutomaticBanner( $title );
+				$banner = $wpbBannerClass::getBannerHtml( $bannername, $params );
 			}
 			// only add banner and styling if valid banner generated
 			if ( $banner !== null ) {
 				if ( isset( $params['data-toc'] ) ) {
 					$out->addModuleStyles( 'ext.WikidataPageBanner.toc.styles' );
 				}
-				$wpbFunctionsClass::setOutputPageProperties( $out, $banner );
+				$wpbBannerClass::setOutputPageProperties( $out, $banner );
 
 				// FIXME: This is currently only needed to support testing
 				$out->setProperty( 'articlebanner-name', $bannername );
@@ -186,13 +192,13 @@ class WikidataPageBanner implements
 		) {
 			// if the page uses no 'PAGEBANNER' invocation and if article page, insert default banner
 			// first try to obtain bannername from Wikidata
-			$bannername = $wpbFunctionsClass::getAutomaticBanner( $title );
+			$bannername = $wpbBannerClass::getAutomaticBanner( $title );
 			// add title and whether the banner is auto generated to template parameters
 			$paramsForBannerTemplate = [ 'title' => $title, 'isAutomatic' => true ];
-			$banner = $wpbFunctionsClass::getBannerHtml( $bannername, $paramsForBannerTemplate );
+			$banner = $wpbBannerClass::getBannerHtml( $bannername, $paramsForBannerTemplate );
 			// only add banner and styling if valid banner generated
 			if ( $banner !== null ) {
-				$wpbFunctionsClass::setOutputPageProperties( $out, $banner );
+				$wpbBannerClass::setOutputPageProperties( $out, $banner );
 
 				// set articlebanner property on OutputPage
 				// FIXME: This is currently only needed to support testing
@@ -281,7 +287,7 @@ class WikidataPageBanner implements
 	}
 
 	/**
-	 * WikidataPageBanner::onOutputPageParserOutput add banner parameters from ParserOutput to
+	 * Hooks::onOutputPageParserOutput add banner parameters from ParserOutput to
 	 * Output page
 	 *
 	 * @param OutputPage $outputPage
@@ -335,7 +341,7 @@ class WikidataPageBanner implements
 	}
 
 	/**
-	 * WikidataPageBanner::addCustomBanner
+	 * Hooks::addCustomBanner
 	 * Parser function hooked to 'PAGEBANNER' magic word, to define a custom banner and options to
 	 * customize banner such as icons,horizontal TOC,etc. The method does not return any content but
 	 * sets the banner parameters in ParserOutput object for use at a later stage to generate banner
@@ -348,7 +354,7 @@ class WikidataPageBanner implements
 		// @var array to hold parameters to be passed to banner template
 		$paramsForBannerTemplate = [];
 		// Convert $argumentsFromParserFunction into an associative array
-		$wpbFunctionsClass = self::$wpbFunctionsClass;
+		$wpbFunctionsClass = self::$wpbBannerClass;
 		$argumentsFromParserFunction = $wpbFunctionsClass::extractOptions( $parser, $args );
 		// if given banner does not exist, return
 		$title = $parser->getTitle();
@@ -385,11 +391,11 @@ class WikidataPageBanner implements
 					$argumentsFromParserFunction['bottomtoc'] === 'yes' ) {
 				$paramsForBannerTemplate['bottomtoc'] = true;
 			}
-			WikidataPageBannerFunctions::addToc( $paramsForBannerTemplate,
+			Banner::addToc( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
-			WikidataPageBannerFunctions::addIcons( $paramsForBannerTemplate,
+			Banner::addIcons( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
-			WikidataPageBannerFunctions::addFocus( $paramsForBannerTemplate,
+			Banner::addFocus( $paramsForBannerTemplate,
 					$argumentsFromParserFunction );
 			$paramsForBannerTemplate['name'] = $bannername;
 
@@ -424,7 +430,7 @@ class WikidataPageBanner implements
 	}
 
 	/**
-	 * WikidataPageBanner::onParserFirstCallInit
+	 * Hooks::onParserFirstCallInit
 	 * Hooks the parser function addCustomBanner to the magic word 'PAGEBANNER'
 	 *
 	 * @param Parser $parser

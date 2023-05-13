@@ -1,6 +1,6 @@
 <?php
 
-use MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner;
+use MediaWiki\Extension\WikidataPageBanner\Hooks;
 
 /**
  * @group WikidataPageBanner
@@ -49,7 +49,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @dataProvider provideTestDefaultBanner
-	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner::onBeforePageDisplay
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\Hooks::onBeforePageDisplay
 	 * @param string $title of page banner being generated on
 	 * @param number $ns namespace of title
 	 * @param string $customBanner parameter given to PAGEBANNER magic word
@@ -59,25 +59,25 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		$out = $this->createPage( $title, $ns, $customBanner );
 		// store a mock object in $wpbFunctionsClass static variable so that hooks call mock functions
 		// through this variable when performing tests
-		WikidataPageBanner::$wpbFunctionsClass = MockWikidataPageBannerFunctions::class;
+		Hooks::$wpbBannerClass = MockBanner::class;
 		$skin = $this->createMock( Skin::class );
 		$skin->expects( $this->any() )->method( 'getSkinName' )
 			->will( $this->returnValue( "vector" ) );
-		$wikidataPageBanner = new WikidataPageBanner();
+		$wikidataPageBanner = new Hooks();
 		$wikidataPageBanner->onBeforePageDisplay( $out, $skin );
 		$this->assertEquals( $expected, $out->getProperty( 'articlebanner-name' ),
 			'articlebanner-name property must only be set when a valid banner is added' );
 	}
 
 	/**
-	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBanner::addCustomBanner
+	 * @covers \MediaWiki\Extension\WikidataPageBanner\Hooks::addCustomBanner
 	 */
 	public function testCustomBanner() {
 		$parser = $this->createParser( 'PageWithCustomBanner', NS_MAIN );
 		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock
 		// functions through this variable when performing tests
-		WikidataPageBanner::$wpbFunctionsClass = "MockWikidataPageBannerFunctions";
-		$wikidataPageBanner = new WikidataPageBanner();
+		Hooks::$wpbBannerClass = "MockBanner";
+		$wikidataPageBanner = new Hooks();
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
@@ -85,7 +85,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 			'banner parameters must be set on valid namespaces' );
 
 		$parser = $this->createParser( 'PageInTalkNamespace', NS_TALK );
-		WikidataPageBanner::$wpbFunctionsClass = MockWikidataPageBannerFunctions::class;
+		Hooks::$wpbBannerClass = MockBanner::class;
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
@@ -93,7 +93,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 			'bannerparameters property should be null for not-allowed namespaces' );
 
 		$parser = $this->createParser( 'NoWikidataBanner', NS_TALK );
-		WikidataPageBanner::$wpbFunctionsClass = MockWikidataPageBannerFunctions::class;
+		Hooks::$wpbBannerClass = MockBanner::class;
 		$wikidataPageBanner->addCustomBanner( $parser, 'NoBanner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
@@ -102,7 +102,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 
 		$this->setMwGlobals( 'wgWPBNamespaces', true );
 		$parser = $this->createParser( 'PageWithCustomBanner', NS_TALK );
-		WikidataPageBanner::$wpbFunctionsClass = MockWikidataPageBannerFunctions::class;
+		Hooks::$wpbBannerClass = MockBanner::class;
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
@@ -112,7 +112,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 
 		// Test $wgWPBEnableMainPage.
 		$parser = $this->createParser( 'Main_Page', NS_MAIN );
-		WikidataPageBanner::$wpbFunctionsClass = MockWikidataPageBannerFunctions::class;
+		Hooks::$wpbBannerClass = MockBanner::class;
 		// Not enabled.
 		$this->setMwGlobals( 'wgWPBEnableMainPage', false );
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );

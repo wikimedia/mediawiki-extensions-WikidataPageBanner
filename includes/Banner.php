@@ -18,10 +18,12 @@ use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 /**
- * This class contains helper functions which are used by hooks in WikidataPageBanner
- * to render the banner
+ * This class is responsible for generating a banner
+ * in response to Hook events.
+ *
+ * TODO: make non-static and split wikidata specific logic into a WikidataBanner class
  */
-class WikidataPageBannerFunctions {
+class Banner {
 	/**
 	 * Set bannertoc variable on parser output object
 	 *
@@ -148,7 +150,7 @@ class WikidataPageBannerFunctions {
 	}
 
 	/**
-	 * WikidataPageBanner::getBannerHtml
+	 * Hooks::getBannerHtml
 	 * Returns the html code for the pagebanner
 	 *
 	 * @param string $bannername FileName of banner image
@@ -212,7 +214,7 @@ class WikidataPageBannerFunctions {
 	}
 
 	/**
-	 * WikidataPageBanner::getImageUrl
+	 * Hooks::getImageUrl
 	 * Return the full url of the banner image, stored on the wiki, given the
 	 * image name. Additionally, if a width parameter is specified, it creates
 	 * and returns url of an image of specified width.
@@ -242,7 +244,7 @@ class WikidataPageBannerFunctions {
 	}
 
 	/**
-	 * WikidataPageBanner::getStandardSizeUrls
+	 * Hooks::getStandardSizeUrls
 	 * returns an array of urls of standard image sizes defined by $wgWPBStandardSizes
 	 *
 	 * @param string $filename Name of Image file
@@ -307,7 +309,7 @@ class WikidataPageBannerFunctions {
 	}
 
 	/**
-	 * WikidataPageBanner::getWikidataBanner Fetches banner from wikidata for the specified page
+	 * Hooks::getWikidataBanner Fetches banner from wikidata for the specified page
 	 *
 	 * @param Title $title Title of the page
 	 * @return string|null file name of the banner from wikidata
@@ -387,7 +389,7 @@ class WikidataPageBannerFunctions {
 	}
 
 	/**
-	 * Returns a new or cached config object for WikidataPageBanner extension.
+	 * Returns a new or cached config object for Hooks extension.
 	 *
 	 * @return Config
 	 */
