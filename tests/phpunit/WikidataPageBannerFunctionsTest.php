@@ -22,7 +22,7 @@ class WikidataPageBannerFunctionsTest extends PHPUnit\Framework\TestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\WikidataPageBanner\WikidataPageBannerFunctions::getBannerHtml()
-	 * @dataProvider provideGetBannerHtml()
+	 * @dataProvider provideGetBannerHtml
 	 * @param string $bannerFilename
 	 * @param bool $fileNeeded
 	 * @param mixed[] $options
@@ -41,7 +41,7 @@ class WikidataPageBannerFunctionsTest extends PHPUnit\Framework\TestCase {
 		}
 	}
 
-	public function provideGetBannerHtml() {
+	public static function provideGetBannerHtml() {
 		return [
 			'file-not-found' => [
 				'Not-existing-image-file.jpg',

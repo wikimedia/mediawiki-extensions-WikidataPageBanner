@@ -14,7 +14,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 	 * array( 0 => TestPageName, 1 => Namespace, 2 => customBannerValue, 3 => expected articlebanner
 	 * property
 	 */
-	protected $testPagesForDefaultBanner = [
+	private const TEST_PAGES_FOR_DEFAULT_BANNER = [
 			[ 'PageWithoutCustomBanner', NS_MAIN, false, "WikidataBanner" ],
 			[ 'PageWithCustomBanner', NS_MAIN, "CustomBanner", "CustomBanner" ],
 			[ 'PageInFileNamespace', NS_FILE, false, null ],
@@ -30,7 +30,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function addDBData() {
 		try {
-			foreach ( $this->testPagesForDefaultBanner as $page ) {
+			foreach ( self::TEST_PAGES_FOR_DEFAULT_BANNER as $page ) {
 				if ( !Title::newFromText( $page[0], $page[1] )->exists() ) {
 					$this->insertPage( $page[0], 'Some Text' );
 				}
@@ -170,8 +170,8 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * Data Provider for testDefaultBanner
 	 */
-	public function provideTestDefaultBanner() {
-		return $this->testPagesForDefaultBanner;
+	public static function provideTestDefaultBanner() {
+		return self::TEST_PAGES_FOR_DEFAULT_BANNER;
 	}
 
 }
