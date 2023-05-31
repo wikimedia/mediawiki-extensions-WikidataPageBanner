@@ -9,20 +9,21 @@
 	display: none;
 }
 
+// Entire container
 .ext-wpb-pagebanner {
 	position: relative;
 	width: 100%;
 	margin: 1em 0;
 }
 
-.ext-wpb-pagebanner-subtitle {
-	font-size: 0.875em;
-}
-
+// Actual image (img) being styled
 .wpb-banner-image {
 	visibility: hidden;
+	width: 100%;
+	height: auto;
 }
 
+// Contains title and link with the banner image. Also #firstHeading
 .wpb-topbanner {
 	position: relative;
 	max-width: 1800px;
@@ -32,37 +33,34 @@
 	// Wikivoyage banners
 	max-height: 300px;
 
+	// The a link around the image / .wpb-banner-image
 	.image {
 		position: relative;
 		display: block;
 		height: 100%;
 		width: 100%;
 	}
-}
 
-.ext-wpb-pagebanner .wpb-topbanner .wpb-name {
-	position: absolute;
-	z-index: 1;
-	// make banner heading more specific so that this rule overrides skin's styling of h1
-	margin: 0.6em 0 0 0.4em;
-	padding: 8px 7px;
-	font-size: 1em;
-	font-weight: bold;
-	background: none repeat scroll 0% 0% rgba( 0, 0, 0, 0.3 );
-	border-radius: 4px;
-	color: @color-inverted;
-	white-space: nowrap;
-	line-height: 0.9em;
-	// hide text exceeding the line
-	overflow: hidden;
-	-webkit-text-overflow: ellipsis;
-	text-overflow: ellipsis;
-	max-width: 95%;
-}
-
-.wpb-topbanner .wpb-banner-image {
-	width: 100%;
-	height: auto;
+	// The h1 element inside .wpb-topbanner / #firstHeading
+	// We actually require the additional specificity here
+	.wpb-name {
+		position: absolute;
+		z-index: 1;
+		// make banner heading more specific so that this rule overrides skin's styling of h1
+		margin: 0.6em 0 0 0.4em;
+		padding: 8px 7px;
+		font-size: 1em;
+		font-weight: bold;
+		background: none repeat scroll 0 0 rgba( 0, 0, 0, 0.3 );
+		border-radius: 4px;
+		color: @color-inverted;
+		white-space: nowrap;
+		line-height: 0.9em;
+		// hide text exceeding the line
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 95%;
+	}
 }
 
 .wpb-iconbox {
@@ -71,7 +69,7 @@
 	right: 0;
 	padding: 3px;
 	z-index: 3;
-	background: rgba( 0, 0, 0, 0.7 ) none repeat scroll 0% 0%;
+	background: rgba( 0, 0, 0, 0.7 ) none repeat scroll 0 0;
 	border-bottom-left-radius: 5px;
 	// each <a> link of icon will be wrapped in a <p> tag by mustache, so float them left
 	p {
@@ -81,10 +79,13 @@
 
 // disable heading wrapping on large screen
 @media screen and ( min-width: 768px ) {
-	.ext-wpb-pagebanner .wpb-topbanner .wpb-name {
-		font-size: 2.2em;
-		white-space: normal;
-		overflow: auto;
+	.wpb-topbanner {
+		// We need the additional specificity here
+		.wpb-name {
+			font-size: 2.2em;
+			white-space: normal;
+			overflow: auto;
+		}
 	}
 }
 
@@ -97,29 +98,27 @@
 
 // banner enlargement and faking banner cropping for small screens
 @media screen and ( max-width: 400px ) {
-	.wpb-topbanner {
-		.wpb-banner-image {
-			// this rule overrides the max-width:100% rule for images in Skin Minerva so that banner
-			// can be increased in size for increasing the height accordingly. The overflowing
-			// banner is cropped by setting overflow hidden on containing element
-			max-width: none !important;
-			// Banners on mobile screens should be using the origin parameter and be at least 180px in height
-			min-height: 180px;
-			// centre the banner by default
-			margin-left: 50%;
-			transform: translateX( -50% );
-		}
+	.wpb-banner-image {
+		// this rule overrides the max-width:100% rule for images in Skin Minerva so that banner
+		// can be increased in size for increasing the height accordingly. The overflowing
+		// banner is cropped by setting overflow hidden on containing element
+		max-width: none !important;
+		// Banners on mobile screens should be using the origin parameter and be at least 180px in height
+		min-height: 180px;
+		// centre the banner by default
+		margin-left: 50%;
+		transform: translateX( -50% );
+	}
 
-		/**
-		 * The rules below define custom positioning for banner in case the cropped banner needs to be
-		 * shifted to allow focus to a different area
-		 */
-		.wpb-left {
-			transform: translateX( -25% );
-		}
+	/**
+	 * The rules below define custom positioning for banner in case the cropped banner needs to be
+	 * shifted to allow focus to a different area
+	 */
+	.wpb-left {
+		transform: translateX( -25% );
+	}
 
-		.wpb-right {
-			transform: translateX( -75% );
-		}
+	.wpb-right {
+		transform: translateX( -75% );
 	}
 }
