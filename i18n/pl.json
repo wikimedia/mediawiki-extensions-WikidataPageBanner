@@ -4,7 +4,6 @@
 			"Chrumps"
 		]
 	},
-	"wikidatapagebanner-extensionname": "WikidataPageBanner",
 	"wikidatapagebanner-invalid-arguments": "Następujące argumenty używane w PAGEBANNER są nieprawidłowe lub nieznane: $1",
 	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner z nieznanymi parametrami"
 }

@@ -7,7 +7,6 @@
 			"Wladek92"
 		]
 	},
-	"wikidatapagebanner-extensionname": "WikidataPageBanner",
 	"wikidatapagebanner-desc": "Affiche des bannières sur des pages spécifiées du wiki au début des articles",
 	"wikidatapagebanner-invalid-arguments": "Les arguments suivants utilisés dans PAGEBANNER ne sont pas valides ou sont inconnus : $1",
 	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner avec des paramètres inconnus"

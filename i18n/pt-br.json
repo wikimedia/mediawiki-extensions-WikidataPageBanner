@@ -5,7 +5,6 @@
 			"Felipe L. Ewald"
 		]
 	},
-	"wikidatapagebanner-extensionname": "WikidataPageBanner",
 	"wikidatapagebanner-desc": "Coloca banners em páginas específicas de uma wiki no começo dos artigos",
 	"wikidatapagebanner-invalid-arguments": "Os seguintes argumentos usados em PAGEBANNER são inválidos ou desconhecidos: $1",
 	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner está com parâmetros desconhecidos"
