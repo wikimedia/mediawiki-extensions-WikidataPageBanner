@@ -8,13 +8,13 @@ use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SiteNoticeAfterHook;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use Message;
 use OOUI\IconWidget;
 use OutputPage;
 use Parser;
 use ParserOutput;
 use Skin;
-use Title;
 
 /**
  * This class implements the hookhandlers for WikidataPageBanner

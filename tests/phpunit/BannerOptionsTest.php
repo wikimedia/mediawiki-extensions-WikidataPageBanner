@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Extension\WikidataPageBanner\Hooks;
+use MediaWiki\Title\Title;
 
 /**
  * @group WikidataPageBanner
