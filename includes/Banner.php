@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\WikidataPageBanner;
 
 use Config;
 use ExtensionRegistry;
+use MediaWiki\Html\TemplateParser;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use OutputPage;
@@ -11,7 +12,6 @@ use PageImages\PageImages;
 use Parser;
 use Sanitizer;
 use Skin;
-use TemplateParser;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\NumericPropertyId;
