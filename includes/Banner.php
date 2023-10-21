@@ -165,7 +165,7 @@ class Banner {
 		$srcset = [];
 
 		// if a valid bannername given, set banner
-		if ( !empty( $urls ) ) {
+		if ( $urls ) {
 			// @var int index variable
 			$i = 0;
 			foreach ( $urls as $url ) {
