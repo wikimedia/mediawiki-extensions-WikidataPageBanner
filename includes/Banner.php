@@ -318,7 +318,7 @@ class Banner {
 	public static function getWikidataBanner( $title ) {
 		$banner = null;
 		$wpbBannerProperty = self::getWPBConfig()->get( 'WPBBannerProperty' );
-		if ( empty( $wpbBannerProperty ) ) {
+		if ( $wpbBannerProperty === '' ) {
 			return null;
 		}
 		if ( !ExtensionRegistry::getInstance()->isLoaded( 'WikibaseClient' ) ) {
