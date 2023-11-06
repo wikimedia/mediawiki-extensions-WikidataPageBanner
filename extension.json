@@ -77,7 +77,6 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "WikidataPageBannerHooks",
-		"ParserOutputPostCacheTransform": "WikidataPageBannerHooks",
 		"OutputPageParserOutput": "WikidataPageBannerHooks",
 		"SiteNoticeAfter": "WikidataPageBannerHooks",
 		"ParserFirstCallInit": "WikidataPageBannerHooks"
