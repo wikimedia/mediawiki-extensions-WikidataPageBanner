@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mainframe98"
+			"Mainframe98",
+			"McDutchie"
 		]
 	},
+	"wikidatapagebanner-desc": "Banners vertonen op bepaalde pagina’s van de wiki aan het begin van de artikelen",
 	"wikidatapagebanner-invalid-arguments": "De volgende argumenten gebruikt in PAGEBANNER zijn ongeldig of onbekend: $1",
 	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner met onbekende parameters"
 }
