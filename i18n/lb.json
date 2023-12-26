@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
 	"wikidatapagebanner-extensionname": "WikidataPageBanner",
-	"wikidatapagebanner-desc": "Generéiert Banneren op spezifizéierte Säite vun der Wiki am Ufank vun den Artikelen"
+	"wikidatapagebanner-desc": "Generéiert Banneren op spezifizéierte Säite vun der Wiki am Ufank vun den Artikelen",
+	"wikidatapagebanner-invalid-arguments": "Déi follgend Argumenter vu PAGEBANNER sinn ongülteg oder onbekannt: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner mat onbekannte Parameteren"
 }
