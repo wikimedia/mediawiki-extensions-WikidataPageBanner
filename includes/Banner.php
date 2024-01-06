@@ -2,15 +2,15 @@
 
 namespace MediaWiki\Extension\WikidataPageBanner;
 
-use Config;
 use ExtensionRegistry;
+use MediaWiki\Config\Config;
 use MediaWiki\Html\TemplateParser;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Output\OutputPage;
+use MediaWiki\Parser\Sanitizer;
 use MediaWiki\Title\Title;
-use OutputPage;
 use PageImages\PageImages;
 use Parser;
-use Sanitizer;
 use Skin;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\Item;

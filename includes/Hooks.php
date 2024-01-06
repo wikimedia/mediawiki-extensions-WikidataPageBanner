@@ -8,12 +8,12 @@ use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SiteNoticeAfterHook;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Output\OutputPage;
+use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Title\Title;
 use Message;
 use OOUI\IconWidget;
-use OutputPage;
 use Parser;
-use ParserOutput;
 use Skin;
 
 /**
