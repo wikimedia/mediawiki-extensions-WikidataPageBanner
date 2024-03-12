@@ -65,7 +65,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		Hooks::$wpbBannerClass = MockBanner::class;
 		$skin = $this->createMock( Skin::class );
 		$skin->expects( $this->any() )->method( 'getSkinName' )
-			->will( $this->returnValue( "vector" ) );
+			->willReturn( "vector" );
 		$wikidataPageBanner = new Hooks();
 		$wikidataPageBanner->onBeforePageDisplay( $out, $skin );
 		$this->assertEquals( $expected, $out->getProperty( 'articlebanner-name' ),
