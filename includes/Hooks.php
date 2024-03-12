@@ -5,11 +5,11 @@ namespace MediaWiki\Extension\WikidataPageBanner;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\OutputPageParserOutputHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
+use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SiteNoticeAfterHook;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Parser\ParserOutput;
-use MediaWiki\Parser\ParserOutputFlags;
 use MediaWiki\Title\Title;
 use Message;
 use OOUI\IconWidget;
@@ -26,6 +26,7 @@ class Hooks implements
 	BeforePageDisplayHook,
 	OutputPageParserOutputHook,
 	ParserFirstCallInitHook,
+	ParserOutputPostCacheTransformHook,
 	SiteNoticeAfterHook
 {
 
@@ -213,6 +214,21 @@ class Hooks implements
 	 */
 	private function getBannerOptions( ParserOutput $parserOutput ) {
 		return $parserOutput->getExtensionData( 'wpb-banner-options' );
+	}
+
+	/**
+	 * Disables the primary table of contents in the article.
+	 * @param ParserOutput $parserOutput
+	 * @param string &$text
+	 * @param array &$options
+	 */
+	public function onParserOutputPostCacheTransform( $parserOutput, &$text, &$options ): void {
+		// Disable table of contents in article.
+		$bannerOptions = $this->getBannerOptions( $parserOutput );
+		if ( $bannerOptions !== null && isset( $bannerOptions['enable-toc'] ) ) {
+			$enableTocInBanner = $bannerOptions['enable-toc'];
+			$options['injectTOC'] = !$enableTocInBanner;
+		}
 	}
 
 	/**
@@ -409,9 +425,6 @@ class Hooks implements
 				$parser->getOutput()->setPageProperty( 'wpb_banner_focus_y',
 						// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 						(string)$paramsForBannerTemplate['data-pos-y'] );
-				if ( isset( $paramsForBannerTemplate['enable-toc'] ) ) {
-					$parser->getOutput()->setOutputFlag( ParserOutputFlags::NO_TOC );
-				}
 			}
 		}
 	}
