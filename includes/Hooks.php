@@ -418,11 +418,6 @@ class Hooks implements
 			if ( $bannerTitle !== null ) {
 				$parser->getOutput()->setExtensionData( 'wpb-banner-options', $paramsForBannerTemplate );
 				$parser->fetchFileAndTitle( $bannerTitle );
-				$parser->getOutput()->setUnsortedPageProperty( 'wpb_banner', $bannerTitle->getText() );
-				$parser->getOutput()->setUnsortedPageProperty( 'wpb_banner_focus_x',
-						$paramsForBannerTemplate['data-pos-x'] ?? '' );
-				$parser->getOutput()->setUnsortedPageProperty( 'wpb_banner_focus_y',
-						$paramsForBannerTemplate['data-pos-y'] ?? '' );
 			}
 		}
 	}
