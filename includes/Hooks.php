@@ -2,18 +2,18 @@
 
 namespace MediaWiki\Extension\WikidataPageBanner;
 
-use MediaWiki\Hook\BeforePageDisplayHook;
-use MediaWiki\Hook\OutputPageParserOutputHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SiteNoticeAfterHook;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Message\Message;
+use MediaWiki\Output\Hook\BeforePageDisplayHook;
+use MediaWiki\Output\Hook\OutputPageParserOutputHook;
 use MediaWiki\Output\OutputPage;
+use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Title\Title;
-use Message;
 use OOUI\IconWidget;
-use Parser;
 use Skin;
 
 /**

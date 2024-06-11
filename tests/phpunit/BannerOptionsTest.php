@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Extension\WikidataPageBanner\Hooks;
+use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Title\Title;
 
