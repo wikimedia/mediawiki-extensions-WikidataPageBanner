@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"MR973"
+		]
+	},
+	"wikidatapagebanner-desc": "Мәҡәләнең башына баннер һүрәтен өҫтәү",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER-ҙа ҡулланылған түбәндәге аргументтар дөрөҫ түгел йәки билдәһеҙ: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "Билдәһеҙ параметрҙар менән WikidataPageBanner"
+}
