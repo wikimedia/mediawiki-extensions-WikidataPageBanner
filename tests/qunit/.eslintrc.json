@@ -2,14 +2,10 @@
 	"root": true,
 	"extends": [
 		"wikimedia",
-		"wikimedia/mediawiki"
+		"wikimedia/qunit"
 	],
 	"env": {
-		"browser": true,
 		"jquery": true
-	},
-	"globals": {
-		"mediaWiki": false
 	},
 	"rules": {}
 }

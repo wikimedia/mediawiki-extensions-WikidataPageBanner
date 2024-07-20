@@ -1,7 +1,6 @@
-( function ( mw, $ ) {
+( function () {
 	QUnit.module( 'ext.WikidataPageBanner.positionBanner', QUnit.newMwEnvironment() );
 	QUnit.test( 'testFocus', function ( assert ) {
-		assert.expect( 10 );
 		this.$wpbBannerImageContainer = $( '<div/>', {
 			width: 600,
 			height: 300
@@ -70,4 +69,4 @@
 			'Banner top should shift -100px with origin 0.2,-1' );
 
 	} );
-}( mediaWiki, jQuery ) );
+}() );
