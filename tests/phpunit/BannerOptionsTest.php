@@ -23,7 +23,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		$this->addDBData();
-		$this->setMwGlobals( 'wgWPBEnablePageImagesBanners', false );
+		$this->overrideConfigValue( 'WPBEnablePageImagesBanners', false );
 	}
 
 	/**
