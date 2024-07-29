@@ -46,9 +46,11 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
-		$this->setMwGlobals( 'wgWPBImage', "DefaultBanner" );
-		$this->setMwGlobals( 'wgWPBEnableDefaultBanner', true );
-		$this->setMwGlobals( 'wgWPBEnablePageImagesBanners', true );
+		$this->overrideConfigValues( [
+			'WPBImage' => 'DefaultBanner',
+			'WPBEnableDefaultBanner' => true,
+			'WPBEnablePageImagesBanners' => true,
+		] );
 		$this->addDBData();
 	}
 
@@ -105,7 +107,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		$this->assertNull( $bannerparams,
 			'bannerparameters property should be null for invalid Wikidata banner' );
 
-		$this->setMwGlobals( 'wgWPBNamespaces', true );
+		$this->overrideConfigValue( 'WPBNamespaces', true );
 		$parser = $this->createParser( 'PageWithCustomBanner', NS_TALK );
 		Hooks::$wpbBannerClass = MockBanner::class;
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
@@ -113,18 +115,18 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
 		$this->assertEquals( 'Banner', $bannerparams['name'],
 			'banner parameters must be set on valid namespaces' );
-		$this->setMwGlobals( 'wgWPBNamespaces', [ 0 ] );
+		$this->overrideConfigValue( 'WPBNamespaces', [ 0 ] );
 
 		// Test $wgWPBEnableMainPage.
 		$parser = $this->createParser( 'Main_Page', NS_MAIN );
 		Hooks::$wpbBannerClass = MockBanner::class;
 		// Not enabled.
-		$this->setMwGlobals( 'wgWPBEnableMainPage', false );
+		$this->overrideConfigValue( 'WPBEnableMainPage', false );
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
 		$bannerparams = $parser->getOutput()->getExtensionData( 'wpb-banner-options' );
 		$this->assertNull( $bannerparams, 'bannerparams must not be set on the Main Page' );
 		// Enabled.
-		$this->setMwGlobals( 'wgWPBEnableMainPage', true );
+		$this->overrideConfigValue( 'WPBEnableMainPage', true );
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
 		$bannerparams = $parser->getOutput()->getExtensionData( 'wpb-banner-options' );
 		$this->assertIsArray( $bannerparams, 'bannerparams is set on the Main Page' );
