@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"wikidatapagebanner-desc": "Йаззаман йуьххьехь баннеран сурт тӀетохар",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER чохь лелош йолу рогӀера аргументаш нийса йац йа йевзаш йац: $1.",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner йевзаш йоцу параметраш йолуш йу"
+}
