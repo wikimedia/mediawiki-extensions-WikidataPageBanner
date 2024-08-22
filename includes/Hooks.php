@@ -42,6 +42,7 @@ class Hooks implements
 
 	/**
 	 * Holds an array of valid parameters for PAGEBANNER hook.
+	 * @var string[]
 	 */
 	private static $allowedParameters = [
 		'pgname',
