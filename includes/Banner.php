@@ -237,7 +237,7 @@ class Banner {
 			// validate $bannerwidth to be a width within 3000
 			$mto = $file->transform( [ 'width' => $imagewidth ] );
 			if ( $mto ) {
-				return wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
+				return wfGetUrlUtils()->expand( $mto->getUrl(), PROTO_CURRENT );
 			}
 		} else {
 			// return image without transforming, if width not valid
