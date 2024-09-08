@@ -226,7 +226,8 @@ class Banner {
 	public static function getImageUrl( $filename, $imagewidth = null ) {
 		// make title object from image name
 		$title = Title::makeTitleSafe( NS_FILE, $filename );
-		$file = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
+		$services = MediaWikiServices::getInstance();
+		$file = $services->getRepoGroup()->findFile( $title );
 		$options = [
 			'options' => [ 'min_range' => 0, 'max_range' => 3000 ]
 		];
@@ -237,7 +238,7 @@ class Banner {
 			// validate $bannerwidth to be a width within 3000
 			$mto = $file->transform( [ 'width' => $imagewidth ] );
 			if ( $mto ) {
-				return wfGetUrlUtils()->expand( $mto->getUrl(), PROTO_CURRENT );
+				return $services->getUrlUtils()->expand( $mto->getUrl(), PROTO_CURRENT );
 			}
 		} else {
 			// return image without transforming, if width not valid
