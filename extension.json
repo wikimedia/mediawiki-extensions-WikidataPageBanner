@@ -85,7 +85,9 @@
 	"HookHandlers": {
 		"WikidataPageBannerHooks": {
 			"class": "MediaWiki\\Extension\\WikidataPageBanner\\Hooks",
-			"services": []
+			"services": [
+				"LanguageConverterFactory"
+			]
 		}
 	},
 	"config": {

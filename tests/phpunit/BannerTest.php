@@ -44,6 +44,12 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
+	private function newHooks() {
+		return new Hooks(
+			$this->getServiceContainer()->getLanguageConverterFactory()
+		);
+	}
+
 	protected function setUp(): void {
 		parent::setUp();
 		$this->overrideConfigValues( [
@@ -70,7 +76,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		$skin = $this->createMock( Skin::class );
 		$skin->expects( $this->any() )->method( 'getSkinName' )
 			->willReturn( "vector" );
-		$wikidataPageBanner = new Hooks();
+		$wikidataPageBanner = $this->newHooks();
 		$wikidataPageBanner->onBeforePageDisplay( $out, $skin );
 		$this->assertEquals( $expected, $out->getProperty( 'articlebanner-name' ),
 			'articlebanner-name property must only be set when a valid banner is added' );
@@ -84,7 +90,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock
 		// functions through this variable when performing tests
 		Hooks::$wpbBannerClass = "MockBanner";
-		$wikidataPageBanner = new Hooks();
+		$wikidataPageBanner = $this->newHooks();
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );

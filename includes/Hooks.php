@@ -5,7 +5,7 @@ namespace MediaWiki\Extension\WikidataPageBanner;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SiteNoticeAfterHook;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Languages\LanguageConverterFactory;
 use MediaWiki\Message\Message;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
 use MediaWiki\Output\Hook\OutputPageParserOutputHook;
@@ -55,7 +55,12 @@ class Hooks implements
 		'link',
 	];
 
-	public function __construct() {
+	private LanguageConverterFactory $languageConverterFactory;
+
+	public function __construct(
+		LanguageConverterFactory $languageConverterFactory
+	) {
+		$this->languageConverterFactory = $languageConverterFactory;
 	}
 
 	/**
@@ -366,7 +371,7 @@ class Hooks implements
 
 			// set title and tooltip attribute to default title
 			// convert title to preferred language variant as done in core Parser.php
-			$langConv = MediaWikiServices::getInstance()->getLanguageConverterFactory()
+			$langConv = $this->languageConverterFactory
 				->getLanguageConverter( $parser->getTargetLanguage() );
 			$paramsForBannerTemplate['tooltip'] = $langConv->convert( $title->getText() );
 			$paramsForBannerTemplate['title'] = $langConv->convert( $title->getText() );

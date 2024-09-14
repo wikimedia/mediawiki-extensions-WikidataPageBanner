@@ -20,6 +20,12 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
+	private function newHooks() {
+		return new Hooks(
+			$this->getServiceContainer()->getLanguageConverterFactory()
+		);
+	}
+
 	protected function setUp(): void {
 		parent::setUp();
 		$this->addDBData();
@@ -36,7 +42,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		Hooks::$wpbBannerClass = MockBannerOptions::class;
 		$parser = $this->createParser( 'BannerWithOptions', NS_MAIN );
 
-		$wikidataPageBanner = new Hooks();
+		$wikidataPageBanner = $this->newHooks();
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner1' );
 		$pOut = $parser->getOutput();
 		$bannerparams = $pOut->getExtensionData( 'wpb-banner-options' );
