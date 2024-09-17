@@ -1,4 +1,4 @@
-( function ( mw, $ ) {
+( function () {
 	var $wpbBannerImageContainer = $( '.wpb-topbanner' ),
 		$img = $( 'img.wpb-banner-image' );
 
@@ -117,4 +117,4 @@
 	mw.wpb = {
 		positionBanner: positionBanner
 	};
-}( mediaWiki, jQuery ) );
+}() );
