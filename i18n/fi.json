@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Samoasambia"
+		]
+	},
+	"wikidatapagebanner-desc": "Renderöi bannereita artikkelien alussa tietyillä wikin sivuilla",
+	"wikidatapagebanner-invalid-arguments": "Seuraavat PAGEBANNERissa käytetyt argumentit ovat kelvottomia tai tuntemattomia: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner, jossa on tuntemattomia parametreja"
+}
