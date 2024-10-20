@@ -2,13 +2,13 @@
 
 namespace MediaWiki\Extension\WikidataPageBanner;
 
-use ExtensionRegistry;
 use MediaWiki\Config\Config;
 use MediaWiki\Html\TemplateParser;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\Sanitizer;
+use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Title\Title;
 use PageImages\PageImages;
 use Skin;
