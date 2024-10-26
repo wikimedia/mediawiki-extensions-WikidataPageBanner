@@ -52,7 +52,7 @@ class Banner {
 			if ( substr( $key, 0, 5 ) === 'icon-' ) {
 				// extract iconname after 'icon-' til the end of key
 				$iconname = substr( $key, 5 );
-				if ( !isset( $iconname ) || !isset( $value ) ) {
+				if ( $iconname === '' || $value === null ) {
 					continue;
 				}
 
