@@ -10,7 +10,6 @@ use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\Sanitizer;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Title\Title;
-use PageImages\PageImages;
 use Skin;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\Item;
@@ -301,8 +300,10 @@ class Banner {
 			$config->get( 'WPBEnablePageImagesBanners' ) &&
 			ExtensionRegistry::getInstance()->isLoaded( 'PageImages' )
 		) {
-			$pi = PageImages::getPageImage( $title );
-			// getPageImage returns false if no page image.
+			$pageImages = MediaWikiServices::getInstance()
+				->getService( 'PageImages.PageImages' );
+			$pi = $pageImages->getImage( $title );
+			// getImage returns null if no page image.
 			if ( $pi ) {
 				return $pi->getTitle()->getDBkey();
 			}
