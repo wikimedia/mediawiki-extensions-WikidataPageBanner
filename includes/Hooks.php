@@ -12,9 +12,9 @@ use MediaWiki\Output\Hook\OutputPageParserOutputHook;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
+use MediaWiki\Skin\Skin;
 use MediaWiki\Title\Title;
 use OOUI\IconWidget;
-use Skin;
 
 /**
  * This class implements the hookhandlers for WikidataPageBanner

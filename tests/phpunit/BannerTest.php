@@ -5,6 +5,7 @@ use MediaWiki\Extension\WikidataPageBanner\Hooks;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
+use MediaWiki\Skin\Skin;
 use MediaWiki\Title\Title;
 
 /**
