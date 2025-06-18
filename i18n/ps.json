@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"wikidatapagebanner-desc": "د ليکنو په پيل کې د ويکي په ځانگړو مخونو کې خبرتوغونه وړاندې‌کوي",
+	"wikidatapagebanner-invalid-arguments": "په PAGEBANNER کارول شوي لاندې دليلونه ناباوره یا ناڅرگند دي: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "ويکي‌اومتوک‌مخ‌خبرتوغ له نامالومو پاراميترونو سره"
+}
