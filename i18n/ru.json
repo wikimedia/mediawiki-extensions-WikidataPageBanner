@@ -2,9 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Atsirlin",
+			"Engineer56",
 			"Facenapalm"
 		]
 	},
+	"wikidatapagebanner-extensionname": "WikidataPageBanner",
 	"wikidatapagebanner-desc": "Добавление изображения-баннера в начало статьи",
 	"wikidatapagebanner-invalid-arguments": "Следующие использованные в PAGEBANNER аргументы некорректны или неизвестны: $1",
 	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner с неизвестными параметрами"
