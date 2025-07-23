@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"JeffreyKim"
+		]
+	},
+	"wikidatapagebanner-desc": "喺文章開頭喺 wiki 嘅指定頁面上面渲染橫額",
+	"wikidatapagebanner-invalid-arguments": "喺PAGEBANNER入面用嘅以下引數係無效或者未知嘅：$1",
+	"wikidatapagebanner-invalid-arguments-cat": "參數未知嘅維基數據頁面橫額"
+}
