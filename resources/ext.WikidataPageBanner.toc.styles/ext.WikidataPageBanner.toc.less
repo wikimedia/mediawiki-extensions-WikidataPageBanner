@@ -76,15 +76,7 @@
 		}
 
 		// On hovering over a list item, show the list items which are immediate child of this item
-		li:hover {
-			& > ul > li {
-				display: block;
-			}
-			// make hovered element prominent
-			background: rgba( 0, 0, 0, 0.8 ) none repeat scroll 0% 0%;
-		}
-		// Separate rule so that IE11 interprets at least the :hover one and drops only :focus-within
-		// stylelint-disable-next-line no-descending-specificity
+		li:hover,
 		li:focus-within {
 			& > ul > li {
 				display: block;
