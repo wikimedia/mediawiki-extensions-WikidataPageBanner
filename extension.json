@@ -134,7 +134,7 @@
 		}
 	},
 	"ConfigRegistry": {
-		"wikidatapagebanner": "GlobalVarConfig::newInstance"
+		"wikidatapagebanner": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},
 	"manifest_version": 2
 }
