@@ -15,6 +15,7 @@ use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Skin\Skin;
 use MediaWiki\Title\Title;
 use OOUI\IconWidget;
+use Wikimedia\Message\ListType;
 
 /**
  * This class implements the hookhandlers for WikidataPageBanner
@@ -341,7 +342,7 @@ class Hooks implements
 			// saved. It contains a list of unknown parameters.
 			$parser->getOutput()->addWarningMsg(
 				'wikidatapagebanner-invalid-arguments',
-				Message::listParam( $badParams, 'comma' )
+				Message::listParam( $badParams, ListType::COMMA )
 			);
 		}
 	}
