@@ -56,12 +56,9 @@ class Hooks implements
 		'link',
 	];
 
-	private LanguageConverterFactory $languageConverterFactory;
-
 	public function __construct(
-		LanguageConverterFactory $languageConverterFactory
+		private readonly LanguageConverterFactory $languageConverterFactory,
 	) {
-		$this->languageConverterFactory = $languageConverterFactory;
 	}
 
 	/**
