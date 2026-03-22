@@ -23,9 +23,8 @@
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\WikidataPageBanner\\": "includes/"
 	},
-	"TestAutoloadClasses": {
-		"MockBanner": "tests/phpunit/MockBanner.php",
-		"MockBannerOptions": "tests/phpunit/MockBannerOptions.php"
+	"TestAutoloadNamespaces": {
+		"MediaWiki\\Extension\\WikidataPageBanner\\Tests\\": "tests/phpunit/"
 	},
 	"ResourceModules": {
 		"ext.WikidataPageBanner": {

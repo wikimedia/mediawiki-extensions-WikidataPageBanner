@@ -1,5 +1,7 @@
 <?php
 
+namespace MediaWiki\Extension\WikidataPageBanner\Tests;
+
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\WikidataPageBanner\Hooks;
 use MediaWiki\Output\OutputPage;
@@ -7,6 +9,7 @@ use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Skin\Skin;
 use MediaWiki\Title\Title;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @group WikidataPageBanner
@@ -90,7 +93,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		$parser = $this->createParser( 'PageWithCustomBanner', NS_MAIN );
 		// store a mock class name in $wpbFunctionsClass static variable so that hooks call mock
 		// functions through this variable when performing tests
-		Hooks::$wpbBannerClass = "MockBanner";
+		Hooks::$wpbBannerClass = MockBanner::class;
 		$wikidataPageBanner = $this->newHooks();
 		$wikidataPageBanner->addCustomBanner( $parser, 'Banner' );
 		$pOut = $parser->getOutput();

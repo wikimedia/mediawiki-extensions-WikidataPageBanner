@@ -1,5 +1,7 @@
 <?php
 
+namespace MediaWiki\Extension\WikidataPageBanner\Tests;
+
 use MediaWiki\Extension\WikidataPageBanner\Banner;
 use MediaWiki\MediaWikiServices;
 
@@ -11,7 +13,7 @@ use MediaWiki\MediaWikiServices;
  * @license GPL-2.0-only
  * @author Sébastien Santoro <dereckson@espace-win.org>
  */
-class WikidataPageBannerFunctionsTest extends PHPUnit\Framework\TestCase {
+class WikidataPageBannerFunctionsTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\WikidataPageBanner\Banner::getImageUrl

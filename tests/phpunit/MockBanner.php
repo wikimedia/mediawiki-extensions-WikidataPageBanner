@@ -1,5 +1,7 @@
 <?php
 
+namespace MediaWiki\Extension\WikidataPageBanner\Tests;
+
 use MediaWiki\Extension\WikidataPageBanner\Banner;
 
 /**

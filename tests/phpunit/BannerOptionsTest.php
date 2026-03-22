@@ -1,9 +1,12 @@
 <?php
 
+namespace MediaWiki\Extension\WikidataPageBanner\Tests;
+
 use MediaWiki\Extension\WikidataPageBanner\Hooks;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Title\Title;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @group WikidataPageBanner
