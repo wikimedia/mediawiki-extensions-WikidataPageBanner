@@ -2,16 +2,16 @@
 
 namespace MediaWiki\Extension\WikidataPageBanner;
 
-use MediaWiki\Hook\ParserFirstCallInitHook;
-use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
-use MediaWiki\Hook\SiteNoticeAfterHook;
-use MediaWiki\Languages\LanguageConverterFactory;
+use MediaWiki\Language\LanguageConverterFactory;
 use MediaWiki\Message\Message;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
 use MediaWiki\Output\Hook\OutputPageParserOutputHook;
 use MediaWiki\Output\OutputPage;
+use MediaWiki\Parser\Hook\ParserFirstCallInitHook;
+use MediaWiki\Parser\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
+use MediaWiki\Skin\Hook\SiteNoticeAfterHook;
 use MediaWiki\Skin\Skin;
 use MediaWiki\Title\Title;
 use OOUI\IconWidget;
