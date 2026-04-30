@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tensama0415"
+		]
+	},
+	"wikidatapagebanner-desc": "지정된 위키 문서의 시작 부분에 배너를 표시합니다",
+	"wikidatapagebanner-invalid-arguments": "PAGEBANNER에 사용된 다음 인수는 잘못되었거나 알 수 없습니다: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "알 수 없는 매개변수를 가진 WikidataPageBanner"
+}
