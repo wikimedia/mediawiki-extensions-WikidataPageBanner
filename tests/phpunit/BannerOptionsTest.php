@@ -16,7 +16,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 
 	public function addDBData() {
 		try {
-			if ( !Title::newFromText( 'BannerWithOptions', NS_MAIN )->exists() ) {
+			if ( !Title::makeTitle( NS_MAIN, 'BannerWithOptions' )->exists() ) {
 				$this->insertPage( 'BannerWithOptions', 'Some Text' );
 			}
 		} catch ( Exception $e ) {
@@ -171,7 +171,7 @@ class BannerOptionsTest extends MediaWikiIntegrationTestCase {
 		$parser->expects( $this->any() )->method( 'getOutput' )
 			->willReturn( $parserOutput );
 
-		$curTitle = Title::newFromText( $title, $namespace );
+		$curTitle = Title::makeTitle( $namespace, $title );
 		$parser->expects( $this->any() )->method( 'getTitle' )
 			->willReturn( $curTitle );
 		$language = $this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' );

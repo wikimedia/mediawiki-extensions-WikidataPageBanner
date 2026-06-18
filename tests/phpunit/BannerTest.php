@@ -40,7 +40,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 	public function addDBData() {
 		try {
 			foreach ( self::TEST_PAGES_FOR_DEFAULT_BANNER as $page ) {
-				if ( !Title::newFromText( $page[0], $page[1] )->exists() ) {
+				if ( !Title::makeTitle( $page[1], $page[0] )->exists() ) {
 					$this->insertPage( $page[0], 'Some Text' );
 				}
 			}
@@ -151,7 +151,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 	 */
 	protected function createPage( $title, $namespace, $customBanner ) {
 		$context = new RequestContext();
-		$curTitle = Title::newFromText( $title, $namespace );
+		$curTitle = Title::makeTitle( $namespace, $title );
 		$context->setTitle( $curTitle );
 		$out = $context->getOutput();
 		$out->setTitle( $curTitle );
@@ -176,7 +176,7 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 		$parser->expects( $this->any() )->method( 'getOutput' )
 			->willReturn( $parserOutput );
 
-		$curTitle = Title::newFromText( $title, $namespace );
+		$curTitle = Title::makeTitle( $namespace, $title );
 		$parser->expects( $this->any() )->method( 'getTitle' )
 			->willReturn( $curTitle );
 		$language = $this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' );
