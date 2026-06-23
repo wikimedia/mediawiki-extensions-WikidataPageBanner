@@ -61,7 +61,6 @@ class BannerTest extends MediaWikiIntegrationTestCase {
 			'WPBEnableDefaultBanner' => true,
 			'WPBEnablePageImagesBanners' => true,
 		] );
-		$this->addDBData();
 	}
 
 	/**
