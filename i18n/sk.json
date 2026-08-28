@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"wikidatapagebanner-desc": "Zobrazuje na zadaných stránkach wiki bannery na začiatku článkov",
+	"wikidatapagebanner-invalid-arguments": "Nasledujúce argumenty použité v PAGEBANNER sú neplatné alebo neznáme: $1",
+	"wikidatapagebanner-invalid-arguments-cat": "WikidataPageBanner s neznámymi parametrami"
+}
