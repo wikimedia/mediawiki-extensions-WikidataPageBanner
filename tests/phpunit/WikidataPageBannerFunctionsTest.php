@@ -3,17 +3,18 @@
 namespace MediaWiki\Extension\WikidataPageBanner\Tests;
 
 use MediaWiki\Extension\WikidataPageBanner\Banner;
-use MediaWiki\MediaWikiServices;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @covers \MediaWiki\Extension\WikidataPageBanner\Banner
  *
  * @group WikidataPageBanner
+ * @group Database
  *
  * @license GPL-2.0-only
  * @author Sébastien Santoro <dereckson@espace-win.org>
  */
-class WikidataPageBannerFunctionsTest extends \PHPUnit\Framework\TestCase {
+class WikidataPageBannerFunctionsTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\WikidataPageBanner\Banner::getImageUrl
@@ -32,7 +33,7 @@ class WikidataPageBannerFunctionsTest extends \PHPUnit\Framework\TestCase {
 	 */
 	public function testGetBannerHtml( $bannerFilename, $fileNeeded, $options, $expectedHtml ) {
 		// Rely on InstantCommons for test files.
-		if ( $fileNeeded && !MediaWikiServices::getInstance()->getRepoGroup()->findFile( $bannerFilename ) ) {
+		if ( $fileNeeded && !$this->getServiceContainer()->getRepoGroup()->findFile( $bannerFilename ) ) {
 			$this->markTestSkipped( '"' . $bannerFilename . '" not found? Instant commons disabled?' );
 		}
 		$bannerHtml = Banner::getBannerHtml( $bannerFilename, $options );
