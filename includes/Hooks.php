@@ -43,9 +43,8 @@ class Hooks implements
 
 	/**
 	 * Holds an array of valid parameters for PAGEBANNER hook.
-	 * @var string[]
 	 */
-	private static $allowedParameters = [
+	private const ALLOWED_PARAMETERS = [
 		'pgname',
 		'tooltip',
 		'toc',
@@ -323,10 +322,9 @@ class Hooks implements
 	 */
 	public function addBadParserFunctionArgsWarning( array $args, Parser $parser ) {
 		$badParams = [];
-		$allowedParams = array_flip( self::$allowedParameters );
 		foreach ( $args as $param => $value ) {
 			// manually check for icons, they can have any name with the "icon-" prefix
-			if ( !isset( $allowedParams[$param] ) && substr( $param, 0, 5 ) !== 'icon-' ) {
+			if ( !in_array( $param, self::ALLOWED_PARAMETERS ) && !str_starts_with( $param, 'icon-' ) ) {
 				$badParams[] = $param;
 			}
 		}
